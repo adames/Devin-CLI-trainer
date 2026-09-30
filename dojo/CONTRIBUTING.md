@@ -1,4 +1,4 @@
-# How it works and how to add cards
+# Contributing: how it works and how to add cards
 
 I'm a Cognition support engineer. I built Professor Devin to help me learn the
 commands I use when I investigate a support issue. This file explains where
@@ -299,3 +299,8 @@ I keep review captures in `transcripts/`:
 - `prof-categories.txt`: the category table.
 - `prof-color.ansi`: a four-round terminal color capture.
 - `prof-deck.txt`: the command cards in a format that's easy to review.
+- `render/prof-light.html` and `render/prof-dark.html`: HTML renders of
+  `prof-color.ansi` in light and dark themes.
+
+`transcripts/README.md` indexes the rest of the captures (drill results,
+mystery-ticket runs, and test/lint output).

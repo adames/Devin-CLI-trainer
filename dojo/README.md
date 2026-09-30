@@ -4,6 +4,9 @@ I'm a support engineer at Cognition. I built Professor Devin so I could stop
 looking up Devin CLI flags and start knowing them. It asks me to write real
 commands, points out what I got wrong, and brings missed cards back later.
 
+This folder is part of the [devin-cli-mastery kit](../README.md); it expects
+`../cards.tsv` and `../GUIDE.md` to be in place next to it.
+
 ## Install
 
 1. Open a terminal in this project folder.
@@ -68,3 +71,18 @@ Progress goes to `$PROFESSOR_HOME` if set, otherwise `$DOJO_HOME`, otherwise
 If `professor-devin` is not found, add `~/.local/bin` to your `PATH`, then
 open a new terminal. Run `professor-devin --help` to see the available
 commands.
+
+## Development
+
+```
+python3 -m unittest discover -s tests -v
+flake8 --max-line-length 120 dojo.py tests/
+```
+
+## More docs
+
+- [CONTRIBUTING.md](CONTRIBUTING.md) — where card facts come from and how to
+  add cards.
+- [SPEC.md](SPEC.md) — exact game behaviour.
+- [DESIGN.md](DESIGN.md) — terminal styling rules.
+- [transcripts/README.md](transcripts/README.md) — index of review captures.
