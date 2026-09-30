@@ -1,0 +1,6 @@
+Show rule directory locations
+
+Usage: devin rules paths
+
+Options:
+  -h, --help  Print help

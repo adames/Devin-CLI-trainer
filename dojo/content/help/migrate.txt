@@ -1,0 +1,11 @@
+Migrate configuration from other tools
+
+Usage: devin migrate <COMMAND>
+
+Commands:
+  hooks      Migrate Windsurf hooks (.windsurf/hooks.json) to Devin hooks (.devin/hooks.v1.json)
+  workflows  Migrate workflow files into skills and remove the originals
+  help       Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help

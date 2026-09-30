@@ -1,0 +1,12 @@
+Remove an installed plugin (auto-installed requireds are left in place)
+
+Usage: devin plugins remove [OPTIONS] <NAME>
+
+Arguments:
+  <NAME>  The installed plugin name (or a disambiguated `owner/repo` label when several installed plugins share the same name)
+
+Options:
+      --force  Remove even if another installed plugin or a governance config still requires it. A governance-required plugin is reinstalled on the next session in the requiring scope
+      --local  Remove from this machine only. Fails for plugins that are in your personal plugins
+  -y, --yes    Skip the interactive cloud-removal confirmation
+  -h, --help   Print help

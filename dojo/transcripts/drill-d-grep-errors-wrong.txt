@@ -1,0 +1,21 @@
+Drill: d-grep-errors (wrong)
+Injected input:
+'intentionally-wrong'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:general-cli]
+How many lines contain ERROR (case-insensitive) across app.log and app.log.1.gz?
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> Expected: 129
+Include the plain current log and the gzipped rotated log, matching ERROR case-insensitively.
+Cleanup completed.
+
+Session summary
+XP gained: 0
+Accuracy: 0/1 (0.0%)
+Per-topic accuracy:
+  general-cli: 0/1 (0.0%)
+Weakest topics: general-cli
+Missed items:
+  How many lines contain ERROR (case-insensitive) across app.log and app.log.1.gz? -> Include the plain current log and the gzipped rotated log, matching ERROR case-insensitively.
+Items due tomorrow: 0
+Best combo: x1

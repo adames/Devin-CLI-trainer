@@ -1,0 +1,21 @@
+Drill: d-version (wrong)
+Injected input:
+'intentionally-wrong'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:launch]
+Installed Devin CLI version number?
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> Expected: 3000.11.3
+Check the installed version with devin --version.
+Cleanup completed.
+
+Session summary
+XP gained: 0
+Accuracy: 0/1 (0.0%)
+Per-topic accuracy:
+  launch: 0/1 (0.0%)
+Weakest topics: launch
+Missed items:
+  Installed Devin CLI version number? -> Check the installed version with devin --version.
+Items due tomorrow: 0
+Best combo: x1

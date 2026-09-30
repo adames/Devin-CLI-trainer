@@ -1,0 +1,6 @@
+Log out and remove stored credentials
+
+Usage: devin auth logout
+
+Options:
+  -h, --help  Print help

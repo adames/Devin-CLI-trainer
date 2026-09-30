@@ -1,0 +1,17 @@
+List sessions in the current directory
+
+Usage: devin list [OPTIONS]
+
+Options:
+      --format <FORMAT>
+          Output format
+
+          Possible values:
+          - interactive: Interactive session picker (default)
+          - json:        JSON output
+          - csv:         CSV output
+          
+          [default: interactive]
+
+  -h, --help
+          Print help (see a summary with '-h')

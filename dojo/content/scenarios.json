@@ -1,0 +1,731 @@
+[
+  {
+    "id": "s1-hooks-wrapper",
+    "topic": "hooks",
+    "title": "The silent hook",
+    "ticket": "I added a PreToolUse hook in .devin/hooks.v1.json to block rm -rf but it never fires.",
+    "prompt": "customer@laptop ~/app$ ",
+    "turns": 8,
+    "commands": [
+      {
+        "id": "hook-file",
+        "match": [
+          "^cat \\.devin/hooks\\.v1\\.json$"
+        ],
+        "output": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"exec\",\n        \"hooks\": [{\"type\": \"command\", \"command\": \"./scripts/check-command.sh\"}]\n      }\n    ]\n  }\n}",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "version",
+        "match": [
+          "^devin --version$"
+        ],
+        "output": "devin 3000.11.3 (9c803229faa4)",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "doctor",
+        "match": [
+          "^devin doctor$"
+        ],
+        "output": "pass  custom subagent profiles   none configured\npass  otel exporter environment  no unsupported OTEL_EXPORTER_OTLP_* variables set\n\n2 check(s): 2 passed, 0 warning(s), 0 failure(s)",
+        "evidence": false,
+        "source": "recorded"
+      },
+      {
+        "id": "devin-dir",
+        "match": [
+          "^ls -la \\.devin$"
+        ],
+        "output": "total 12\ndrwxr-xr-x 2 customer customer 4096 Sep 30 03:00 .\ndrwxr-xr-x 4 customer customer 4096 Sep 30 03:00 ..\n-rw-r--r-- 1 customer customer  184 Sep 30 03:00 hooks.v1.json",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "pretty-json",
+        "match": [
+          "^python3 -m json\\.tool \\.devin/hooks\\.v1\\.json$",
+          "^jq \\. \\.devin/hooks\\.v1\\.json$"
+        ],
+        "output": "{\n    \"hooks\": {\n        \"PreToolUse\": [\n            {\n                \"matcher\": \"exec\",\n                \"hooks\": [\n                    {\n                        \"type\": \"command\",\n                        \"command\": \"./scripts/check-command.sh\"\n                    }\n                ]\n            }\n        ]\n    }\n}",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "rules",
+        "match": [
+          "^devin rules list$"
+        ],
+        "output": "No rules found.\n\nTo create rules, add files to one of these directories:\nDevin rules:\n  .windsurf/rules/*.md (always-on)\n\nCursor rules:\n  .cursor/rules/*.md (conditional)\n\n  Current directory: /home/customer/project",
+        "evidence": false,
+        "source": "recorded"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "What is wrong with the hook file?",
+      "choices": [
+        "The standalone .devin/hooks.v1.json file must be the hooks object itself, without a top-level hooks wrapper.",
+        "Hooks need organization enablement before PreToolUse can fire.",
+        "The event name must be pre_tool_use.",
+        "Project hooks only load from ~/.config/devin."
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "What is the right fix?",
+      "choices": [
+        "Remove the wrapper so PreToolUse is top-level, or move the hooks object under hooks in .devin/config.json; verify with /hooks.",
+        "Add --sandbox and leave the file unchanged.",
+        "Restart with --permission-mode dangerous.",
+        "Rename the file to hooks.json."
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "cat .devin/hooks.v1.json",
+      "python3 -m json.tool .devin/hooks.v1.json"
+    ],
+    "explain": "The standalone file's top-level object is the hooks mapping; settings and config files nest it under hooks."
+  },
+  {
+    "id": "s2-path-alias",
+    "topic": "debug",
+    "title": "The missing Node binary",
+    "ticket": "Devin keeps saying `node: command not found`, but node works in my terminal.",
+    "prompt": "customer@laptop ~/app$ ",
+    "turns": 8,
+    "commands": [
+      {
+        "id": "command-v-node",
+        "match": [
+          "^command -v node$"
+        ],
+        "output": "alias node='~/.nvm/versions/node/v20.11.1/bin/node'",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "which-node",
+        "match": [
+          "^which node$"
+        ],
+        "output": "",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "type-node",
+        "match": [
+          "^type node$"
+        ],
+        "output": "node is aliased to `~/.nvm/versions/node/v20.11.1/bin/node'",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "path",
+        "match": [
+          "^echo \\$PATH$"
+        ],
+        "output": "/usr/local/bin:/usr/bin:/bin",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "login-command",
+        "match": [
+          "^bash -lic ['\"]command -v node['\"]$"
+        ],
+        "output": "",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "login-path",
+        "match": [
+          "^bash -lic ['\"]echo \\$PATH['\"]$"
+        ],
+        "output": "/usr/local/bin:/usr/bin:/bin",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "bashrc",
+        "match": [
+          "^cat ~/.bashrc$",
+          "^grep node ~/.bashrc$"
+        ],
+        "output": "alias node='~/.nvm/versions/node/v20.11.1/bin/node'",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "version",
+        "match": [
+          "^devin --version$"
+        ],
+        "output": "devin 3000.11.3 (9c803229faa4)",
+        "evidence": false,
+        "source": "simulated"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "Why does Devin not find node?",
+      "choices": [
+        "Node is only an alias; aliases and functions are not exported as environment variables, and Devin snapshots the login-shell environment at startup.",
+        "The Devin sandbox blocks node by default.",
+        "Devin does not support nvm-managed Node.",
+        "The PATH variable is too long."
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "What should the customer change?",
+      "choices": [
+        "Export the nvm bin directory in the shell profile and restart Devin, which snapshots the environment once at startup.",
+        "Run /clear.",
+        "Run devin update.",
+        "Start Devin with --sandbox."
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "type node",
+      "bash -lic 'echo $PATH'",
+      "grep node ~/.bashrc"
+    ],
+    "explain": "The alias can work in a terminal but is not an exported environment variable. Devin takes a login-shell environment snapshot at startup."
+  },
+  {
+    "id": "s3-dead-proxy",
+    "topic": "debug",
+    "title": "The dead proxy",
+    "ticket": "Every devin command that hits the network fails on my work laptop since Monday.",
+    "prompt": "customer@laptop ~/app$ ",
+    "turns": 8,
+    "commands": [
+      {
+        "id": "proxy-env",
+        "match": [
+          "^env \\| grep -i proxy$",
+          "^printenv \\| grep -i proxy$"
+        ],
+        "output": "HTTPS_PROXY=http://127.0.0.1:9",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "curl-proxy",
+        "match": [
+          "^curl -sv https://cli\\.devin\\.ai -o /dev/null$"
+        ],
+        "output": "* Uses proxy env variable HTTPS_PROXY == 'http://127.0.0.1:9'\n*   Trying 127.0.0.1:9...\n* connect to 127.0.0.1 port 9 failed: Connection refused\n* Failed to connect to 127.0.0.1 port 9 after 0 ms: Connection refused\n* Closing connection 0",
+        "evidence": true,
+        "source": "recorded"
+      },
+      {
+        "id": "update",
+        "match": [
+          "^devin update$"
+        ],
+        "output": "",
+        "evidence": false,
+        "source": "recorded"
+      },
+      {
+        "id": "trace-update",
+        "match": [
+          "^RUST_LOG=reqwest=trace,hyper=trace CHISEL_LOG_STDERR=1 devin update$"
+        ],
+        "output": "TRACE hyper_util::client::legacy::pool: checkout waiting for idle connection: (\"https\", unleash.codeium.com)\nDEBUG reqwest::connect: starting new connection: https://unleash.codeium.com/\nDEBUG reqwest::connect: proxy(http://127.0.0.1:9/) intercepts 'https://unleash.codeium.com/'\nTRACE reqwest::connect: tunneling HTTPS over proxy\nTRACE hyper_util::client::legacy::connect::http: Http::connect; scheme=Some(\"http\"), host=Some(\"127.0.0.1\"), port=Some(Port(9))\nDEBUG hyper_util::client::legacy::connect::http: connecting to 127.0.0.1:9\nTRACE hyper_util::client::legacy::connect::http: connect error for 127.0.0.1:9: ConnectError(\"tcp connect error\", Os { code: 111, kind: ConnectionRefused, message: \"Connection refused\" })",
+        "evidence": true,
+        "source": "recorded"
+      },
+      {
+        "id": "auth-status",
+        "match": [
+          "^devin auth status$"
+        ],
+        "output": "Not logged in.\n  Credentials path: /home/customer/.local/share/devin/credentials.toml\nRun `devin auth login` to authenticate.",
+        "evidence": false,
+        "source": "recorded"
+      },
+      {
+        "id": "version",
+        "match": [
+          "^devin --version$"
+        ],
+        "output": "devin 3000.11.3 (9c803229faa4)",
+        "evidence": false,
+        "source": "simulated"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "What is causing the network failures?",
+      "choices": [
+        "HTTPS_PROXY points at 127.0.0.1:9, where no proxy is listening; the CLI routes traffic through proxy environment variables in system mode.",
+        "The Devin token expired.",
+        "cli.devin.ai is down.",
+        "The operating system is missing a trusted TLS CA."
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "What is the appropriate fix?",
+      "choices": [
+        "Fix or unset HTTPS_PROXY, or configure proxy.mode/url and NO_PROXY appropriately.",
+        "Reinstall the CLI.",
+        "Log out and log in again.",
+        "Run Devin with --sandbox."
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "env | grep -i proxy",
+      "curl -sv https://cli.devin.ai -o /dev/null",
+      "RUST_LOG=reqwest=trace,hyper=trace CHISEL_LOG_STDERR=1 devin update"
+    ],
+    "explain": "The trace shows reqwest routing to the configured proxy and getting connection refused from 127.0.0.1:9."
+  },
+  {
+    "id": "s4-untrusted-print",
+    "topic": "launch",
+    "title": "Print mode in CI",
+    "ticket": "`devin -p` works on my laptop but fails in our CI job in a freshly cloned repo.",
+    "prompt": "customer@laptop ~/app$ ",
+    "turns": 8,
+    "commands": [
+      {
+        "id": "print",
+        "match": [
+          "^devin -p \"summarize the repo\"$"
+        ],
+        "output": "Error: Refusing to run in an untrusted workspace: /home/customer/app\nStart `devin` interactively in this directory to trust it, or set `respect_workspace_trust: false` in your config to restore the previous behavior.",
+        "evidence": true,
+        "source": "recorded"
+      },
+      {
+        "id": "version",
+        "match": [
+          "^devin --version$"
+        ],
+        "output": "devin 3000.11.3 (9c803229faa4)",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "auth",
+        "match": [
+          "^devin auth status$"
+        ],
+        "output": "Logged in",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "trust-help",
+        "match": [
+          "^devin --help \\| grep -A3 trust$"
+        ],
+        "output": "      --respect-workspace-trust [<RESPECT_WORKSPACE_TRUST>]\n          Respect workspace trust settings\n\n          Defaults to true in every mode. Non-interactive (print) mode cannot show the trust prompt and fails in an untrusted directory; pass --respect-workspace-trust false to skip the check.\n\n          [possible values: true, false]",
+        "evidence": true,
+        "source": "recorded"
+      },
+      {
+        "id": "ls",
+        "match": [
+          "^ls -la$"
+        ],
+        "output": "total 8\ndrwxr-xr-x 2 customer customer 4096 Sep 30 03:00 .\ndrwxr-xr-x 4 customer customer 4096 Sep 30 03:00 ..",
+        "evidence": false,
+        "source": "simulated"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "Why can print mode fail in the fresh CI clone?",
+      "choices": [
+        "Print mode cannot display the workspace-trust prompt and fails in an untrusted directory.",
+        "Print mode cannot run when DEVIN_MODEL is set.",
+        "The directory must be started with --sandbox.",
+        "The -c flag is required for print mode."
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "What should CI do?",
+      "choices": [
+        "Pass --respect-workspace-trust false (or set respect_workspace_trust: false in config), or trust the directory by starting devin interactively there once.",
+        "Set DEVIN_MODEL.",
+        "Use --sandbox.",
+        "Use -c."
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "devin --help | grep -A3 trust",
+      "devin -p \"summarize the repo\""
+    ],
+    "explain": "Print mode cannot show the workspace-trust prompt, so in a fresh clone it refuses to run (recorded from devin 3000.11.3). CI should pass --respect-workspace-trust false."
+  },
+  {
+    "id": "s5-org-policy",
+    "topic": "permissions",
+    "title": "The stubborn git push prompt",
+    "ticket": "I run with --permission-mode dangerous but Devin still asks before every git push. Bug?",
+    "prompt": "customer@laptop ~/app$ ",
+    "turns": 8,
+    "commands": [
+      {
+        "id": "version",
+        "match": [
+          "^devin --version$"
+        ],
+        "output": "devin 3000.11.3 (9c803229faa4)",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "user-config",
+        "match": [
+          "^cat ~/.config/devin/config\\.json$"
+        ],
+        "output": "{\n  \"version\": 1\n}",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "project-config",
+        "match": [
+          "^cat \\.devin/config\\.json$"
+        ],
+        "output": "{\n  \"version\": 1\n}",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "local-config",
+        "match": [
+          "^cat \\.devin/config\\.local\\.json$"
+        ],
+        "output": "cat: .devin/config.local.json: No such file or directory",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "doctor",
+        "match": [
+          "^devin doctor$"
+        ],
+        "output": "pass  custom subagent profiles   none configured\npass  otel exporter environment  no unsupported OTEL_EXPORTER_OTLP_* variables set\n\n2 check(s): 2 passed, 0 warning(s), 0 failure(s)",
+        "evidence": false,
+        "source": "recorded"
+      },
+      {
+        "id": "cache",
+        "match": [
+          "^ls ~/.cache/devin$"
+        ],
+        "output": "team_settings.bin\nmodel_configs.bin\ncli",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "team-ask",
+        "match": [
+          "^strings ~/.cache/devin/team_settings\\.bin \\| grep -i push$"
+        ],
+        "output": "ask Exec(git push)",
+        "evidence": true,
+        "source": "simulated"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "Why does dangerous mode still prompt for git push?",
+      "choices": [
+        "An organization/team ask rule applies; org deny and ask rules cannot be overridden by permission modes or local config.",
+        "Dangerous mode is deprecated.",
+        "Project config overrides all CLI flags.",
+        "Smart mode's model judged git push unsafe."
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "Who can change the policy?",
+      "choices": [
+        "A team admin must change Team Settings; the user cannot override it locally.",
+        "Add an allow entry in config.local.json.",
+        "Use /bypass.",
+        "Delete the cache file."
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "cat .devin/config.json",
+      "ls ~/.cache/devin",
+      "strings ~/.cache/devin/team_settings.bin | grep -i push"
+    ],
+    "explain": "Team settings outrank local permission modes; the guide says organization deny/ask rules remain active even in dangerous or bypass mode."
+  },
+  {
+    "id": "s6-stale-binary",
+    "topic": "launch",
+    "title": "The old binary on PATH",
+    "ticket": "I ran `devin update` twice and it says I'm on the latest, but `devin --version` still shows an old version.",
+    "prompt": "customer@laptop ~/app$ ",
+    "turns": 8,
+    "commands": [
+      {
+        "id": "old-version",
+        "match": [
+          "^devin --version$"
+        ],
+        "output": "devin 3000.9.0 (a1b2c3d4)",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "which-all",
+        "match": [
+          "^type -a devin$",
+          "^which -a devin$"
+        ],
+        "output": "devin is /usr/local/bin/devin\ndevin is /home/customer/.local/bin/devin",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "path",
+        "match": [
+          "^echo \\$PATH$"
+        ],
+        "output": "/usr/local/bin:/home/customer/.local/bin:/usr/bin:/bin",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "new-version",
+        "match": [
+          "^~/.local/bin/devin --version$"
+        ],
+        "output": "devin 3000.11.3 (9c803229faa4)",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "versions",
+        "match": [
+          "^ls ~/.local/share/devin/cli/_versions$"
+        ],
+        "output": "3000.11.3\n_download\ncurrent",
+        "evidence": false,
+        "source": "recorded"
+      },
+      {
+        "id": "old-file",
+        "match": [
+          "^ls -la /usr/local/bin/devin$"
+        ],
+        "output": "-rwxr-xr-x 1 root root 14325600 Jan 17 09:24 /usr/local/bin/devin",
+        "evidence": false,
+        "source": "simulated"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "Why does devin --version still show the old version?",
+      "choices": [
+        "An older second copy earlier on PATH shadows the updated ~/.local/bin/devin.",
+        "The update command needs --force.",
+        "The CLI cache is stale.",
+        "The installer must be run with sudo."
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "What should the user do?",
+      "choices": [
+        "Remove the stale copy or fix PATH order, run hash -r, and verify with type -a devin.",
+        "Run devin update --force.",
+        "Clear ~/.cache/devin.",
+        "Reinstall with sudo."
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "type -a devin",
+      "echo $PATH",
+      "~/.local/bin/devin --version"
+    ],
+    "explain": "The shell uses the first matching executable on PATH; an older /usr/local/bin copy shadows the updated user install."
+  },
+  {
+    "id": "s7-claude-hook",
+    "topic": "hooks",
+    "title": "The hook from another tool",
+    "ticket": "Some hook keeps blocking my commands with 'blocked by policy' but I have no Devin hooks configured.",
+    "prompt": "customer@laptop ~/app$ ",
+    "turns": 8,
+    "commands": [
+      {
+        "id": "project-devin",
+        "match": [
+          "^ls \\.devin$"
+        ],
+        "output": "ls: cannot access '.devin': No such file or directory",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "user-config",
+        "match": [
+          "^cat ~/.config/devin/config\\.json$"
+        ],
+        "output": "{\"version\":1}",
+        "evidence": false,
+        "source": "simulated"
+      },
+      {
+        "id": "claude-dir",
+        "match": [
+          "^ls -la \\.claude$"
+        ],
+        "output": "total 12\ndrwxr-xr-x 2 customer customer 4096 Sep 30 03:00 .\ndrwxr-xr-x 4 customer customer 4096 Sep 30 03:00 ..\n-rw-r--r-- 1 customer customer  256 Sep 30 03:00 settings.json",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "claude-settings",
+        "match": [
+          "^cat \\.claude/settings\\.json$"
+        ],
+        "output": "{\n  \"hooks\": {\n    \"PreToolUse\": [{\n      \"matcher\": \"exec\",\n      \"hooks\": [{\"type\": \"command\", \"command\": \"echo 'blocked by policy'; exit 2\"}]\n    }]\n  }\n}",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "version",
+        "match": [
+          "^devin --version$"
+        ],
+        "output": "devin 3000.11.3 (9c803229faa4)",
+        "evidence": false,
+        "source": "simulated"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "Where does the blocking hook come from?",
+      "choices": [
+        "Devin imports hooks from .claude/settings.json because read_config_from.claude is on by default.",
+        "An organization policy always imports hooks.",
+        "The OS sandbox is blocking the command.",
+        "The sessions.db file is corrupted."
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "How can the customer stop importing that hook?",
+      "choices": [
+        "Remove the hook or set read_config_from.claude=false in user config; confirm its source with /hooks.",
+        "Delete sessions.db.",
+        "Disable the sandbox.",
+        "Add a Windsurf rule."
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "ls -la .claude",
+      "cat .claude/settings.json"
+    ],
+    "explain": "The CLI imports Claude Code config by default; the hook's settings file reveals the source."
+  },
+  {
+    "id": "s8-mcp-typo",
+    "topic": "mcp",
+    "title": "The filesystem server that never starts",
+    "ticket": "My filesystem MCP server's tools never show up in Devin.",
+    "prompt": "customer@laptop ~/app$ ",
+    "turns": 8,
+    "commands": [
+      {
+        "id": "mcp-list",
+        "match": [
+          "^devin mcp list$"
+        ],
+        "output": "Configured MCP servers:\n\n  • fs\n    Command: npx -y @modelcontextprotocol/server-filesystm /home/customer/docs",
+        "evidence": false,
+        "source": "recorded"
+      },
+      {
+        "id": "mcp-get",
+        "match": [
+          "^devin mcp get fs$"
+        ],
+        "output": "Server: fs\n    Command: npx -y @modelcontextprotocol/server-filesystm /home/customer/docs",
+        "evidence": true,
+        "source": "recorded"
+      },
+      {
+        "id": "mcp-config",
+        "match": [
+          "^cat \\.devin/mcp_config\\.local\\.json$"
+        ],
+        "output": "{\n  \"mcpServers\": {\n    \"fs\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystm\", \"/home/customer/docs\"],\n      \"transport\": \"stdio\"\n    }\n  }\n}",
+        "evidence": true,
+        "source": "recorded"
+      },
+      {
+        "id": "npm-typo",
+        "match": [
+          "^npx -y @modelcontextprotocol/server-filesystm /tmp$"
+        ],
+        "output": "npm E404: Not Found - GET https://registry.npmjs.org/@modelcontextprotocol%2fserver-filesystm",
+        "evidence": true,
+        "source": "simulated"
+      },
+      {
+        "id": "version",
+        "match": [
+          "^devin --version$"
+        ],
+        "output": "devin 3000.11.3 (9c803229faa4)",
+        "evidence": false,
+        "source": "simulated"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "Why do the filesystem tools not appear?",
+      "choices": [
+        "The stdio server package name is misspelled, so the server never starts.",
+        "The organization disallows MCP.",
+        "The server requires devin mcp login.",
+        "Filesystem servers require HTTP transport."
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "What is the correct repair?",
+      "choices": [
+        "Remove fs, then add it again with @modelcontextprotocol/server-filesystem; verify the command manually first.",
+        "Run devin mcp enable fs.",
+        "Restart the terminal.",
+        "Add mcp__fs__* to the allow list."
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "devin mcp list",
+      "devin mcp get fs",
+      "cat .devin/mcp_config.local.json"
+    ],
+    "explain": "The recorded CLI output shows the misspelled package in the local project MCP configuration."
+  }
+]

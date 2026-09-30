@@ -1,0 +1,19 @@
+Forward ports from a cloud Devin session's box to localhost
+
+Opens a tunnel to the Devin SSH gateway and forwards each port so a dev server running on the box can be opened at http://localhost:<port>. Runs until Ctrl-C.
+
+Usage: devin forward [OPTIONS] <SESSION> <PORTS>...
+
+Arguments:
+  <SESSION>
+          Session id or session URL
+
+  <PORTS>...
+          Ports on the box to forward, as `<port>` or `<local>:<port>` (e.g. `3000` or `8080:3000`)
+
+Options:
+      --gateway <GATEWAY>
+          SSH gateway host (defaults to the ssh. host of your Devin API)
+
+  -h, --help
+          Print help (see a summary with '-h')

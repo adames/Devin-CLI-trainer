@@ -1,0 +1,9 @@
+[Research Preview] Print the sandbox prerequisites for the current platform
+
+On Linux, `--sandbox` requires bubblewrap (bwrap) and socat. macOS sandboxing (seatbelt) works out of the box. On Windows, install and run Devin inside WSL 2 to use sandbox mode.
+
+Usage: devin sandbox setup
+
+Options:
+  -h, --help
+          Print help (see a summary with '-h')

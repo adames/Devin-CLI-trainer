@@ -1,0 +1,1070 @@
+[
+  {
+    "id": "card-01",
+    "topic": "launch",
+    "q": "Start a one-shot, non-interactive run that prints the answer and exits",
+    "answers": [
+      "devin -p",
+      "devin --print"
+    ],
+    "keywords": [
+      "devin -p"
+    ],
+    "hint": "devin -p \"prompt\"",
+    "explain": "devin -p \"prompt\"   (or devin -p -- words)"
+  },
+  {
+    "id": "card-02",
+    "topic": "launch",
+    "q": "Start the REPL with an initial prompt",
+    "answers": [
+      "devin -- your prompt"
+    ],
+    "keywords": [
+      "devin --"
+    ],
+    "hint": "devin -- your prompt",
+    "explain": "devin -- your prompt"
+  },
+  {
+    "id": "card-03",
+    "topic": "launch",
+    "q": "Load the initial prompt from a file",
+    "answers": [
+      "devin --prompt-file task.md"
+    ],
+    "keywords": [
+      "--prompt-file"
+    ],
+    "hint": "devin --prompt-file task.md",
+    "explain": "devin --prompt-file task.md"
+  },
+  {
+    "id": "card-04",
+    "topic": "sessions",
+    "q": "Continue the most recent session in the current dir",
+    "answers": [
+      "devin -c",
+      "--continue"
+    ],
+    "keywords": [
+      "devin -c"
+    ],
+    "hint": "devin -c",
+    "explain": "devin -c  (--continue)"
+  },
+  {
+    "id": "card-05",
+    "topic": "sessions",
+    "q": "Resume a specific session / open the picker",
+    "answers": [
+      "devin -r"
+    ],
+    "keywords": [
+      "devin -r"
+    ],
+    "hint": "devin -r <id>",
+    "explain": "devin -r <id>  /  devin -r"
+  },
+  {
+    "id": "card-06",
+    "topic": "sessions",
+    "q": "List sessions as JSON",
+    "answers": [
+      "devin list --format json"
+    ],
+    "keywords": [
+      "--format json"
+    ],
+    "hint": "devin list --format json",
+    "explain": "devin list --format json"
+  },
+  {
+    "id": "card-07",
+    "topic": "sessions",
+    "q": "Delete a session without confirmation",
+    "answers": [
+      "devin rm <id> --force"
+    ],
+    "keywords": [
+      "devin rm",
+      "--force"
+    ],
+    "hint": "devin rm <id> --force",
+    "explain": "devin rm <id> --force"
+  },
+  {
+    "id": "card-08",
+    "topic": "auth",
+    "q": "Log in over SSH where the localhost redirect fails",
+    "answers": [
+      "devin auth login --force-manual-token-flow"
+    ],
+    "keywords": [
+      "--force-manual-token-flow"
+    ],
+    "hint": "devin auth login --force-manual-token-flow",
+    "explain": "devin auth login --force-manual-token-flow"
+  },
+  {
+    "id": "card-09",
+    "topic": "auth",
+    "q": "Where are CLI credentials stored (Linux)?",
+    "answers": [
+      "~/.local/share/devin/credentials.toml (shown by devin auth status)"
+    ],
+    "keywords": [
+      "credentials.toml"
+    ],
+    "hint": "~/.local/share/devin/credentials.toml (shown by devin auth status)",
+    "explain": "~/.local/share/devin/credentials.toml (shown by devin auth status)"
+  },
+  {
+    "id": "card-10",
+    "topic": "debug",
+    "q": "Machine-readable health check",
+    "answers": [
+      "devin doctor --json"
+    ],
+    "keywords": [
+      "devin doctor --json"
+    ],
+    "hint": "devin doctor --json",
+    "explain": "devin doctor --json"
+  },
+  {
+    "id": "card-11",
+    "topic": "debug",
+    "q": "List models available to the account",
+    "answers": [
+      "devin models list"
+    ],
+    "keywords": [
+      "devin models list"
+    ],
+    "hint": "devin models list",
+    "explain": "devin models list"
+  },
+  {
+    "id": "card-12",
+    "topic": "config",
+    "q": "User config file path (Linux/macOS)",
+    "answers": [
+      "~/.config/devin/config.json"
+    ],
+    "keywords": [
+      "~/.config/devin/config.json"
+    ],
+    "hint": "~/.config/devin/config.json",
+    "explain": "~/.config/devin/config.json"
+  },
+  {
+    "id": "card-13",
+    "topic": "config",
+    "q": "Override the user config file for one run",
+    "answers": [
+      "devin --config <path>"
+    ],
+    "keywords": [
+      "devin --config"
+    ],
+    "hint": "devin --config <path>",
+    "explain": "devin --config <path>"
+  },
+  {
+    "id": "card-14",
+    "topic": "config",
+    "q": "Project config vs personal project config",
+    "answers": [
+      ".devin/config.json (shared) vs .devin/config.local.json (gitignored)"
+    ],
+    "keywords": [
+      ".devin/config.json",
+      ".devin/config.local.json"
+    ],
+    "hint": ".devin/config.json (shared) vs .devin/config.local.json (gitignored)",
+    "explain": ".devin/config.json (shared) vs .devin/config.local.json (gitignored)"
+  },
+  {
+    "id": "card-15",
+    "topic": "config",
+    "q": "Config precedence, highest to lowest",
+    "answers": [
+      "Org/team > session approvals > .devin/config.local.json > .devin/config.json > ~/.config/devin/config.json"
+    ],
+    "keywords": [
+      "Org/team",
+      "session approvals",
+      "config.local.json"
+    ],
+    "hint": "Org/team > session approvals > .devin/config.local.json > .devin/config.json > ~/.config/d",
+    "explain": "Org/team > session approvals > .devin/config.local.json > .devin/config.json > ~/.config/devin/config.json"
+  },
+  {
+    "id": "card-16",
+    "topic": "permissions",
+    "q": "Can dangerous/bypass mode override org deny rules?",
+    "answers": [
+      "No. Org deny/ask rules always apply"
+    ],
+    "keywords": [
+      "Org deny/ask rules always apply"
+    ],
+    "hint": "No. Org deny/ask rules always apply",
+    "explain": "No. Org deny/ask rules always apply"
+  },
+  {
+    "id": "card-17",
+    "topic": "modes",
+    "q": "Permission modes accepted by --permission-mode in v3000.11.3",
+    "answers": [
+      "auto (default), accept-edits, smart, dangerous  (env DEVIN_PERMISSION_MODE)"
+    ],
+    "keywords": [
+      "auto",
+      "accept-edits",
+      "smart",
+      "dangerous"
+    ],
+    "hint": "auto (default), accept-edits, smart, dangerous",
+    "explain": "auto (default), accept-edits, smart, dangerous  (env DEVIN_PERMISSION_MODE)"
+  },
+  {
+    "id": "card-18",
+    "topic": "modes",
+    "q": "What does Smart mode do?",
+    "answers": [
+      "Auto-approves workspace edits; a fast model judges other actions; prompts if unsafe or unsure"
+    ],
+    "keywords": [
+      "Auto-approves workspace edits",
+      "fast model"
+    ],
+    "hint": "Auto-approves workspace edits; a fast model judges other actions; prompts if unsafe or uns",
+    "explain": "Auto-approves workspace edits; a fast model judges other actions; prompts if unsafe or unsure"
+  },
+  {
+    "id": "card-19",
+    "topic": "modes",
+    "q": "Which mode requires --sandbox?",
+    "answers": [
+      "autonomous (/autonomous)"
+    ],
+    "keywords": [
+      "autonomous",
+      "--sandbox"
+    ],
+    "hint": "autonomous (/autonomous)",
+    "explain": "autonomous (/autonomous)"
+  },
+  {
+    "id": "card-20",
+    "topic": "slash",
+    "q": "Read-only planning mode / one-shot read-only question",
+    "answers": [
+      "/plan",
+      "/ask"
+    ],
+    "keywords": [
+      "/plan",
+      "/ask"
+    ],
+    "hint": "/plan",
+    "explain": "/plan  /  /ask <question>"
+  },
+  {
+    "id": "card-21",
+    "topic": "slash",
+    "q": "List conversation steps, fork from one, revert from one",
+    "answers": [
+      "/steps, /fork [step], /revert <step>"
+    ],
+    "keywords": [
+      "/steps",
+      "/fork",
+      "/revert"
+    ],
+    "hint": "/steps, /fork [step], /revert <step>",
+    "explain": "/steps, /fork [step], /revert <step>"
+  },
+  {
+    "id": "card-22",
+    "topic": "slash",
+    "q": "What does /revert undo?",
+    "answers": [
+      "File changes from that step onward AND rewinds the conversation to before it"
+    ],
+    "keywords": [
+      "rewinds the conversation"
+    ],
+    "hint": "File changes from that step onward AND rewinds the conversation to before it",
+    "explain": "File changes from that step onward AND rewinds the conversation to before it"
+  },
+  {
+    "id": "card-23",
+    "topic": "slash",
+    "q": "Ask a side question without derailing the task",
+    "answers": [
+      "/btw <prompt>"
+    ],
+    "keywords": [
+      "/btw"
+    ],
+    "hint": "/btw <prompt>",
+    "explain": "/btw <prompt>"
+  },
+  {
+    "id": "card-24",
+    "topic": "slash",
+    "q": "Implement, then auto-review the diff in a loop",
+    "answers": [
+      "/loop <prompt>"
+    ],
+    "keywords": [
+      "/loop"
+    ],
+    "hint": "/loop <prompt>",
+    "explain": "/loop <prompt>"
+  },
+  {
+    "id": "card-25",
+    "topic": "slash",
+    "q": "Show context window usage / force compaction",
+    "answers": [
+      "/context  /  /compact"
+    ],
+    "keywords": [
+      "/context",
+      "/compact"
+    ],
+    "hint": "/context",
+    "explain": "/context  /  /compact"
+  },
+  {
+    "id": "card-26",
+    "topic": "slash",
+    "q": "Show session credit/ACU usage",
+    "answers": [
+      "/usage"
+    ],
+    "keywords": [
+      "/usage"
+    ],
+    "hint": "/usage",
+    "explain": "/usage"
+  },
+  {
+    "id": "card-27",
+    "topic": "hooks",
+    "q": "List loaded hooks with source paths",
+    "answers": [
+      "/hooks"
+    ],
+    "keywords": [
+      "/hooks"
+    ],
+    "hint": "/hooks",
+    "explain": "/hooks"
+  },
+  {
+    "id": "card-28",
+    "topic": "mcp",
+    "q": "MCP server status inside the REPL",
+    "answers": [
+      "/mcp"
+    ],
+    "keywords": [
+      "/mcp"
+    ],
+    "hint": "/mcp",
+    "explain": "/mcp"
+  },
+  {
+    "id": "card-29",
+    "topic": "slash",
+    "q": "Report a bug to the CLI devs from inside the REPL",
+    "answers": [
+      "/bug [description]"
+    ],
+    "keywords": [
+      "/bug"
+    ],
+    "hint": "/bug [description]",
+    "explain": "/bug [description]"
+  },
+  {
+    "id": "card-30",
+    "topic": "cloud",
+    "q": "Continue a local task in Devin Cloud",
+    "answers": [
+      "/handoff [task]"
+    ],
+    "keywords": [
+      "/handoff"
+    ],
+    "hint": "/handoff [task]",
+    "explain": "/handoff [task]"
+  },
+  {
+    "id": "card-31",
+    "topic": "cloud",
+    "q": "Bring a cloud session's PR branch back locally",
+    "answers": [
+      "/pickup",
+      "/handoff"
+    ],
+    "keywords": [
+      "/pickup"
+    ],
+    "hint": "/pickup",
+    "explain": "/pickup  (or /handoff inside a cloud session)"
+  },
+  {
+    "id": "card-32",
+    "topic": "cloud",
+    "q": "Drive cloud sessions from the terminal",
+    "answers": [
+      "devin --cloud"
+    ],
+    "keywords": [
+      "devin --cloud"
+    ],
+    "hint": "devin --cloud",
+    "explain": "devin --cloud"
+  },
+  {
+    "id": "card-33",
+    "topic": "cloud",
+    "q": "SSH into a cloud session VM",
+    "answers": [
+      "devin ssh [session-id-or-url] [ssh args]"
+    ],
+    "keywords": [
+      "devin ssh"
+    ],
+    "hint": "devin ssh [session-id-or-url] [ssh args]",
+    "explain": "devin ssh [session-id-or-url] [ssh args]"
+  },
+  {
+    "id": "card-34",
+    "topic": "cloud",
+    "q": "Forward cloud VM port 3000 to local 8080",
+    "answers": [
+      "devin forward <session> 8080:3000"
+    ],
+    "keywords": [
+      "devin forward"
+    ],
+    "hint": "devin forward <session> 8080:3000",
+    "explain": "devin forward <session> 8080:3000"
+  },
+  {
+    "id": "card-35",
+    "topic": "hooks",
+    "q": "Standalone project hooks file (and its shape)",
+    "answers": [
+      ".devin/hooks.v1.json"
+    ],
+    "keywords": [
+      ".devin/hooks.v1.json",
+      "no hooks wrapper"
+    ],
+    "hint": ".devin/hooks.v1.json. The entire file is the hooks object (no \"hooks\" wrapper)",
+    "explain": ".devin/hooks.v1.json. The entire file is the hooks object (no \"hooks\" wrapper)"
+  },
+  {
+    "id": "card-36",
+    "topic": "hooks",
+    "q": "Hook events (name 6)",
+    "answers": [
+      "PreToolUse, PostToolUse, UserPromptSubmit, Stop, SessionStart, (+ others in lifecycle docs)"
+    ],
+    "keywords": [
+      "PreToolUse",
+      "PostToolUse",
+      "UserPromptSubmit",
+      "Stop",
+      "SessionStart"
+    ],
+    "hint": "PreToolUse, PostToolUse, UserPromptSubmit, Stop, SessionStart, (+ others in lifecycle docs",
+    "explain": "PreToolUse, PostToolUse, UserPromptSubmit, Stop, SessionStart, (+ others in lifecycle docs)"
+  },
+  {
+    "id": "card-37",
+    "topic": "hooks",
+    "q": "Rewrite a tool's input from a hook",
+    "answers": [
+      "Return hookSpecificOutput.updatedInput in a PreToolUse hook"
+    ],
+    "keywords": [
+      "hookSpecificOutput.updatedInput"
+    ],
+    "hint": "Return hookSpecificOutput.updatedInput in a PreToolUse hook",
+    "explain": "Return hookSpecificOutput.updatedInput in a PreToolUse hook"
+  },
+  {
+    "id": "card-38",
+    "topic": "hooks",
+    "q": "Inject context from a hook",
+    "answers": [
+      "hookSpecificOutput.additionalContext (UserPromptSubmit, SessionStart, PostToolUse)"
+    ],
+    "keywords": [
+      "hookSpecificOutput.additionalContext"
+    ],
+    "hint": "hookSpecificOutput.additionalContext (UserPromptSubmit, SessionStart, PostToolUse)",
+    "explain": "hookSpecificOutput.additionalContext (UserPromptSubmit, SessionStart, PostToolUse)"
+  },
+  {
+    "id": "card-39",
+    "topic": "rules",
+    "q": "Project rules file recommended by docs",
+    "answers": [
+      "AGENTS.md"
+    ],
+    "keywords": [
+      "AGENTS.md"
+    ],
+    "hint": "AGENTS.md at project root (global: ~/.config/devin/AGENTS.md)",
+    "explain": "AGENTS.md at project root (global: ~/.config/devin/AGENTS.md)"
+  },
+  {
+    "id": "card-40",
+    "topic": "rules",
+    "q": "Show where rules / skills are loaded from",
+    "answers": [
+      "devin rules paths",
+      "devin skills paths"
+    ],
+    "keywords": [
+      "devin rules paths",
+      "devin skills paths"
+    ],
+    "hint": "devin rules paths",
+    "explain": "devin rules paths  /  devin skills paths"
+  },
+  {
+    "id": "card-41",
+    "topic": "skills",
+    "q": "Project skill location",
+    "answers": [
+      ".devin/skills/<name>/SKILL.md  (also .agents/skills, .cognition/skills)"
+    ],
+    "keywords": [
+      ".devin/skills",
+      "SKILL.md"
+    ],
+    "hint": ".devin/skills/<name>/SKILL.md",
+    "explain": ".devin/skills/<name>/SKILL.md  (also .agents/skills, .cognition/skills)"
+  },
+  {
+    "id": "card-42",
+    "topic": "mcp",
+    "q": "User MCP config file (v3000.3+)",
+    "answers": [
+      "~/.config/devin/mcp_config.json  (project: .devin/mcp_config.json / .local.json)"
+    ],
+    "keywords": [
+      "~/.config/devin/mcp_config.json"
+    ],
+    "hint": "~/.config/devin/mcp_config.json",
+    "explain": "~/.config/devin/mcp_config.json  (project: .devin/mcp_config.json / .local.json)"
+  },
+  {
+    "id": "card-43",
+    "topic": "mcp",
+    "q": "Auto-approve a specific MCP tool",
+    "answers": [
+      "permissions.allow: [\"mcp__<server>__<tool>\"]"
+    ],
+    "keywords": [
+      "permissions.allow",
+      "mcp__"
+    ],
+    "hint": "permissions.allow: [\"mcp__<server>__<tool>\"]",
+    "explain": "permissions.allow: [\"mcp__<server>__<tool>\"]"
+  },
+  {
+    "id": "card-44",
+    "topic": "logs",
+    "q": "Where are per-run logs (Linux/macOS)?",
+    "answers": [
+      "~/.local/share/devin/cli/logs/devin_<timestamp>_<pid>.log (.gz after 48h)"
+    ],
+    "keywords": [
+      "~/.local/share/devin/cli/logs"
+    ],
+    "hint": "~/.local/share/devin/cli/logs/devin_<timestamp>_<pid>.log (.gz after 48h)",
+    "explain": "~/.local/share/devin/cli/logs/devin_<timestamp>_<pid>.log (.gz after 48h)"
+  },
+  {
+    "id": "card-45",
+    "topic": "logs",
+    "q": "Search compressed + plain logs",
+    "answers": [
+      "rg -z \"error\" ~/.local/share/devin/cli/logs/"
+    ],
+    "keywords": [
+      "rg -z",
+      "error"
+    ],
+    "hint": "rg -z \"error\" ~/.local/share/devin/cli/logs/",
+    "explain": "rg -z \"error\" ~/.local/share/devin/cli/logs/"
+  },
+  {
+    "id": "card-46",
+    "topic": "logs",
+    "q": "Enable full HTTP/TLS trace logging",
+    "answers": [
+      "RUST_LOG=\"chisel=trace,windsurf_api_client=trace,connect_rpc=trace,reqwest=trace,hyper=trace,rustls=trace\" CHISEL_LOG_STDERR=1 devin ..."
+    ],
+    "keywords": [
+      "RUST_LOG",
+      "CHISEL_LOG_STDERR"
+    ],
+    "hint": "RUST_LOG=\"chisel=trace,windsurf_api_client=trace,connect_rpc=trace,reqwest=trace,hyper=tra",
+    "explain": "RUST_LOG=\"chisel=trace,windsurf_api_client=trace,connect_rpc=trace,reqwest=trace,hyper=trace,rustls=trace\" CHISEL_LOG_STDERR=1 devin ..."
+  },
+  {
+    "id": "card-47",
+    "topic": "debug",
+    "q": "Why can't the agent find a tool that works in my terminal?",
+    "answers": [
+      "Env is snapshotted from $SHELL as an interactive login shell at startup; alias/function-only or later changes are missed. Restart Devin"
+    ],
+    "keywords": [
+      "interactive login shell",
+      "Restart Devin"
+    ],
+    "hint": "Env is snapshotted from $SHELL as an interactive login shell at startup; alias/function-on",
+    "explain": "Env is snapshotted from $SHELL as an interactive login shell at startup; alias/function-only or later changes are missed. Restart Devin"
+  },
+  {
+    "id": "card-48",
+    "topic": "debug",
+    "q": "Where does the CLI get trusted CAs for TLS-inspecting proxies?",
+    "answers": [
+      "the OS certificate store"
+    ],
+    "keywords": [
+      "OS certificate store"
+    ],
+    "hint": "The OS certificate store",
+    "explain": "The OS certificate store"
+  },
+  {
+    "id": "card-49",
+    "topic": "launch",
+    "q": "Print mode fails in an untrusted directory. Fix?",
+    "answers": [
+      "--respect-workspace-trust false"
+    ],
+    "keywords": [
+      "--respect-workspace-trust false"
+    ],
+    "hint": "--respect-workspace-trust false",
+    "explain": "--respect-workspace-trust false"
+  },
+  {
+    "id": "card-50",
+    "topic": "acp",
+    "q": "Run the agent as an ACP server for an IDE",
+    "answers": [
+      "devin acp  (--agent-type review|summarizer)"
+    ],
+    "keywords": [
+      "devin acp"
+    ],
+    "hint": "devin acp",
+    "explain": "devin acp  (--agent-type review|summarizer)"
+  },
+  {
+    "id": "card-51",
+    "topic": "hooks",
+    "q": "Migrate Windsurf hooks to Devin hooks",
+    "answers": [
+      "devin migrate hooks"
+    ],
+    "keywords": [
+      "devin migrate hooks"
+    ],
+    "hint": "devin migrate hooks",
+    "explain": "devin migrate hooks"
+  },
+  {
+    "id": "card-52",
+    "topic": "cloud",
+    "q": "Manage environment blueprints/builds from the CLI",
+    "answers": [
+      "devin cloud drs (blueprint-list, build, build-logs, sandbox-create, run...)"
+    ],
+    "keywords": [
+      "devin cloud drs"
+    ],
+    "hint": "devin cloud drs (blueprint-list, build, build-logs, sandbox-create, run...)",
+    "explain": "devin cloud drs (blueprint-list, build, build-logs, sandbox-create, run...)"
+  },
+  {
+    "id": "card-53",
+    "topic": "debug",
+    "q": "Env var for models to fall back to on provider refusal",
+    "answers": [
+      "DEVIN_REFUSAL_FALLBACK (comma-separated)"
+    ],
+    "keywords": [
+      "DEVIN_REFUSAL_FALLBACK"
+    ],
+    "hint": "DEVIN_REFUSAL_FALLBACK (comma-separated)",
+    "explain": "DEVIN_REFUSAL_FALLBACK (comma-separated)"
+  },
+  {
+    "id": "card-54",
+    "topic": "config",
+    "q": "Disable importing Claude Code config",
+    "answers": [
+      "read_config_from.claude = false in user config"
+    ],
+    "keywords": [
+      "read_config_from.claude = false"
+    ],
+    "hint": "read_config_from.claude = false in user config",
+    "explain": "read_config_from.claude = false in user config"
+  },
+  {
+    "id": "card-55",
+    "topic": "logs",
+    "q": "CLI: follow the newest log live",
+    "answers": [
+      "tail -F \"$(ls -t ~/.local/share/devin/cli/logs/*.log | head -1)\""
+    ],
+    "keywords": [
+      "tail -F",
+      "ls -t"
+    ],
+    "hint": "tail -F \"$(ls -t ~/.local/share/devin/cli/logs/*.log | head -1)\"",
+    "explain": "tail -F \"$(ls -t ~/.local/share/devin/cli/logs/*.log | head -1)\""
+  },
+  {
+    "id": "card-56",
+    "topic": "general-cli",
+    "q": "CLI: list every path a process opens or stats",
+    "answers": [
+      "strace -f -e trace=file -o out.txt <cmd>"
+    ],
+    "keywords": [
+      "strace -f",
+      "trace=file"
+    ],
+    "hint": "strace -f -e trace=file -o out.txt <cmd>",
+    "explain": "strace -f -e trace=file -o out.txt <cmd>"
+  },
+  {
+    "id": "card-57",
+    "topic": "general-cli",
+    "q": "CLI: show a running process's env vars",
+    "answers": [
+      "tr '\\0' '\\n' < /proc/<pid>/environ"
+    ],
+    "keywords": [
+      "/proc/<pid>/environ"
+    ],
+    "hint": "tr '\\0' '\\n' < /proc/<pid>/environ",
+    "explain": "tr '\\0' '\\n' < /proc/<pid>/environ"
+  },
+  {
+    "id": "card-58",
+    "topic": "general-cli",
+    "q": "CLI: show doctor checks that did not pass",
+    "answers": [
+      "devin doctor --json | jq -r '.checks[]|select(.status!=\"pass\")|.check'"
+    ],
+    "keywords": [
+      "devin doctor --json",
+      "jq -r"
+    ],
+    "hint": "devin doctor --json | jq -r '.checks[]|select(.status!=\"pass\")|.check'",
+    "explain": "devin doctor --json | jq -r '.checks[]|select(.status!=\"pass\")|.check'"
+  },
+  {
+    "id": "card-59",
+    "topic": "general-cli",
+    "q": "CLI: diff two JSON configs ignoring key order",
+    "answers": [
+      "diff <(jq -S . a.json) <(jq -S . b.json)"
+    ],
+    "keywords": [
+      "diff <(jq -S"
+    ],
+    "hint": "diff <(jq -S . a.json) <(jq -S . b.json)",
+    "explain": "diff <(jq -S . a.json) <(jq -S . b.json)"
+  },
+  {
+    "id": "card-60",
+    "topic": "general-cli",
+    "q": "CLI: open SQLite DB safely read-only and list tables",
+    "answers": [
+      "sqlite3 -readonly file.db '.tables'"
+    ],
+    "keywords": [
+      "sqlite3 -readonly"
+    ],
+    "hint": "sqlite3 -readonly file.db '.tables'",
+    "explain": "sqlite3 -readonly file.db '.tables'"
+  },
+  {
+    "id": "card-61",
+    "topic": "general-cli",
+    "q": "CLI: compare interactive-login PATH vs current",
+    "answers": [
+      "bash -lic 'echo $PATH'  vs  echo $PATH"
+    ],
+    "keywords": [
+      "bash -lic",
+      "echo $PATH"
+    ],
+    "hint": "bash -lic 'echo $PATH'",
+    "explain": "bash -lic 'echo $PATH'  vs  echo $PATH"
+  },
+  {
+    "id": "card-62",
+    "topic": "general-cli",
+    "q": "CLI: find every devin on PATH, in order",
+    "answers": [
+      "type -a devin",
+      "which -a devin"
+    ],
+    "keywords": [
+      "type -a devin",
+      "which -a devin"
+    ],
+    "hint": "type -a devin",
+    "explain": "type -a devin   (or which -a devin)"
+  },
+  {
+    "id": "card-63",
+    "topic": "general-cli",
+    "q": "CLI: process tree for a PID",
+    "answers": [
+      "ps -o pid,ppid,cmd --forest -g <pgid>   (or pstree -p <pid>)"
+    ],
+    "keywords": [
+      "ps -o",
+      "--forest"
+    ],
+    "hint": "ps -o pid,ppid,cmd --forest -g <pgid>",
+    "explain": "ps -o pid,ppid,cmd --forest -g <pgid>   (or pstree -p <pid>)"
+  },
+  {
+    "id": "card-64",
+    "topic": "general-cli",
+    "q": "CLI: files/sockets held by a process",
+    "answers": [
+      "lsof -p <pid>  ;  ss -tpn"
+    ],
+    "keywords": [
+      "lsof -p",
+      "ss -tpn"
+    ],
+    "hint": "lsof -p <pid>",
+    "explain": "lsof -p <pid>  ;  ss -tpn"
+  },
+  {
+    "id": "card-65",
+    "topic": "debug",
+    "q": "Where does the CLI cache team settings / model configs / flags?",
+    "answers": [
+      "~/.cache/devin/ (team_settings.bin, model_configs.bin, cli/unleash_definitions.*.bin)"
+    ],
+    "keywords": [
+      "~/.cache/devin",
+      "team_settings.bin",
+      "model_configs.bin"
+    ],
+    "hint": "~/.cache/devin/ (team_settings.bin, model_configs.bin, cli/unleash_definitions.*.bin)",
+    "explain": "~/.cache/devin/ (team_settings.bin, model_configs.bin, cli/unleash_definitions.*.bin)"
+  },
+  {
+    "id": "card-66",
+    "topic": "config",
+    "q": "MDM-managed system policy file (Linux)",
+    "answers": [
+      "/etc/devin/system.json"
+    ],
+    "keywords": [
+      "/etc/devin/system.json"
+    ],
+    "hint": "/etc/devin/system.json",
+    "explain": "Managed policy file found via strace; not in public troubleshooting docs. Also check ~/.config/devin/config.json and ~/.cache/devin/.",
+    "tags": [
+      "support"
+    ],
+    "source": "S-MASTER",
+    "confidence": "confirmed (strace)"
+  },
+  {
+    "id": "mc-config-precedence",
+    "topic": "config",
+    "q": "Which configuration precedence is highest to lowest?",
+    "answers": [
+      "Org/team > session approvals > .devin/config.local.json > .devin/config.json > ~/.config/devin/config.json"
+    ],
+    "keywords": [
+      "Org/team > session approvals > .devin/config.local.json > .devin/config.json > ~/.config/devin/config.json"
+    ],
+    "choices": [
+      "Org/team > session approvals > .devin/config.local.json > .devin/config.json > ~/.config/devin/config.json",
+      ".devin/config.local.json > Org/team > session approvals > ~/.config/devin/config.json > .devin/config.json",
+      "Session approvals > Org/team > ~/.config/devin/config.json > .devin/config.json > .devin/config.local.json",
+      "~/.config/devin/config.json > .devin/config.json > .devin/config.local.json > session approvals > Org/team"
+    ],
+    "hint": "Org/team > session approvals > .devin/config.local",
+    "explain": "Org/team > session approvals > .devin/config.local.json > .devin/config.json > ~/.config/devin/config.json"
+  },
+  {
+    "id": "mc-dangerous-org",
+    "topic": "permissions",
+    "q": "Can dangerous or bypass mode override organization deny rules?",
+    "answers": [
+      "No. Org deny/ask rules always apply"
+    ],
+    "keywords": [
+      "No. Org deny/ask rules always apply"
+    ],
+    "choices": [
+      "No. Org deny/ask rules always apply",
+      "Yes, dangerous mode overrides all rules",
+      "Yes, if the project has config.local.json",
+      "Only when the CLI is running in print mode"
+    ],
+    "hint": "No. Org deny/ask rules always apply",
+    "explain": "No. Org deny/ask rules always apply"
+  },
+  {
+    "id": "mc-print-trust",
+    "topic": "launch",
+    "q": "Which flag lets print mode run in an untrusted directory?",
+    "answers": [
+      "--respect-workspace-trust false"
+    ],
+    "keywords": [
+      "--respect-workspace-trust false"
+    ],
+    "choices": [
+      "--respect-workspace-trust false",
+      "--sandbox",
+      "--permission-mode dangerous",
+      "--config empty.json"
+    ],
+    "hint": "--respect-workspace-trust false",
+    "explain": "--respect-workspace-trust false"
+  },
+  {
+    "id": "mc-skill-path",
+    "topic": "skills",
+    "q": "Where does a project skill live?",
+    "answers": [
+      ".devin/skills/<name>/SKILL.md"
+    ],
+    "keywords": [
+      ".devin/skills/<name>/SKILL.md"
+    ],
+    "choices": [
+      ".devin/skills/<name>/SKILL.md",
+      "~/.config/devin/skills/<name>.md",
+      "AGENTS.md",
+      ".devin/skills/<name>.json"
+    ],
+    "hint": ".devin/skills/<name>/SKILL.md",
+    "explain": ".devin/skills/<name>/SKILL.md"
+  },
+  {
+    "id": "mc-hook-shape",
+    "topic": "hooks",
+    "q": "What is the shape of .devin/hooks.v1.json?",
+    "answers": [
+      "The entire file is the hooks object (no hooks wrapper)"
+    ],
+    "keywords": [
+      "The entire file is the hooks object (no hooks wrapper)"
+    ],
+    "choices": [
+      "The entire file is the hooks object (no hooks wrapper)",
+      "Hooks are nested under a top-level hooks key",
+      "A list of event names with no object",
+      "A hooks key is required only for PreToolUse"
+    ],
+    "hint": "The entire file is the hooks object (no hooks wrap",
+    "explain": "The entire file is the hooks object (no hooks wrapper)"
+  },
+  {
+    "id": "mc-env-snapshot",
+    "topic": "debug",
+    "q": "How does the CLI obtain the environment used by the agent?",
+    "answers": [
+      "It snapshots environment variables from $SHELL as an interactive login shell at startup"
+    ],
+    "keywords": [
+      "It snapshots environment variables from $SHELL as an interactive login shell at startup"
+    ],
+    "choices": [
+      "It snapshots environment variables from $SHELL as an interactive login shell at startup",
+      "It reads aliases from the current terminal after every prompt",
+      "It imports shell functions into the child process",
+      "It reads only PATH from the system profile"
+    ],
+    "hint": "It snapshots environment variables from $SHELL as ",
+    "explain": "It snapshots environment variables from $SHELL as an interactive login shell at startup"
+  },
+  {
+    "id": "mc-system-proxy",
+    "topic": "config",
+    "q": "Which proxy mode respects HTTP_PROXY, HTTPS_PROXY, and ALL_PROXY?",
+    "answers": [
+      "system"
+    ],
+    "keywords": [
+      "system"
+    ],
+    "choices": [
+      "system",
+      "manual",
+      "disabled",
+      "interactive"
+    ],
+    "hint": "system",
+    "explain": "system"
+  },
+  {
+    "id": "mc-mcp-path",
+    "topic": "mcp",
+    "q": "Where is user MCP configuration stored in v3000.3+?",
+    "answers": [
+      "~/.config/devin/mcp_config.json"
+    ],
+    "keywords": [
+      "~/.config/devin/mcp_config.json"
+    ],
+    "choices": [
+      "~/.config/devin/mcp_config.json",
+      "~/.local/share/devin/mcp_config.json",
+      ".devin/config.json",
+      "~/.config/devin/config.json"
+    ],
+    "hint": "~/.config/devin/mcp_config.json",
+    "explain": "~/.config/devin/mcp_config.json"
+  },
+  {
+    "id": "devin-shadow-function",
+    "topic": "debug",
+    "q": "In a Devin-created terminal, `devin --version` prints 'not supported in terminals created by Devin'. First command to diagnose, and the cause?",
+    "answers": [
+      "type -a devin"
+    ],
+    "keywords": [
+      "type",
+      "function"
+    ],
+    "hint": "type -a",
+    "explain": "type -a devin shows a shell function named devin shadowing ~/.local/bin/devin; call the binary by full path or `command devin`."
+  }
+]

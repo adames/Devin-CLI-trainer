@@ -1,0 +1,18 @@
+Drill: d-doctor-count (right)
+Injected input:
+'2'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:debug]
+How many checks does `devin doctor --json` run?
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> Drill passed.
+Cleanup completed.
+
+Session summary
+XP gained: 40
+Accuracy: 1/1 (100.0%)
+Per-topic accuracy:
+  debug: 1/1 (100.0%)
+Weakest topics: debug
+Items due tomorrow: 1
+Best combo: x1

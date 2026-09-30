@@ -1,0 +1,17 @@
+Migrate workflow files into skills and remove the originals
+
+Usage: devin migrate workflows [OPTIONS]
+
+Options:
+      --scope <SCOPE>
+          Which workflows to migrate: all (default), workspace, or global
+
+          Possible values:
+          - all:       Migrate both workspace and global workflows
+          - workspace: Migrate only workspace-level workflows
+          - global:    Migrate only global workflows from ~/.codeium/
+          
+          [default: all]
+
+  -h, --help
+          Print help (see a summary with '-h')

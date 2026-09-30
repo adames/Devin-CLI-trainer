@@ -1,0 +1,42 @@
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | combo:launch]
+MYSTERY TICKET: Print mode in CI
+`devin -p` works on my laptop but fails in our CI job in a freshly cloned repo.
+customer@laptop ~/app$ 
+customer@laptop ~/app$       --respect-workspace-trust [<RESPECT_WORKSPACE_TRUST>]
+          Respect workspace trust settings
+
+          Defaults to true in every mode. Non-interactive (print) mode cannot show the trust prompt and fails in an untrusted directory; pass --respect-workspace-trust false to skip the check.
+
+          [possible values: true, false]
+Evidence found (1/2).
+Turns: 1/8 | combo x1
+customer@laptop ~/app$ Error: Refusing to run in an untrusted workspace: /home/customer/app
+Start `devin` interactively in this directory to trust it, or set `respect_workspace_trust: false` in your config to restore the previous behavior.
+Evidence found (2/2).
+Turns: 2/8 | combo x2
+customer@laptop ~/app$ Root cause: Why can print mode fail in the fresh CI clone?
+1) Print mode cannot display the workspace-trust prompt and fails in an untrusted directory.
+2) Print mode cannot run when DEVIN_MODEL is set.
+3) The directory must be started with --sandbox.
+4) The -c flag is required for print mode.
+Choose 1-4 (or type the answer): Fix: What should CI do?
+1) Pass --respect-workspace-trust false (or set respect_workspace_trust: false in config), or trust the directory by starting devin interactively there once.
+2) Set DEVIN_MODEL.
+3) Use --sandbox.
+4) Use -c.
+Choose 1-4 (or type the answer): Root cause correct.
+Fix correct (+25 XP).
+Correct root cause: Print mode cannot display the workspace-trust prompt and fails in an untrusted directory.
+Correct fix: Pass --respect-workspace-trust false (or set respect_workspace_trust: false in config), or trust the directory by starting devin interactively there once.
+Optimal chain: devin --help | grep -A3 trust -> devin -p "summarize the repo"
+Print mode cannot show the workspace-trust prompt, so in a fresh clone it refuses to run (recorded from devin 3000.11.3). CI should pass --respect-workspace-trust false.
+Evidence found 2/2.
+
+Session summary
+XP gained: 250
+Accuracy: 1/1 (100.0%)
+Per-topic accuracy:
+  launch: 1/1 (100.0%)
+Weakest topics: none
+Items due tomorrow: 1
+Best combo: x2

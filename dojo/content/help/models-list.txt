@@ -1,0 +1,16 @@
+List available models, organized by model family
+
+Usage: devin models list [OPTIONS]
+
+Options:
+      --format <FORMAT>
+          Output format
+
+          Possible values:
+          - text: Human-readable, organized by model family
+          - json: Machine-readable JSON (for scripts)
+          
+          [default: text]
+
+  -h, --help
+          Print help (see a summary with '-h')

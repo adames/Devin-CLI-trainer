@@ -1,0 +1,79 @@
+Command: python3 dojo.py --mode combo --topic '^hooks$' --rounds 1 --seed 0 --no-live
+Scenario: s1-hooks-wrapper
+Injected input:
+'cat .devin/hooks.v1.json'
+'python3 -m json.tool .devin/hooks.v1.json'
+'solve'
+'1'
+'1'
+
+devin dojo
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1 ticket
+
+round 1/1 · ticket · hooks                      l1 intern · 0 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+mystery ticket · The silent hook
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+I added a PreToolUse hook in .devin/hooks.v1.json to block rm -rf but it never fires.
+☞ customer@laptop ~/app$ 
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "exec",
+        "hooks": [{"type": "command", "command": "./scripts/check-command.sh"}]
+      }
+    ]
+  }
+} [sim]
+evidence ●○ · combo x1 · turns 1/8
+☞ customer@laptop ~/app$ 
+{
+    "hooks": {
+        "PreToolUse": [
+            {
+                "matcher": "exec",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "./scripts/check-command.sh"
+                    }
+                ]
+            }
+        ]
+    }
+} [sim]
+evidence ●● · combo x2 · turns 2/8
+☞ customer@laptop ~/app$ 
+root cause  What is wrong with the hook file?
+1) The standalone .devin/hooks.v1.json file must be the hooks object itself, without a top-level hooks wrapper.
+2) Hooks need organization enablement before PreToolUse can fire.
+3) The event name must be pre_tool_use.
+4) Project hooks only load from ~/.config/devin.
+☞ choose 1-4 or type the answer 
+fix  What is the right fix?
+1) Remove the wrapper so PreToolUse is top-level, or move the hooks object under hooks in .devin/config.json; verify with /hooks.
+2) Add --sandbox and leave the file unchanged.
+3) Restart with --permission-mode dangerous.
+4) Rename the file to hooks.json.
+☞ choose 1-4 or type the answer 
+● root cause
+● fix correct +25 xp
+correct root cause  The standalone .devin/hooks.v1.json file must be the hooks object itself, without a top-level hooks wrapper.
+correct fix  Remove the wrapper so PreToolUse is top-level, or move the hooks object under hooks in .devin/config.json; verify with /hooks.
+optimal chain  cat .devin/hooks.v1.json -> python3 -m json.tool .devin/hooks.v1.json
+The standalone file's top-level object is the hooks mapping; settings and config files nest it under hooks.
+evidence ●●
+
+session summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+xp gained               250
+accuracy        1/1  100.0%
+per-topic accuracy
+topic          right  seen     acc  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+hooks              1     1  100.0%  ━━━━━━━━━━
+weakest topics  none
+items due tomorrow            1
+best combo               x2

@@ -1,0 +1,22 @@
+Drill: d-mcp-add (right)
+Injected input:
+'!devin mcp add dojo-echo -- echo hi'
+''
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:mcp]
+Add a stdio MCP server named dojo-echo that runs `echo hi`.
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> ✓ Added MCP server 'dojo-echo' to local project config
+>> Server: dojo-echo
+    Command: echo hi
+Drill passed.
+Cleanup completed.
+
+Session summary
+XP gained: 40
+Accuracy: 1/1 (100.0%)
+Per-topic accuracy:
+  mcp: 1/1 (100.0%)
+Weakest topics: mcp
+Items due tomorrow: 1
+Best combo: x1

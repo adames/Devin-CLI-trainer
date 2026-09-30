@@ -1,0 +1,6 @@
+Print the current version
+
+Usage: devin version
+
+Options:
+  -h, --help  Print help

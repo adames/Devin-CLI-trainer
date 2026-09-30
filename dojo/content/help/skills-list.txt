@@ -1,0 +1,17 @@
+List all available skills
+
+Usage: devin skills list [OPTIONS]
+
+Options:
+      --trigger <TRIGGER>
+          Filter by trigger type
+
+          Possible values:
+          - user:  User-invocable skills (slash commands)
+          - model: Model-invocable skills
+
+      --json
+          Output as JSON
+
+  -h, --help
+          Print help (see a summary with '-h')

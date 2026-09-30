@@ -1,0 +1,181 @@
+Script started on 2026-09-30 04:21:07+00:00 [<not executed on terminal>]
+A customer requests the opus model for their next Devin session.
+devin --permisson-mode auto
+n
+skip
+A support engineer needs to review the agent rules available to the customer.
+devin -p --respect-workspace-trust false "x"
+n
+A support engineer needs to review sessions created in the current directory.
+A support engineer needs to confirm whether the customer is signed in.
+skip
+A support engineer needs to connect to a cloud session's machine.
+A customer needs to begin a new interactive Devin session.
+solve
+1
+1
+professor devin
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+easy devin training
+10 command rounds · 1 ticket boss
+
+train · launch · tier 1 · recognize             l1 intern · 0 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+devin --model opus
+a) A customer needs tool processes isolated by the platform sandbox.
+b) A customer needs one prompt answered without starting an interactive session.
+c) A customer requests the opus model for their next Devin session.
+d) A customer needs the current conversation saved to a chosen file.
+☞ answer  ? hint · skip · quit ● correct +5 xp
+
+train · sessions · tier 1 · recognize           l1 intern · 5 xp · x1.25
+────────────────────────────────────────────────────────────────────────
+devin forward <session> <ports>
+a) A support engineer needs to delete a session by its identifier or name.
+b) A support engineer needs to forward cloud-session ports to localhost.
+c) A support workflow needs the customer's session list in a selected output format.
+d) A support engineer needs to connect to a cloud session's machine.
+☞ answer  ? hint · skip · quit [missed]
+answer  A support engineer needs to forward cloud-session ports to localhost.
+command  devin forward <session> <ports>
+content/help/forward.txt: Usage: devin forward [OPTIONS] <SESSION> <PORTS>...
+forward    Forward ports from a cloud Devin session's box to localhost
+Use it when the support case needs to forward cloud-session ports to localhost.
+☞ count it? y/n 
+train · auth · tier 1 · recognize               l1 intern · 5 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+devin auth login
+a) A support engineer needs to clear the customer's stored Devin credentials.
+b) A support engineer needs to confirm whether the customer is signed in.
+c) A customer needs to sign in by pasting a token instead of opening a browser.
+d) A support engineer needs to sign in to Devin on the customer's machine.
+☞ answer  ? hint · skip · quit [missed]
+answer  A support engineer needs to sign in to Devin on the customer's machine.
+command  devin auth login
+content/help/auth-login.txt: Usage: devin auth login [OPTIONS]
+login   Log in to Devin
+Use it when the support case needs to sign in to Devin on the customer's machine.
+
+train · config-rules · tier 1 · recognize       l1 intern · 5 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+devin rules list
+a) A support engineer needs to review the agent rules available to the customer.
+b) A customer needs agent rules filtered to one provider.
+c) A support engineer needs Devin to read a specific configuration file.
+d) A support engineer needs to inspect a named agent rule.
+☞ answer  ? hint · skip · quit ● correct +5 xp
+
+train · launch · tier 1 · recognize            l1 intern · 10 xp · x1.25
+────────────────────────────────────────────────────────────────────────
+devin -r <session>
+a) A support session must use the customer's requested auto permission mode.
+b) A customer knows the session ID of the conversation they need to reopen.
+c) A support engineer needs to reopen the latest conversation from this directory.
+d) A customer wants their initial instructions treated as the session prompt.
+☞ answer  ? hint · skip · quit [missed]
+answer  A customer knows the session ID of the conversation they need to reopen.
+command  devin -r <session>
+content/help/devin.txt: Usage: devin [OPTIONS] [PATH]... [-- <PROMPT>...] [COMMAND]
+content/help/devin.txt: -r, --resume [<SESSION_ID>]
+-r, --resume [<SESSION_ID>]
+Use it when the customer knows which saved session needs to be reopened.
+☞ count it? y/n 
+train · sessions · tier 1 · recognize          l1 intern · 10 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+devin list
+a) A customer has approved deleting a stale session without an interactive confirmation.
+b) A support engineer needs to review sessions created in the current directory.
+c) A support engineer needs to connect to a cloud session's machine.
+d) A support engineer needs to delete a session by its identifier or name.
+☞ answer  ? hint · skip · quit ● correct +5 xp
+
+train · auth · tier 1 · recognize              l1 intern · 15 xp · x1.25
+────────────────────────────────────────────────────────────────────────
+devin auth status
+a) A support engineer needs to sign in to Devin on the customer's machine.
+b) A support engineer needs to confirm whether the customer is signed in.
+c) A support engineer needs to clear the customer's stored Devin credentials.
+d) A customer needs to sign in by pasting a token instead of opening a browser.
+☞ answer  ? hint · skip · quit ● correct +6 xp
+
+train · launch · tier 1 · recognize            l1 intern · 21 xp · x1.50
+────────────────────────────────────────────────────────────────────────
+devin -- <prompt>
+a) A customer knows the session ID of the conversation they need to reopen.
+b) A support engineer has initial instructions saved in a file for the next session.
+c) A support engineer needs to reopen the latest conversation from this directory.
+d) A customer wants their initial instructions treated as the session prompt.
+☞ answer  ? hint · skip · quit [missed]
+answer  A customer wants their initial instructions treated as the session prompt.
+command  devin -- <prompt>
+content/help/devin.txt: Usage: devin [OPTIONS] [PATH]... [-- <PROMPT>...] [COMMAND]
+Usage: devin [OPTIONS] [PATH]... [-- <PROMPT>...] [COMMAND]
+Use it when the support case needs to start an interactive Devin session.
+
+train · sessions · tier 1 · recognize          l1 intern · 21 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+devin ssh
+a) A support engineer needs to forward cloud-session ports to localhost.
+b) A support engineer needs to review sessions created in the current directory.
+c) A support engineer needs to connect to a cloud session's machine.
+d) A support engineer needs an SSH connection to a cloud session through a specified gateway.
+☞ answer  ? hint · skip · quit ● correct +5 xp
+
+train · launch · tier 1 · recognize            l1 intern · 26 xp · x1.25
+────────────────────────────────────────────────────────────────────────
+devin
+a) A customer needs to begin a new interactive Devin session.
+b) A customer needs one prompt answered without starting an interactive session.
+c) A customer needs the current conversation saved to a chosen file.
+d) A support engineer has initial instructions saved in a file for the next session.
+☞ answer  ? hint · skip · quit ● correct +6 xp
+
+round 11/11 · ticket · mcp                     l1 intern · 32 xp · x1.50
+────────────────────────────────────────────────────────────────────────
+mystery ticket · The filesystem server that never starts
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+My filesystem MCP server's tools never show up in Devin.
+☞ customer@laptop ~/app$ root cause  Why do the filesystem tools not appear?
+1) The stdio server package name is misspelled, so the server never starts.
+2) The organization disallows MCP.
+3) The server requires devin mcp login.
+4) Filesystem servers require HTTP transport.
+☞ choose 1-4 or type the answer fix  What is the correct repair?
+1) Remove fs, then add it again with @modelcontextprotocol/server-filesystem; verify the command manually first.
+2) Run devin mcp enable fs.
+3) Restart the terminal.
+4) Add mcp__fs__* to the allow list.
+☞ choose 1-4 or type the answer ● root cause
+● fix correct +25 xp
+correct root cause  The stdio server package name is misspelled, so the server never starts.
+correct fix  Remove fs, then add it again with @modelcontextprotocol/server-filesystem; verify the command manually first.
+optimal chain  devin mcp list -> devin mcp get fs -> cat .devin/mcp_config.local.json
+The recorded CLI output shows the misspelled package in the local project MCP configuration.
+evidence ○○○
+
+session summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+xp gained               204
+accuracy        7/11  63.6%
+category performance
+category        correct    seen     acc  progress
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+launch                2       4   50.0%  ━━━━━─────
+sessions              2       3   66.7%  ━━━━━━━───
+auth                  1       2   50.0%  ━━━━━─────
+config-rules          1       1  100.0%  ━━━━━━━━━━
+weakest topics  auth, launch, sessions
+missed items
+○ A support engineer needs to forward cloud-session ports to localhost.
+  answer  devin forward <session> <ports>
+○ A support engineer needs to sign in to Devin on the customer's machine.
+  answer  devin auth login
+○ A customer knows the session ID of the conversation they need to reopen.
+  answer  devin -r <session>
+○ A customer wants their initial instructions treated as the session prompt.
+  answer  devin -- <prompt>
+items due tomorrow            7
+best combo               x1
+next up: 1 new tier-1 cards in skills
+
+Script done on 2026-09-30 04:21:08+00:00 [COMMAND_EXIT_CODE="0"]

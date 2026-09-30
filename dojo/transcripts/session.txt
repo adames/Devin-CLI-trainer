@@ -1,0 +1,202 @@
+Command: python3 dojo.py --seed 1 --no-live
+Fresh DOJO_HOME: yes
+Injected input:
+correct card-37: Return hookSpecificOutput.updatedInput in a PreToolUse hook
+skip card-41: skip
+wrong mc-print-trust: intentionally-wrong
+self-grade: n
+skip card-34: skip
+wrong card-41: intentionally-wrong
+self-grade: n
+correct mc-print-trust: --respect-workspace-trust false
+skip card-34: skip
+wrong card-39: intentionally-wrong
+self-grade: n
+skip flash round 9: skip
+skip flash round 10: skip
+skip flash round 11: skip
+skip flash round 12: skip
+solve combo: solve
+root cause choice: 1
+fix choice: 1
+
+devin dojo
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6 flash · 2 drill · 4 flash · 1 ticket
+
+round 01/13 · flash · hooks                     l1 intern · 0 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+Rewrite a tool's input from a hook
+☞ answer  ? hint · skip · quit 
+● correct +10 xp
+
+round 02/13 · flash · skills                   l1 intern · 10 xp · x1.25
+────────────────────────────────────────────────────────────────────────
+Project skill location
+☞ answer  ? hint · skip · quit 
+[missed]
+answer  .devin/skills/<name>/SKILL.md  (also .agents/skills, .cognition/skills)
+.devin/skills/<name>/SKILL.md  (also .agents/skills, .cognition/skills)
+
+round 03/13 · flash · launch                   l1 intern · 10 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+Which flag lets print mode run in an untrusted directory?
+a) --config empty.json
+b) --sandbox
+c) --permission-mode dangerous
+d) --respect-workspace-trust false
+☞ answer  ? hint · skip · quit 
+[missed]
+answer  --respect-workspace-trust false
+--respect-workspace-trust false
+☞ count it? y/n 
+
+round 04/13 · flash · cloud                    l1 intern · 10 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+Forward cloud VM port 3000 to local 8080
+☞ answer  ? hint · skip · quit 
+[missed]
+answer  devin forward <session> 8080:3000
+devin forward <session> 8080:3000
+
+round 05/13 · flash · skills                   l1 intern · 10 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+Project skill location
+☞ answer  ? hint · skip · quit 
+[missed]
+answer  .devin/skills/<name>/SKILL.md  (also .agents/skills, .cognition/skills)
+.devin/skills/<name>/SKILL.md  (also .agents/skills, .cognition/skills)
+☞ count it? y/n 
+
+round 06/13 · flash · launch                   l1 intern · 10 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+Which flag lets print mode run in an untrusted directory?
+a) --config empty.json
+b) --respect-workspace-trust false
+c) --permission-mode dangerous
+d) --sandbox
+☞ answer  ? hint · skip · quit 
+● correct +10 xp
+
+round 07/13 · flash · cloud                    l1 intern · 20 xp · x1.25
+────────────────────────────────────────────────────────────────────────
+Forward cloud VM port 3000 to local 8080
+☞ answer  ? hint · skip · quit 
+[missed]
+answer  devin forward <session> 8080:3000
+devin forward <session> 8080:3000
+
+round 08/13 · flash · rules                    l1 intern · 20 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+Project rules file recommended by docs
+☞ answer  ? hint · skip · quit 
+[missed]
+answer  AGENTS.md
+AGENTS.md at project root (global: ~/.config/devin/AGENTS.md)
+☞ count it? y/n 
+
+round 09/13 · flash · logs                     l1 intern · 20 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+Where are per-run logs (Linux/macOS)?
+☞ answer  ? hint · skip · quit 
+[missed]
+answer  ~/.local/share/devin/cli/logs/devin_<timestamp>_<pid>.log (.gz after 48h)
+~/.local/share/devin/cli/logs/devin_<timestamp>_<pid>.log (.gz after 48h)
+
+round 10/13 · flash · hooks                    l1 intern · 20 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+List loaded hooks with source paths
+☞ answer  ? hint · skip · quit 
+[missed]
+answer  /hooks
+/hooks
+
+round 11/13 · flash · rules                    l1 intern · 20 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+Project rules file recommended by docs
+☞ answer  ? hint · skip · quit 
+[missed]
+answer  AGENTS.md
+AGENTS.md at project root (global: ~/.config/devin/AGENTS.md)
+
+round 12/13 · flash · logs                     l1 intern · 20 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+Where are per-run logs (Linux/macOS)?
+☞ answer  ? hint · skip · quit 
+[missed]
+answer  ~/.local/share/devin/cli/logs/devin_<timestamp>_<pid>.log (.gz after 48h)
+~/.local/share/devin/cli/logs/devin_<timestamp>_<pid>.log (.gz after 48h)
+
+round 13/13 · ticket · launch                  l1 intern · 20 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+mystery ticket · The old binary on PATH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+I ran `devin update` twice and it says I'm on the latest, but `devin --version` still shows an old version.
+☞ customer@laptop ~/app$ 
+root cause  Why does devin --version still show the old version?
+1) An older second copy earlier on PATH shadows the updated ~/.local/bin/devin.
+2) The update command needs --force.
+3) The CLI cache is stale.
+4) The installer must be run with sudo.
+☞ choose 1-4 or type the answer 
+fix  What should the user do?
+1) Remove the stale copy or fix PATH order, run hash -r, and verify with type -a devin.
+2) Run devin update --force.
+3) Clear ~/.cache/devin.
+4) Reinstall with sudo.
+☞ choose 1-4 or type the answer 
+● root cause
+● fix correct +25 xp
+correct root cause  An older second copy earlier on PATH shadows the updated ~/.local/bin/devin.
+correct fix  Remove the stale copy or fix PATH order, run hash -r, and verify with type -a devin.
+optimal chain  type -a devin -> echo $PATH -> ~/.local/bin/devin --version
+The shell uses the first matching executable on PATH; an older /usr/local/bin copy shadows the updated user install.
+evidence ○○○
+
+session summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+xp gained               135
+accuracy        3/13  23.1%
+per-topic accuracy
+topic          right  seen     acc  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+cloud              0     2    0.0%  ──────────
+hooks              1     2   50.0%  ━━━━━─────
+launch             2     3   66.7%  ━━━━━━━───
+logs               0     2    0.0%  ──────────
+rules              0     2    0.0%  ──────────
+skills             0     2    0.0%  ──────────
+weakest topics  cloud, logs, rules
+missed items
+○ Project skill location
+  answer  .devin/skills/<name>/SKILL.md  (also .agents/skills, .cognition/skills)
+○ Which flag lets print mode run in an untrusted directory?
+  answer  --respect-workspace-trust false
+○ Forward cloud VM port 3000 to local 8080
+  answer  devin forward <session> 8080:3000
+○ Project skill location
+  answer  .devin/skills/<name>/SKILL.md  (also .agents/skills, .cognition/skills)
+○ Forward cloud VM port 3000 to local 8080
+  answer  devin forward <session> 8080:3000
+○ Project rules file recommended by docs
+  answer  AGENTS.md
+○ Where are per-run logs (Linux/macOS)?
+  answer  ~/.local/share/devin/cli/logs/devin_<timestamp>_<pid>.log (.gz after 48h)
+○ List loaded hooks with source paths
+  answer  /hooks
+○ Project rules file recommended by docs
+  answer  AGENTS.md
+○ Where are per-run logs (Linux/macOS)?
+  answer  ~/.local/share/devin/cli/logs/devin_<timestamp>_<pid>.log (.gz after 48h)
+items due tomorrow            3
+best combo               x1
+
+Flashcard frequency:
+card-27: 1
+card-34: 2
+card-37: 1
+card-39: 2
+card-41: 2
+card-44: 2
+mc-print-trust: 2
+Maximum frequency: 2

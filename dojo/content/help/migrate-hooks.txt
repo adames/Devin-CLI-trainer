@@ -1,0 +1,6 @@
+Migrate Windsurf hooks (.windsurf/hooks.json) to Devin hooks (.devin/hooks.v1.json)
+
+Usage: devin migrate hooks
+
+Options:
+  -h, --help  Print help

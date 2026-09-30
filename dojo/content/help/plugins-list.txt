@@ -1,0 +1,6 @@
+List installed plugins with their version and blocked status
+
+Usage: devin plugins list
+
+Options:
+  -h, --help  Print help

@@ -1,0 +1,9 @@
+Re-fetch and re-install a plugin (or all plugins) at the latest HEAD
+
+Usage: devin plugins update [NAME]
+
+Arguments:
+  [NAME]  The plugin to update; omit to update all installed plugins
+
+Options:
+  -h, --help  Print help

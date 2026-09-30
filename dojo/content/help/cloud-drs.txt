@@ -1,0 +1,20 @@
+Manage Declarative Repo Setup (environment blueprints, sandbox sessions, and builds)
+
+Usage: devin cloud drs <COMMAND>
+
+Commands:
+  whoami            Print the current DRS configuration (org, API endpoint, auth status)
+  sandbox-create    Create a sandbox Devin session for testing repo setup
+  run               Run a shell command inside a sandbox session
+  blueprint-list    List all environment blueprints for the organization
+  blueprint-create  Create a new environment blueprint
+  blueprint-write   Update an existing environment blueprint
+  build             Trigger an environment build and wait for it to finish
+  build-start       Trigger an environment build without waiting
+  build-wait        Wait for a previously started build to finish
+  build-logs        Fetch the log stream for a build job
+  secret-create     Create organization-level secrets
+  help              Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help

@@ -1,0 +1,20 @@
+Drill: d-hooks (wrong)
+Injected input:
+'give up'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:hooks]
+Create a project hooks file with a PreToolUse hook (standalone-file format).
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> In .devin/hooks.v1.json the entire file is the hooks object; PreToolUse is a hook event.
+Cleanup completed.
+
+Session summary
+XP gained: 0
+Accuracy: 0/1 (0.0%)
+Per-topic accuracy:
+  hooks: 0/1 (0.0%)
+Weakest topics: hooks
+Missed items:
+  Create a project hooks file with a PreToolUse hook (standalone-file format). -> In .devin/hooks.v1.json the entire file is the hooks object; PreToolUse is a hook event.
+Items due tomorrow: 0
+Best combo: x1

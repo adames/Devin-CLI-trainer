@@ -1,0 +1,9 @@
+Get details for a specific MCP server
+
+Usage: devin mcp get <NAME>
+
+Arguments:
+  <NAME>  Server name
+
+Options:
+  -h, --help  Print help

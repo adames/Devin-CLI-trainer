@@ -1,0 +1,76 @@
+Add a new MCP server.
+
+Transport is inferred automatically when --transport is omitted: - If a URL is provided (positional or --url) → HTTP - If --command is provided or trailing args (after --) are present → stdio
+
+For stdio servers, --command is optional when trailing args are provided; the first trailing arg becomes the command and the rest become its arguments.
+
+Usage: devin mcp add --transport http <NAME> <URL>
+       devin mcp add <NAME> -- <COMMAND> [ARGS...]
+       devin mcp add <NAME> --url <URL>
+       devin mcp add <NAME> --transport <stdio|sse|http> [OPTIONS]
+
+Arguments:
+  <NAME>
+          Server name
+
+  [POSITIONAL_URL]
+          URL (positional, for HTTP/SSE transports)
+          
+          Can also be provided via --url. When both are given, --url takes precedence.
+
+  [ARGS]...
+          Arguments for stdio command
+          
+          Pass arguments after -- at the end of the command. When --command is omitted, the first argument is used as the command.
+
+Options:
+  -t, --transport <TRANSPORT>
+          Transport type (inferred when omitted: URL → http, trailing args → stdio)
+
+          Possible values:
+          - stdio: Standard input/output (local process)
+          - sse:   Server-Sent Events (HTTP streaming)
+          - http:  HTTP request/response
+
+  -s, --scope <SCOPE>
+          Configuration scope
+
+          Possible values:
+          - local:   Local project config, not committed (.devin/mcp_config.local.json)
+          - project: Project-level config (.devin/mcp_config.json)
+          - user:    User-level config (~/.config/devin/mcp_config.json)
+          
+          [default: local]
+
+      --url <URL>
+          URL for HTTP/SSE transports (alternative to positional URL)
+
+      --command <COMMAND>
+          Command for stdio transport (optional when trailing args are provided)
+
+  -e, --env <KEY=VALUE>
+          Environment variables
+          
+          Format: KEY=value. Can be specified multiple times.
+
+  -H, --header <HEADER: VALUE>
+          HTTP headers
+          
+          Format: "Header: value". Can be specified multiple times.
+
+      --scopes <SCOPE,SCOPE>
+          OAuth scopes to request (comma-separated)
+          
+          Only used for HTTP/SSE servers that support OAuth.
+
+      --oauth-client-id <ID>
+          Pre-registered OAuth client ID for servers that don't support dynamic client registration (e.g. GitHub)
+
+      --oauth-client-secret <SECRET>
+          OAuth client secret (for confidential clients)
+
+      --oauth-resource <RESOURCE>
+          Override the RFC 8707 `resource` parameter sent in OAuth requests (default: the MCP server URL). Pass an empty string to omit the parameter for providers that reject it (e.g. Microsoft Entra)
+
+  -h, --help
+          Print help (see a summary with '-h')

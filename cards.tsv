@@ -1,0 +1,66 @@
+Start a one-shot, non-interactive run that prints the answer and exits	devin -p "prompt"   (or devin -p -- words)
+Start the REPL with an initial prompt	devin -- your prompt
+Load the initial prompt from a file	devin --prompt-file task.md
+Continue the most recent session in the current dir	devin -c  (--continue)
+Resume a specific session / open the picker	devin -r <id>  /  devin -r
+List sessions as JSON	devin list --format json
+Delete a session without confirmation	devin rm <id> --force
+Log in over SSH where the localhost redirect fails	devin auth login --force-manual-token-flow
+Where are CLI credentials stored (Linux)?	~/.local/share/devin/credentials.toml (shown by devin auth status)
+Machine-readable health check	devin doctor --json
+List models available to the account	devin models list
+User config file path (Linux/macOS)	~/.config/devin/config.json
+Override the user config file for one run	devin --config <path>
+Project config vs personal project config	.devin/config.json (shared) vs .devin/config.local.json (gitignored)
+Config precedence, highest to lowest	Org/team > session approvals > .devin/config.local.json > .devin/config.json > ~/.config/devin/config.json
+Can dangerous/bypass mode override org deny rules?	No. Org deny/ask rules always apply
+Permission modes accepted by --permission-mode in v3000.11.3	auto (default), accept-edits, smart, dangerous  (env DEVIN_PERMISSION_MODE)
+What does Smart mode do?	Auto-approves workspace edits; a fast model judges other actions; prompts if unsafe or unsure
+Which mode requires --sandbox?	autonomous (/autonomous)
+Read-only planning mode / one-shot read-only question	/plan  /  /ask <question>
+List conversation steps, fork from one, revert from one	/steps, /fork [step], /revert <step>
+What does /revert undo?	File changes from that step onward AND rewinds the conversation to before it
+Ask a side question without derailing the task	/btw <prompt>
+Implement, then auto-review the diff in a loop	/loop <prompt>
+Show context window usage / force compaction	/context  /  /compact
+Show session credit/ACU usage	/usage
+List loaded hooks with source paths	/hooks
+MCP server status inside the REPL	/mcp
+Report a bug to the CLI devs from inside the REPL	/bug [description]
+Continue a local task in Devin Cloud	/handoff [task]
+Bring a cloud session's PR branch back locally	/pickup  (or /handoff inside a cloud session)
+Drive cloud sessions from the terminal	devin --cloud
+SSH into a cloud session VM	devin ssh [session-id-or-url] [ssh args]
+Forward cloud VM port 3000 to local 8080	devin forward <session> 8080:3000
+Standalone project hooks file (and its shape)	.devin/hooks.v1.json. The entire file is the hooks object (no "hooks" wrapper)
+Hook events (name 6)	PreToolUse, PostToolUse, UserPromptSubmit, Stop, SessionStart, (+ others in lifecycle docs)
+Rewrite a tool's input from a hook	Return hookSpecificOutput.updatedInput in a PreToolUse hook
+Inject context from a hook	hookSpecificOutput.additionalContext (UserPromptSubmit, SessionStart, PostToolUse)
+Project rules file recommended by docs	AGENTS.md at project root (global: ~/.config/devin/AGENTS.md)
+Show where rules / skills are loaded from	devin rules paths  /  devin skills paths
+Project skill location	.devin/skills/<name>/SKILL.md  (also .agents/skills, .cognition/skills)
+User MCP config file (v3000.3+)	~/.config/devin/mcp_config.json  (project: .devin/mcp_config.json / .local.json)
+Auto-approve a specific MCP tool	permissions.allow: ["mcp__<server>__<tool>"]
+Where are per-run logs (Linux/macOS)?	~/.local/share/devin/cli/logs/devin_<timestamp>_<pid>.log (.gz after 48h)
+Search compressed + plain logs	rg -z "error" ~/.local/share/devin/cli/logs/
+Enable full HTTP/TLS trace logging	RUST_LOG="chisel=trace,windsurf_api_client=trace,connect_rpc=trace,reqwest=trace,hyper=trace,rustls=trace" CHISEL_LOG_STDERR=1 devin ...
+Why can't the agent find a tool that works in my terminal?	Env is snapshotted from $SHELL as an interactive login shell at startup; alias/function-only or later changes are missed. Restart Devin
+Where does the CLI get trusted CAs for TLS-inspecting proxies?	The OS certificate store
+Print mode fails in an untrusted directory. Fix?	--respect-workspace-trust false
+Run the agent as an ACP server for an IDE	devin acp  (--agent-type review|summarizer)
+Migrate Windsurf hooks to Devin hooks	devin migrate hooks
+Manage environment blueprints/builds from the CLI	devin cloud drs (blueprint-list, build, build-logs, sandbox-create, run...)
+Env var for models to fall back to on provider refusal	DEVIN_REFUSAL_FALLBACK (comma-separated)
+Disable importing Claude Code config	read_config_from.claude = false in user config
+CLI: follow the newest log live	tail -F "$(ls -t ~/.local/share/devin/cli/logs/*.log | head -1)"
+CLI: list every path a process opens or stats	strace -f -e trace=file -o out.txt <cmd>
+CLI: show a running process's env vars	tr '\0' '\n' < /proc/<pid>/environ
+CLI: show doctor checks that did not pass	devin doctor --json | jq -r '.checks[]|select(.status!="pass")|.check'
+CLI: diff two JSON configs ignoring key order	diff <(jq -S . a.json) <(jq -S . b.json)
+CLI: open SQLite DB safely read-only and list tables	sqlite3 -readonly file.db '.tables'
+CLI: compare interactive-login PATH vs current	bash -lic 'echo $PATH'  vs  echo $PATH
+CLI: find every devin on PATH, in order	type -a devin   (or which -a devin)
+CLI: process tree for a PID	ps -o pid,ppid,cmd --forest -g <pgid>   (or pstree -p <pid>)
+CLI: files/sockets held by a process	lsof -p <pid>  ;  ss -tpn
+Where does the CLI cache team settings / model configs / flags?	~/.cache/devin/ (team_settings.bin, model_configs.bin, cli/unleash_definitions.*.bin)
+MDM-managed system policy file (Linux)	/etc/devin/system.json

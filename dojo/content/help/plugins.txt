@@ -1,0 +1,15 @@
+Manage plugins (install, list, info, update, remove)
+
+Usage: devin plugins <COMMAND>
+
+Commands:
+  install  Install a plugin from a source (auto-installs its required plugins)
+  list     List installed plugins with their version and blocked status
+  info     Show a plugin's skills, hooks, rules, and its required/optional/forbidden lists
+  update   Re-fetch and re-install a plugin (or all plugins) at the latest HEAD
+  remove   Remove an installed plugin (auto-installed requireds are left in place)
+  prune    Prune plugin requirements from repos that no longer exist on disk, then garbage-collect any plugin content no live scope still requires
+  help     Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help

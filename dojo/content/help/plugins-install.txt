@@ -1,0 +1,19 @@
+Install a plugin from a source (auto-installs its required plugins).
+
+A source is a GitHub `owner/repo`, a git URL, or a local path. Append `#path/to/plugin` when the plugin is below a git repository's root.
+
+Usage: devin plugins install [OPTIONS] <SOURCE>
+
+Arguments:
+  <SOURCE>
+          The plugin source (e.g. `acme/review-tools`, `acme/plugins#plugins/review`, a git URL, or `./path`)
+
+Options:
+  -y, --yes
+          Skip the interactive trust prompt
+
+      --local
+          Install on this machine only, without adding the plugin to your personal plugins
+
+  -h, --help
+          Print help (see a summary with '-h')

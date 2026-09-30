@@ -1,0 +1,83 @@
+Script started on 2026-09-30 04:21:08+00:00 [<not executed on terminal>]
+A customer requests the opus model for their next Devin session.
+--
+devin --permission-mode auto
+devin --permission-mode auto
+solve
+1
+1
+professor devin
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+easy devin training
+4 command rounds · 1 ticket boss
+
+train · launch · tier 1 · recognize             l1 intern · 0 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+devin --model opus
+a) A customer needs the current conversation saved to a chosen file.
+b) A support engineer has initial instructions saved in a file for the next session.
+c) A customer requests the opus model for their next Devin session.
+d) A customer needs to begin a new interactive Devin session.
+☞ answer  ? hint · skip · quit ● correct +5 xp
+
+train · launch · tier 1 · fill in               l1 intern · 5 xp · x1.25
+────────────────────────────────────────────────────────────────────────
+A customer wants their initial instructions treated as the session prompt.
+devin ___ <prompt>
+☞ answer  ? hint · skip · quit ● correct +12 xp
+
+train · launch · tier 1 · recall               l1 intern · 17 xp · x1.50
+────────────────────────────────────────────────────────────────────────
+A support session must use the customer's requested auto permission mode.
+☞ answer  ? hint · skip · quit ● correct +22 xp
+
+train · launch · tier 2 · fix                  l1 intern · 39 xp · x1.75
+────────────────────────────────────────────────────────────────────────
+broken  devin --permisson-mode auto
+error: unexpected argument '--permisson-mode' found
+
+  tip: a similar argument exists: '--permission-mode'
+  tip: to pass '--permisson-mode' as a value, use '-- --permisson-mode'
+
+Usage: devin --permission-mode <PERMISSION_MODE> [PATH]... [-- <PROMPT>...]
+
+For more information, try '--help'.
+☞ answer  ? hint · skip · quit ● correct +26 xp
+
+round 5/5 · ticket · launch                l2 log reader · 65 xp · x2.00
+────────────────────────────────────────────────────────────────────────
+mystery ticket · Print mode in CI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`devin -p` works on my laptop but fails in our CI job in a freshly cloned repo.
+☞ customer@laptop ~/app$ root cause  Why can print mode fail in the fresh CI clone?
+1) Print mode cannot display the workspace-trust prompt and fails in an untrusted directory.
+2) Print mode cannot run when DEVIN_MODEL is set.
+3) The directory must be started with --sandbox.
+4) The -c flag is required for print mode.
+☞ choose 1-4 or type the answer fix  What should CI do?
+1) Pass --respect-workspace-trust false (or set respect_workspace_trust: false in config), or trust the directory by starting devin interactively there once.
+2) Set DEVIN_MODEL.
+3) Use --sandbox.
+4) Use -c.
+☞ choose 1-4 or type the answer ● root cause
+● fix correct +25 xp
+correct root cause  Print mode cannot display the workspace-trust prompt and fails in an untrusted directory.
+correct fix  Pass --respect-workspace-trust false (or set respect_workspace_trust: false in config), or trust the directory by starting devin interactively there once.
+optimal chain  devin --help | grep -A3 trust -> devin -p "summarize the repo"
+Print mode cannot show the workspace-trust prompt, so in a fresh clone it refuses to run (recorded from devin 3000.11.3). CI should pass --respect-workspace-trust false.
+evidence ○○
+
+session summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+xp gained               295
+accuracy        5/5  100.0%
+category performance
+category        correct    seen     acc  progress
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+launch                4       4  100.0%  ━━━━━━━━━━
+weakest topics  none
+items due tomorrow            2
+best combo               x1
+next up: 4 new tier-1 cards in launch
+
+Script done on 2026-09-30 04:21:08+00:00 [COMMAND_EXIT_CODE="0"]

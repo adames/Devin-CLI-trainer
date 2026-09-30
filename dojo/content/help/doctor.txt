@@ -1,0 +1,7 @@
+Diagnose the local Devin configuration
+
+Usage: devin doctor [OPTIONS]
+
+Options:
+      --json  Emit machine-readable JSON instead of the text table
+  -h, --help  Print help

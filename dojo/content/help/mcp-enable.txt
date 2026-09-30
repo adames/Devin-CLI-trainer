@@ -1,0 +1,21 @@
+Enable a disabled MCP server
+
+Usage: devin mcp enable [OPTIONS] <NAME>
+
+Arguments:
+  <NAME>
+          Server name
+
+Options:
+  -s, --scope <SCOPE>
+          Configuration scope
+
+          Possible values:
+          - local:   Local project config, not committed (.devin/mcp_config.local.json)
+          - project: Project-level config (.devin/mcp_config.json)
+          - user:    User-level config (~/.config/devin/mcp_config.json)
+          
+          [default: local]
+
+  -h, --help
+          Print help (see a summary with '-h')

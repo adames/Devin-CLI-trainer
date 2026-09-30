@@ -1,0 +1,6 @@
+Prune plugin requirements from repos that no longer exist on disk, then garbage-collect any plugin content no live scope still requires
+
+Usage: devin plugins prune
+
+Options:
+  -h, --help  Print help

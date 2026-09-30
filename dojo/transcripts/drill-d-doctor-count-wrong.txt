@@ -1,0 +1,21 @@
+Drill: d-doctor-count (wrong)
+Injected input:
+'intentionally-wrong'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:debug]
+How many checks does `devin doctor --json` run?
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> Expected: 2
+The JSON doctor response has a checks array.
+Cleanup completed.
+
+Session summary
+XP gained: 0
+Accuracy: 0/1 (0.0%)
+Per-topic accuracy:
+  debug: 0/1 (0.0%)
+Weakest topics: debug
+Missed items:
+  How many checks does `devin doctor --json` run? -> The JSON doctor response has a checks array.
+Items due tomorrow: 0
+Best combo: x1

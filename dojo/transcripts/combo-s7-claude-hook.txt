@@ -1,0 +1,54 @@
+Scenario: s7-claude-hook
+Injected input:
+'ls -la .claude'
+'cat .claude/settings.json'
+'solve'
+'1'
+'1'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | combo:hooks]
+MYSTERY TICKET: The hook from another tool
+Some hook keeps blocking my commands with 'blocked by policy' but I have no Devin hooks configured.
+customer@laptop ~/app$ 
+customer@laptop ~/app$ total 12
+drwxr-xr-x 2 customer customer 4096 Sep 30 03:00 .
+drwxr-xr-x 4 customer customer 4096 Sep 30 03:00 ..
+-rw-r--r-- 1 customer customer  256 Sep 30 03:00 settings.json [sim]
+Evidence found (1/2).
+Turns: 1/8 | combo x1
+customer@laptop ~/app$ {
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "exec",
+      "hooks": [{"type": "command", "command": "echo 'blocked by policy'; exit 2"}]
+    }]
+  }
+} [sim]
+Evidence found (2/2).
+Turns: 2/8 | combo x2
+customer@laptop ~/app$ Root cause: Where does the blocking hook come from?
+1) Devin imports hooks from .claude/settings.json because read_config_from.claude is on by default.
+2) An organization policy always imports hooks.
+3) The OS sandbox is blocking the command.
+4) The sessions.db file is corrupted.
+Choose 1-4 (or type the answer): Fix: How can the customer stop importing that hook?
+1) Remove the hook or set read_config_from.claude=false in user config; confirm its source with /hooks.
+2) Delete sessions.db.
+3) Disable the sandbox.
+4) Add a Windsurf rule.
+Choose 1-4 (or type the answer): Root cause correct.
+Fix correct (+25 XP).
+Correct root cause: Devin imports hooks from .claude/settings.json because read_config_from.claude is on by default.
+Correct fix: Remove the hook or set read_config_from.claude=false in user config; confirm its source with /hooks.
+Optimal chain: ls -la .claude -> cat .claude/settings.json
+The CLI imports Claude Code config by default; the hook's settings file reveals the source.
+Evidence found 2/2.
+
+Session summary
+XP gained: 250
+Accuracy: 1/1 (100.0%)
+Per-topic accuracy:
+  hooks: 1/1 (100.0%)
+Weakest topics: hooks
+Items due tomorrow: 1
+Best combo: x2

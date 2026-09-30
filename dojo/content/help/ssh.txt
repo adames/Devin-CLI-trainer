@@ -1,0 +1,19 @@
+SSH into a cloud Devin session's box
+
+Wraps `ssh` to the Devin SSH gateway and approves the connection with your logged-in credentials, so no browser round-trip is needed.
+
+Usage: devin ssh [OPTIONS] [SESSION] [SSH_ARGS]...
+
+Arguments:
+  [SESSION]
+          Session id or session URL (omit to pick from your cloud sessions)
+
+  [SSH_ARGS]...
+          Extra options passed through to ssh (e.g. `-L 8080:localhost:8080`)
+
+Options:
+      --gateway <GATEWAY>
+          SSH gateway host (defaults to the ssh. host of your Devin API)
+
+  -h, --help
+          Print help (see a summary with '-h')

@@ -1,0 +1,15 @@
+Uninstall and remove data
+
+Usage: devin uninstall [OPTIONS]
+
+Options:
+      --clean
+          Remove all user data
+          
+          Includes configuration, history, and custom data.
+
+      --force
+          Skip confirmation prompt
+
+  -h, --help
+          Print help (see a summary with '-h')

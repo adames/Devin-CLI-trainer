@@ -1,0 +1,20 @@
+Drill: d-skill (wrong)
+Injected input:
+'give up'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:skills]
+Create a PROJECT skill named `log-triage` in this arena so `devin skills list` shows it.
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> Project skills live in .devin/skills/<name>/SKILL.md.
+Cleanup completed.
+
+Session summary
+XP gained: 0
+Accuracy: 0/1 (0.0%)
+Per-topic accuracy:
+  skills: 0/1 (0.0%)
+Weakest topics: skills
+Missed items:
+  Create a PROJECT skill named `log-triage` in this arena so `devin skills list` shows it. -> Project skills live in .devin/skills/<name>/SKILL.md.
+Items due tomorrow: 0
+Best combo: x1

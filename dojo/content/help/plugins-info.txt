@@ -1,0 +1,9 @@
+Show a plugin's skills, hooks, rules, and its required/optional/forbidden lists
+
+Usage: devin plugins info <NAME>
+
+Arguments:
+  <NAME>  The installed plugin name (or a disambiguated `owner/repo` label when several installed plugins share the same name)
+
+Options:
+  -h, --help  Print help

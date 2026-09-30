@@ -1,0 +1,13 @@
+Open Devin Desktop
+
+Launches the Devin Desktop app matching this CLI's channel (e.g. `devin-insiders desktop` opens Devin Desktop Insiders), forwarding any extra arguments to its launcher.
+
+Usage: devin desktop [ARGS]...
+
+Arguments:
+  [ARGS]...
+          Arguments forwarded to the Devin Desktop launcher (e.g. paths)
+
+Options:
+  -h, --help
+          Print help (see a summary with '-h')

@@ -1,0 +1,329 @@
+[
+  {
+    "id": "sup-s-ci-exit2",
+    "topic": "launch",
+    "title": "8 CI jobs exit 2 instantly",
+    "ticket": "My script fans out 8 devin jobs to load-test our account. Every one exits with code 2 in under a second. Nothing in the logs.",
+    "prompt": "customer@ci ~/app$ ",
+    "turns": 7,
+    "commands": [
+      {
+        "id": "cat-script",
+        "match": [
+          "cat run\\.sh",
+          "less run\\.sh",
+          "head run\\.sh"
+        ],
+        "evidence": true,
+        "source": "simulated",
+        "output": "#!/usr/bin/env bash\nfor i in $(seq 1 8); do\n  devin --cwd ~/app --mode bypass-permissions --prompt \"$PROMPT\" > job$i.log 2>&1 &\ndone\nwait"
+      },
+      {
+        "id": "help-grep",
+        "match": [
+          "devin --help",
+          "devin -h",
+          "devin --help \\| grep permission",
+          "devin --help \\| rg permission",
+          "devin -h \\| grep permission",
+          "devin -h \\| rg permission"
+        ],
+        "evidence": true,
+        "source": "recorded",
+        "output": "      --permission-mode <PERMISSION_MODE>\n          Permission mode\n          \n          Modes: \"auto\" auto-approves read-only tools, \"accept-edits\" also auto-approves workspace edits, \"smart\" additionally auto-runs actions a fast model judges safe, \"dangerous\" auto-approves all tools.\n          \n          [env: DEVIN_PERMISSION_MODE=]\n          [default: auto]\n\n  -p, --print [<PROMPT>]\n          Print response and exit\n          \n          Runs in non-interactive mode: processes the prompt and exits. Optionally accepts an inline prompt: -p \"fix the bug\"\n\n      --respect-workspace-trust [<RESPECT_WORKSPACE_TRUST>]\n          Respect workspace trust settings\n          \n          Defaults to true in every mode. Non-interactive (print) mode cannot show the trust prompt and fails in an untrusted directory; pass --respect-workspace-trust false to skip the check.\n          \n          [possible values: true, false]"
+      },
+      {
+        "id": "run-one",
+        "match": [
+          "devin --cwd .*"
+        ],
+        "evidence": true,
+        "source": "recorded",
+        "output": "error: unexpected argument '--cwd' found\n\n  tip: to pass '--cwd' as a value, use '-- --cwd'\n\nUsage: devin [OPTIONS] [PATH]... [-- <PROMPT>...] [COMMAND]\n\nFor more information, try '--help'."
+      },
+      {
+        "id": "version",
+        "match": [
+          "devin --version"
+        ],
+        "evidence": false,
+        "source": "recorded",
+        "output": "devin 3000.11.3 (9c803229faa4)"
+      },
+      {
+        "id": "ls",
+        "match": [
+          "ls",
+          "ls -l",
+          "ls -la"
+        ],
+        "evidence": false,
+        "source": "simulated",
+        "output": "job1.log  job2.log  job3.log  job4.log  job5.log  job6.log  job7.log  job8.log  run.sh"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "Why does every job exit 2?",
+      "choices": [
+        "--cwd, --mode and --prompt are not Devin CLI flags",
+        "The account hit its message quota",
+        "8 concurrent sessions exceed the per-user limit",
+        "PROMPT is empty"
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "Best fix?",
+      "choices": [
+        "cd ~/app, then nohup devin --permission-mode dangerous --respect-workspace-trust=false -p \"$PROMPT\" </dev/null >job$i.log 2>&1 &",
+        "add --yes to each job",
+        "run jobs sequentially",
+        "devin update"
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "cat run.sh",
+      "devin --help | grep permission"
+    ],
+    "explain": "Real repro (resource_exhausted ticket): invented flags from other tools. Exit 2 = arg parse error. Also detach stdin or jobs suspend on tty output.",
+    "source": "S-RE",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-s-remote-login",
+    "topic": "auth",
+    "title": "Login on an SSH box fails",
+    "ticket": "I'm on a remote dev box over SSH. I went to show-auth-code, copied the code, pasted it into devin auth login and it says 'Failed to exchange code'.",
+    "prompt": "customer@devbox ~$ ",
+    "turns": 6,
+    "commands": [
+      {
+        "id": "status",
+        "match": [
+          "devin auth status"
+        ],
+        "evidence": true,
+        "source": "recorded",
+        "output": "Not logged in.\n  Credentials path: /home/customer/.local/share/devin/credentials.toml\nRun `devin auth login` to authenticate."
+      },
+      {
+        "id": "ssh-env",
+        "match": [
+          "echo \\$SSH_CONNECTION",
+          "env \\| grep -i ssh",
+          "printenv \\| grep -i ssh"
+        ],
+        "evidence": true,
+        "source": "simulated",
+        "output": "SSH_CONNECTION=203.0.113.7 51514 10.0.0.12 22"
+      },
+      {
+        "id": "display",
+        "match": [
+          "echo \\$DISPLAY"
+        ],
+        "evidence": true,
+        "source": "simulated",
+        "output": ""
+      },
+      {
+        "id": "login-help",
+        "match": [
+          "devin auth login --help",
+          "devin auth login -h"
+        ],
+        "evidence": true,
+        "source": "recorded",
+        "output": "Log in to Devin\n\nUsage: devin auth login [OPTIONS]\n\nOptions:\n      --force-manual-token-flow\n          Skip browser-based auth and paste a token manually\n          \n          Useful for remote or SSH sessions where the localhost redirect won't work.\n\n  -h, --help\n          Print help (see a summary with '-h')\n"
+      },
+      {
+        "id": "version",
+        "match": [
+          "devin --version"
+        ],
+        "evidence": false,
+        "source": "recorded",
+        "output": "devin 3000.11.3 (9c803229faa4)"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "Root cause?",
+      "choices": [
+        "The code came from the Desktop backup flow; CLI login is PKCE and needs the code from its own printed link",
+        "Remote boxes can't log in to the CLI",
+        "The code expired because SSH is slow",
+        "The org lacks 'Use Devin CLI'"
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "Fix?",
+      "choices": [
+        "devin auth login --force-manual-token-flow, open the printed link, paste that code",
+        "Use Provide Devin auth token (backup login)",
+        "Copy ~/.config/devin from a laptop",
+        "devin auth logout twice"
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "devin auth status",
+      "echo $SSH_CONNECTION",
+      "devin auth login --help"
+    ],
+    "explain": "Hit for real in the Master Devin CLI session: show-auth-code codes are Desktop-only; CLI codes come from its PKCE link.",
+    "source": "S-MASTER",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-s-win-bash",
+    "topic": "acp",
+    "title": "Windows command never finishes",
+    "ticket": "Devin Local on Windows 11 runs `mvn test-compile -q` and it stays 'in progress' forever. Same command finishes in my terminal.",
+    "prompt": "PS C:\\app> ",
+    "turns": 6,
+    "commands": [
+      {
+        "id": "where-bash",
+        "match": [
+          "where bash",
+          "where\\.exe bash",
+          "get-command bash.*"
+        ],
+        "evidence": true,
+        "source": "simulated",
+        "output": "C:\\Program Files (x86)\\MKS Toolkit\\mksnt\\bash.exe\nC:\\Program Files\\Git\\bin\\bash.exe"
+      },
+      {
+        "id": "path",
+        "match": [
+          "\\$env:path",
+          "echo %path%"
+        ],
+        "evidence": true,
+        "source": "simulated",
+        "output": "C:\\Program Files (x86)\\MKS Toolkit\\mksnt;C:\\Program Files\\Git\\bin;C:\\Windows\\system32;..."
+      },
+      {
+        "id": "mvn",
+        "match": [
+          "mvn -v",
+          "mvn --version"
+        ],
+        "evidence": false,
+        "source": "simulated",
+        "output": "Apache Maven 3.9.6"
+      },
+      {
+        "id": "tasklist",
+        "match": [
+          "tasklist.*"
+        ],
+        "evidence": false,
+        "source": "simulated",
+        "output": "(many processes, nothing obviously stuck)"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "Leading hypothesis?",
+      "choices": [
+        "ACP spawns bash.exe -c from PATH and MKS Toolkit bash comes first",
+        "Maven is too slow for Devin",
+        "Windows Defender blocks Devin",
+        "The language server crashed"
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "Next step?",
+      "choices": [
+        "Put Git Bash ahead of MKS on PATH (or remove MKS from PATH) and retest; collect ACP logs if it persists",
+        "Reinstall Devin Desktop",
+        "Switch to cloud Devin",
+        "Run with --permission-mode dangerous"
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "where bash",
+      "$env:PATH"
+    ],
+    "explain": "Pylon #71893. Did NOT reproduce with Git Bash; MKS is the leading suspect, unconfirmed. Label it that way to the customer.",
+    "source": "P-71893",
+    "confidence": "hypothesis"
+  },
+  {
+    "id": "sup-s-ws-transition",
+    "topic": "debug",
+    "title": "Workspace disappears, two windows next launch",
+    "ticket": "I open my saved .code-workspace, start a Devin Local chat, and the title changes to 'Untitled (Workspace)'. Next time I open Devin I get two windows.",
+    "prompt": "PS C:\\Users\\cust> ",
+    "turns": 6,
+    "commands": [
+      {
+        "id": "grep-transition",
+        "match": [
+          "rg .*workspace transition.*",
+          "grep .*workspace transition.*",
+          "select-string .*workspace transition.*",
+          "findstr .*workspace transition.*"
+        ],
+        "evidence": true,
+        "source": "recorded",
+        "output": "renderer.log: ChatSessionStore: Workspace transition c0edaf53... -> 6de94059..."
+      },
+      {
+        "id": "tasklist-acp",
+        "match": [
+          "tasklist.*"
+        ],
+        "evidence": true,
+        "source": "simulated",
+        "output": "(4 devin ACP processes: 2 per window)"
+      },
+      {
+        "id": "ls-logs",
+        "match": [
+          "ls .*logs.*",
+          "dir .*logs.*",
+          "get-childitem .*logs.*"
+        ],
+        "evidence": false,
+        "source": "simulated",
+        "output": "20260929T181900\\window1\\  20260929T181900\\window2\\"
+      }
+    ],
+    "unknown_output": "(no useful output)",
+    "root_cause": {
+      "q": "What triggers the workspace switch?",
+      "choices": [
+        "Sending the first Devin Local message (chat init)",
+        "Pressing Ctrl+G to change mode",
+        "A corrupt .code-workspace file",
+        "Two Desktop installs"
+      ],
+      "answer": 0
+    },
+    "fix": {
+      "q": "Best response today?",
+      "choices": [
+        "Escalate with renderer.log 'Workspace transition' lines + repro steps; workaround: reopen the saved workspace",
+        "Tell the customer to delete %APPDATA%\\Devin",
+        "Disable ACP",
+        "Reinstall Windows"
+      ],
+      "answer": 0
+    },
+    "optimal": [
+      "rg -i \"workspace transition\" logs",
+      "tasklist"
+    ],
+    "explain": "Pylon #67687, reproduced 2/2. Trigger confirmed; internal mechanism not confirmed from source. The 'recorded' log line is from the real repro (ids truncated there).",
+    "source": "P-67687",
+    "confidence": "trigger confirmed; mechanism hypothesis"
+  }
+]

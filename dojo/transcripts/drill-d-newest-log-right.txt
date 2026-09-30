@@ -1,0 +1,18 @@
+Drill: d-newest-log (right)
+Injected input:
+''
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:logs]
+Filename of the newest Devin CLI log?
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> Drill passed.
+Cleanup completed.
+
+Session summary
+XP gained: 40
+Accuracy: 1/1 (100.0%)
+Per-topic accuracy:
+  logs: 1/1 (100.0%)
+Weakest topics: logs
+Items due tomorrow: 1
+Best combo: x1

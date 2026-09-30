@@ -1,0 +1,48 @@
+Scenario: s2-path-alias
+Injected input:
+'type node'
+"bash -lic 'echo $PATH'"
+'grep node ~/.bashrc'
+'solve'
+'1'
+'1'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | combo:debug]
+MYSTERY TICKET: The missing Node binary
+Devin keeps saying `node: command not found`, but node works in my terminal.
+customer@laptop ~/app$ 
+customer@laptop ~/app$ node is aliased to `~/.nvm/versions/node/v20.11.1/bin/node' [sim]
+Evidence found (1/4).
+Turns: 1/8 | combo x1
+customer@laptop ~/app$ /usr/local/bin:/usr/bin:/bin [sim]
+Evidence found (2/4).
+Turns: 2/8 | combo x2
+customer@laptop ~/app$ alias node='~/.nvm/versions/node/v20.11.1/bin/node' [sim]
+Evidence found (3/4).
+Turns: 3/8 | combo x3
+customer@laptop ~/app$ Root cause: Why does Devin not find node?
+1) Node is only an alias; aliases and functions are not exported as environment variables, and Devin snapshots the login-shell environment at startup.
+2) The Devin sandbox blocks node by default.
+3) Devin does not support nvm-managed Node.
+4) The PATH variable is too long.
+Choose 1-4 (or type the answer): Fix: What should the customer change?
+1) Export the nvm bin directory in the shell profile and restart Devin, which snapshots the environment once at startup.
+2) Run /clear.
+3) Run devin update.
+4) Start Devin with --sandbox.
+Choose 1-4 (or type the answer): Root cause correct.
+Fix correct (+25 XP).
+Correct root cause: Node is only an alias; aliases and functions are not exported as environment variables, and Devin snapshots the login-shell environment at startup.
+Correct fix: Export the nvm bin directory in the shell profile and restart Devin, which snapshots the environment once at startup.
+Optimal chain: type node -> bash -lic 'echo $PATH' -> grep node ~/.bashrc
+The alias can work in a terminal but is not an exported environment variable. Devin takes a login-shell environment snapshot at startup.
+Evidence found 3/4.
+
+Session summary
+XP gained: 390
+Accuracy: 1/1 (100.0%)
+Per-topic accuracy:
+  debug: 1/1 (100.0%)
+Weakest topics: debug
+Items due tomorrow: 1
+Best combo: x3

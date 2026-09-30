@@ -1,0 +1,18 @@
+Drill: d-grep-errors (right)
+Injected input:
+'129'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:general-cli]
+How many lines contain ERROR (case-insensitive) across app.log and app.log.1.gz?
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> Drill passed.
+Cleanup completed.
+
+Session summary
+XP gained: 40
+Accuracy: 1/1 (100.0%)
+Per-topic accuracy:
+  general-cli: 1/1 (100.0%)
+Weakest topics: general-cli
+Items due tomorrow: 1
+Best combo: x1

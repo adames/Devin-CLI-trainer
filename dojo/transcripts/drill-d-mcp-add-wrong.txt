@@ -1,0 +1,20 @@
+Drill: d-mcp-add (wrong)
+Injected input:
+'give up'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:mcp]
+Add a stdio MCP server named dojo-echo that runs `echo hi`.
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> The CLI's default local scope writes .devin/mcp_config.local.json.
+Cleanup completed.
+
+Session summary
+XP gained: 0
+Accuracy: 0/1 (0.0%)
+Per-topic accuracy:
+  mcp: 0/1 (0.0%)
+Weakest topics: mcp
+Missed items:
+  Add a stdio MCP server named dojo-echo that runs `echo hi`. -> The CLI's default local scope writes .devin/mcp_config.local.json.
+Items due tomorrow: 0
+Best combo: x1

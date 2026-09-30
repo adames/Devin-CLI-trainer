@@ -1,0 +1,6 @@
+Check authentication status
+
+Usage: devin auth status
+
+Options:
+  -h, --help  Print help

@@ -1,0 +1,9 @@
+Show details for a specific rule
+
+Usage: devin rules show <NAME>
+
+Arguments:
+  <NAME>  Rule name or ID
+
+Options:
+  -h, --help  Print help

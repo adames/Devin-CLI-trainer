@@ -1,0 +1,14 @@
+List all available rules
+
+Usage: devin rules list [OPTIONS]
+
+Options:
+      --provider <PROVIDER>
+          Filter by provider
+
+          Possible values:
+          - cursor:   Cursor rules (.cursor/rules/)
+          - windsurf: Windsurf rules (.windsurf/rules/)
+
+  -h, --help
+          Print help (see a summary with '-h')

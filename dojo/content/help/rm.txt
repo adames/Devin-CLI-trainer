@@ -1,0 +1,10 @@
+Delete a session by id or name
+
+Usage: devin rm [OPTIONS] <TARGET>
+
+Arguments:
+  <TARGET>  Session id or name, or an unambiguous id prefix
+
+Options:
+      --force  Skip the confirmation prompt
+  -h, --help   Print help

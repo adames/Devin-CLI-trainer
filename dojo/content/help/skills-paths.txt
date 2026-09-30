@@ -1,0 +1,6 @@
+Show skill directory locations
+
+Usage: devin skills paths
+
+Options:
+  -h, --help  Print help

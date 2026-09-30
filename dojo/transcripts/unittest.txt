@@ -1,0 +1,23 @@
+test_content_schema_regexes_and_optimal_reachability (test_dojo.ContentTests) ... ok
+test_piped_session_saves_state (test_dojo.EndToEndTests) ... ok
+test_skip_reveals_answer_without_self_grade_prompt (test_dojo.FlashSessionTests) ... ok
+test_wrong_flash_item_requeues_once_after_other_items (test_dojo.FlashSessionTests) ... ok
+test_exact_normalization_and_keyword_grading (test_dojo.GradingTests) ... ok
+test_keyword_set_requires_all_keywords (test_dojo.GradingTests) ... ok
+test_multiple_choice_letter_and_choice_text (test_dojo.GradingTests) ... ok
+test_transitions_and_due_dates_with_injected_clock (test_dojo.LeitnerTests) ... ok
+test_accent_code_parsing_and_default (test_dojo.PresentationTests) ... ok
+test_ascii_fallback_omits_all_unicode_glyphs (test_dojo.PresentationTests) ... ok
+test_color_wrong_flash_uses_inverse_danger_and_accent_marker_only (test_dojo.PresentationTests) ... ok
+test_no_color_full_session_has_plain_danger_labels (test_dojo.PresentationTests) ... ok
+test_source_has_no_non_accent_foreground_sgr_literals (test_dojo.PresentationTests) ... ok
+test_combo_build_reset_and_cap (test_dojo.ScenarioTests) ... ok
+test_combo_scoring_math (test_dojo.ScenarioTests) ... ok
+test_matching_unknown_turn_cost_and_repeat_evidence (test_dojo.ScenarioTests) ... ok
+test_due_first_new_cap_and_seed_determinism (test_dojo.SelectionTests) ... ok
+test_weakest_topics_only_lists_incomplete_topics (test_dojo.SummaryTests) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.100s
+
+OK

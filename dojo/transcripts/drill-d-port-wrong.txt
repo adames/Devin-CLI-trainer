@@ -1,0 +1,21 @@
+Drill: d-port (wrong)
+Injected input:
+'intentionally-wrong'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | drill:general-cli]
+Which TCP port is the python process in this arena listening on?
+Use !command to run a shell command; type 'give up' to stop this drill.
+>> Expected: 48763
+The server PID and its randomly allocated port are stored in .pid and .truth.
+Cleanup completed.
+
+Session summary
+XP gained: 0
+Accuracy: 0/1 (0.0%)
+Per-topic accuracy:
+  general-cli: 0/1 (0.0%)
+Weakest topics: general-cli
+Missed items:
+  Which TCP port is the python process in this arena listening on? -> The server PID and its randomly allocated port are stored in .pid and .truth.
+Items due tomorrow: 0
+Best combo: x1

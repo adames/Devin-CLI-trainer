@@ -1,0 +1,291 @@
+[
+  {
+    "id": "d-version",
+    "topic": "launch",
+    "prompt": "Installed Devin CLI version number?",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "devin",
+      "awk"
+    ],
+    "costs_credits": false,
+    "setup": [],
+    "kind": "answer",
+    "truth": "devin --version | awk '{print $2}'",
+    "cleanup": [],
+    "explain": "Check the installed version with devin --version."
+  },
+  {
+    "id": "d-newest-log",
+    "topic": "logs",
+    "prompt": "Filename of the newest Devin CLI log?",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "devin"
+    ],
+    "costs_credits": false,
+    "setup": [],
+    "kind": "answer",
+    "truth": "ls -t ~/.local/share/devin/cli/logs | head -1",
+    "cleanup": [],
+    "explain": "The CLI keeps per-run logs under ~/.local/share/devin/cli/logs."
+  },
+  {
+    "id": "d-doctor-count",
+    "topic": "debug",
+    "prompt": "How many checks does `devin doctor --json` run?",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "devin",
+      "python3"
+    ],
+    "costs_credits": false,
+    "setup": [],
+    "kind": "answer",
+    "truth": "devin doctor --json | python3 -c 'import json,sys; print(len(json.load(sys.stdin)[\"checks\"]))'",
+    "cleanup": [],
+    "explain": "The JSON doctor response has a checks array."
+  },
+  {
+    "id": "d-auth",
+    "topic": "auth",
+    "prompt": "Is the CLI logged in? yes/no",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "devin",
+      "auth"
+    ],
+    "costs_credits": false,
+    "setup": [],
+    "kind": "answer",
+    "truth": "if devin auth status 2>&1 | grep -q 'Not logged in'; then echo no; else echo yes; fi",
+    "cleanup": [],
+    "explain": "devin auth status reports whether this CLI has credentials."
+  },
+  {
+    "id": "d-skill",
+    "topic": "skills",
+    "prompt": "Create a PROJECT skill named `log-triage` in this arena so `devin skills list` shows it.",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "devin"
+    ],
+    "costs_credits": false,
+    "setup": [
+      "git init -q"
+    ],
+    "kind": "check",
+    "check": "devin skills list | grep -q log-triage",
+    "cleanup": [],
+    "explain": "Project skills live in .devin/skills/<name>/SKILL.md."
+  },
+  {
+    "id": "d-agents-rule",
+    "topic": "rules",
+    "prompt": "Add an always-on project rule via the file the docs recommend.",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "devin"
+    ],
+    "costs_credits": false,
+    "setup": [
+      "git init -q"
+    ],
+    "kind": "check",
+    "check": "devin rules list | grep -qi AGENTS",
+    "cleanup": [],
+    "explain": "The docs recommend AGENTS.md at the project root for an always-on project rule."
+  },
+  {
+    "id": "d-hooks",
+    "topic": "hooks",
+    "prompt": "Create a project hooks file with a PreToolUse hook (standalone-file format).",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [],
+    "costs_credits": false,
+    "setup": [],
+    "kind": "check",
+    "check": "python3 -c 'import json,sys; d=json.load(open(\".devin/hooks.v1.json\")); sys.exit(0 if \"PreToolUse\" in d and \"hooks\" not in d else 1)'",
+    "cleanup": [],
+    "explain": "In .devin/hooks.v1.json the entire file is the hooks object; PreToolUse is a hook event."
+  },
+  {
+    "id": "d-local-deny",
+    "topic": "permissions",
+    "prompt": "Deny `rm` in a personal, gitignored project config.",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [],
+    "costs_credits": false,
+    "setup": [
+      "git init -q; mkdir -p .devin; printf '%s\\n' '.devin/config.local.json' >> .gitignore"
+    ],
+    "kind": "check",
+    "check": "python3 -c 'import json,sys; d=json.load(open(\".devin/config.local.json\")); deny=d.get(\"permissions\",{}).get(\"deny\",[]); sys.exit(0 if any(\"Exec(rm\" in x for x in deny) else 1)'",
+    "cleanup": [],
+    "explain": ".devin/config.local.json is the personal project config and is gitignored."
+  },
+  {
+    "id": "d-mcp-add",
+    "topic": "mcp",
+    "prompt": "Add a stdio MCP server named dojo-echo that runs `echo hi`.",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "devin"
+    ],
+    "costs_credits": false,
+    "setup": [
+      "git init -q"
+    ],
+    "kind": "check",
+    "check": "devin mcp get dojo-echo",
+    "cleanup": [
+      "devin mcp remove dojo-echo >/dev/null 2>&1 || true"
+    ],
+    "explain": "The CLI's default local scope writes .devin/mcp_config.local.json."
+  },
+  {
+    "id": "d-session-json",
+    "topic": "sessions",
+    "prompt": "How many sessions does `devin list --format json` report here?",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "devin",
+      "python3"
+    ],
+    "costs_credits": false,
+    "setup": [],
+    "kind": "answer",
+    "truth": "devin list --format json | python3 -c 'import json,sys; print(len(json.load(sys.stdin)))'",
+    "cleanup": [],
+    "explain": "devin list --format json returns a JSON array of sessions."
+  },
+  {
+    "id": "d-grep-errors",
+    "topic": "general-cli",
+    "prompt": "How many lines contain ERROR (case-insensitive) across app.log and app.log.1.gz?",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "python3"
+    ],
+    "costs_credits": false,
+    "setup": [
+      "python3 -c 'import gzip,random,pathlib; r=random.Random(2026); labels=(\"INFO\",\"WARN\",\"ERROR\",\"error\"); current=[\"%04d %s synthetic entry\"%(i,r.choice(labels)) for i in range(200)]; rotated=[\"%04d %s rotated entry\"%(i,r.choice(labels)) for i in range(37)]; pathlib.Path(\"app.log\").write_text(\"\\n\".join(current)+\"\\n\"); gzip.open(\"app.log.1.gz\",\"wt\").write(\"\\n\".join(rotated)+\"\\n\"); count=sum(1 for line in current+rotated if \"error\" in line.lower()); pathlib.Path(\".truth\").write_text(str(count)+\"\\n\")'"
+    ],
+    "kind": "answer",
+    "truth": "cat .truth",
+    "cleanup": [],
+    "explain": "Include the plain current log and the gzipped rotated log, matching ERROR case-insensitively."
+  },
+  {
+    "id": "d-bad-json",
+    "topic": "general-cli",
+    "prompt": "Relative path of the one invalid JSON file?",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "python3"
+    ],
+    "costs_credits": false,
+    "setup": [
+      "python3 -c 'import json,random,pathlib; root=pathlib.Path(\"json-tree\"); bad=random.SystemRandom().randrange(12); paths=[]; [paths.append(root/(\"group-%d\"%(i%3))/(\"set-%d\"%i)/(\"item-%02d.json\"%i)) for i in range(12)]; [(p.parent.mkdir(parents=True,exist_ok=True),p.write_text(\"{\\\"broken\\\": }\\n\" if i==bad else json.dumps({\"valid\":i})+\"\\n\")) for i,p in enumerate(paths)]; pathlib.Path(\".truth\").write_text(paths[bad].as_posix()+\"\\n\")'"
+    ],
+    "kind": "answer",
+    "truth": "cat .truth",
+    "cleanup": [],
+    "explain": "Validate each JSON file and report the one that fails parsing."
+  },
+  {
+    "id": "d-port",
+    "topic": "general-cli",
+    "prompt": "Which TCP port is the python process in this arena listening on?",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "python3"
+    ],
+    "costs_credits": false,
+    "setup": [
+      "python3 -c 'import pathlib,socket,subprocess,sys; s=socket.socket(); s.bind((\"127.0.0.1\",0)); port=s.getsockname()[1]; s.close(); log=open(\"server.log\",\"w\"); p=subprocess.Popen([sys.executable,\"-m\",\"http.server\",str(port),\"--bind\",\"127.0.0.1\"],stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True); pathlib.Path(\".pid\").write_text(str(p.pid)); pathlib.Path(\".truth\").write_text(str(port)+\"\\n\"); log.close()'"
+    ],
+    "kind": "answer",
+    "truth": "cat .truth",
+    "cleanup": [
+      "python3 -c 'import os,pathlib,signal,time; p=int(pathlib.Path(\".pid\").read_text()); os.kill(p,signal.SIGTERM); [time.sleep(.05) for _ in range(10) if os.path.exists(\"/proc/%d\"%p)]' 2>/dev/null || true"
+    ],
+    "explain": "The server PID and its randomly allocated port are stored in .pid and .truth."
+  },
+  {
+    "id": "d-strace-policy",
+    "topic": "general-cli",
+    "prompt": "Using strace on `devin rules list`, what system-wide policy file does the CLI probe?",
+    "platforms": [
+      "linux"
+    ],
+    "requires": [
+      "strace",
+      "devin"
+    ],
+    "costs_credits": false,
+    "setup": [],
+    "kind": "answer",
+    "truth": "echo /etc/devin/system.json",
+    "cleanup": [],
+    "explain": "On this Linux box, strace shows the CLI probing /etc/devin/system.json."
+  },
+  {
+    "id": "d-print-pong",
+    "topic": "launch",
+    "prompt": "This arena is a fresh, untrusted directory. Use print mode so Devin replies with exactly PONG here, without changing your global config; type what it printed.",
+    "platforms": [
+      "linux",
+      "darwin"
+    ],
+    "requires": [
+      "devin",
+      "auth"
+    ],
+    "costs_credits": true,
+    "setup": [],
+    "kind": "answer",
+    "truth": "echo PONG",
+    "cleanup": [],
+    "explain": "A plain `devin -p` refuses to run in an untrusted workspace. Use `devin --respect-workspace-trust=false -p \"Reply with exactly PONG\" < /dev/null`. Note the `=`: `-p --respect-workspace-trust false \"...\"` misparses because -p's prompt is optional. Consumes credits."
+  }
+]

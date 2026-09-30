@@ -1,0 +1,51 @@
+Scenario: s5-org-policy
+Injected input:
+'cat .devin/config.json'
+'ls ~/.cache/devin'
+'strings ~/.cache/devin/team_settings.bin | grep -i push'
+'solve'
+'1'
+'1'
+
+[L1 Intern | 0xp | streak x1.00 | round 1/1 | combo:permissions]
+MYSTERY TICKET: The stubborn git push prompt
+I run with --permission-mode dangerous but Devin still asks before every git push. Bug?
+customer@laptop ~/app$ 
+customer@laptop ~/app$ {
+  "version": 1
+} [sim]
+Turns: 1/8 | combo x0
+customer@laptop ~/app$ team_settings.bin
+model_configs.bin
+cli [sim]
+Evidence found (1/2).
+Turns: 2/8 | combo x1
+customer@laptop ~/app$ ask Exec(git push) [sim]
+Evidence found (2/2).
+Turns: 3/8 | combo x2
+customer@laptop ~/app$ Root cause: Why does dangerous mode still prompt for git push?
+1) An organization/team ask rule applies; org deny and ask rules cannot be overridden by permission modes or local config.
+2) Dangerous mode is deprecated.
+3) Project config overrides all CLI flags.
+4) Smart mode's model judged git push unsafe.
+Choose 1-4 (or type the answer): Fix: Who can change the policy?
+1) A team admin must change Team Settings; the user cannot override it locally.
+2) Add an allow entry in config.local.json.
+3) Use /bypass.
+4) Delete the cache file.
+Choose 1-4 (or type the answer): Root cause correct.
+Fix correct (+25 XP).
+Correct root cause: An organization/team ask rule applies; org deny and ask rules cannot be overridden by permission modes or local config.
+Correct fix: A team admin must change Team Settings; the user cannot override it locally.
+Optimal chain: cat .devin/config.json -> ls ~/.cache/devin -> strings ~/.cache/devin/team_settings.bin | grep -i push
+Team settings outrank local permission modes; the guide says organization deny/ask rules remain active even in dangerous or bypass mode.
+Evidence found 2/2.
+
+Session summary
+XP gained: 240
+Accuracy: 1/1 (100.0%)
+Per-topic accuracy:
+  permissions: 1/1 (100.0%)
+Weakest topics: permissions
+Items due tomorrow: 1
+Best combo: x2

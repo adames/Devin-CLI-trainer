@@ -1,0 +1,6 @@
+List all configured MCP servers
+
+Usage: devin mcp list
+
+Options:
+  -h, --help  Print help

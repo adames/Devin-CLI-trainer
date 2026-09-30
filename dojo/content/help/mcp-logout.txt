@@ -1,0 +1,9 @@
+Remove stored OAuth credentials for an MCP server
+
+Usage: devin mcp logout <NAME>
+
+Arguments:
+  <NAME>  Server name to logout from
+
+Options:
+  -h, --help  Print help

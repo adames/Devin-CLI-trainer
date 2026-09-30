@@ -1,0 +1,100 @@
+<html><body style="background:#111;color:#ddd;margin:0"><pre style="font:14px/1.35 monospace;padding:16px">Script started on 2026-09-30 04:21:08+00:00 [&lt;not executed on terminal&gt;]
+devin --permisson-mode auto
+n
+A support engineer needs to forward cloud-session ports to localhost.
+A support engineer needs to sign in to Devin on the customer&#x27;s machine.
+A support engineer needs to review the agent rules available to the customer.
+solve
+1
+1
+</span><span class="b">professor devin</span><span class="">
+</span><span class="b">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span><span class="">
+</span><span class="d">easy devin training</span><span class="">
+</span><span class="d">4 command rounds · 1 ticket boss</span><span class="">
+
+train · launch · tier 1 · recognize             </span><span class="d">l1 intern · 0 xp · x1.00</span><span class="">
+</span><span class="d">────────────────────────────────────────────────────────────────────────</span><span class="">
+devin --model opus
+a) A customer needs tool processes isolated by the platform sandbox.
+b) A customer needs one prompt answered without starting an interactive session.
+c) A customer requests the opus model for their next Devin session.
+d) A customer needs the current conversation saved to a chosen file.
+</span><span class="acc">☞</span><span class=""> </span><span class="d">answer  ? hint · skip · quit</span><span class=""> </span><span class="b r">missed</span><span class="">
+answer  A customer requests the opus model for their next Devin session.
+command  devin --model opus
+</span><span class="d">content/help/devin.txt: Usage: devin [OPTIONS] [PATH]... [-- &lt;PROMPT&gt;...] [COMMAND]</span><span class="">
+</span><span class="d">content/help/devin.txt: --model &lt;MODEL&gt;</span><span class="">
+--model &lt;MODEL&gt;
+Use it when the customer requests a particular model for the next session.
+</span><span class="acc">☞</span><span class=""> </span><span class="d">count it? y/n</span><span class=""> 
+train · sessions · tier 1 · recognize           </span><span class="d">l1 intern · 0 xp · x1.00</span><span class="">
+</span><span class="d">────────────────────────────────────────────────────────────────────────</span><span class="">
+devin forward &lt;session&gt; &lt;ports&gt;
+a) A support engineer needs to delete a session by its identifier or name.
+b) A support engineer needs to forward cloud-session ports to localhost.
+c) A support workflow needs the customer&#x27;s session list in a selected output format.
+d) A support engineer needs to connect to a cloud session&#x27;s machine.
+</span><span class="acc">☞</span><span class=""> </span><span class="d">answer  ? hint · skip · quit</span><span class=""> </span><span class="b">● correct</span><span class=""> </span><span class="d">+5 xp</span><span class="">
+
+train · auth · tier 1 · recognize               </span><span class="d">l1 intern · 5 xp · x1.25</span><span class="">
+</span><span class="d">────────────────────────────────────────────────────────────────────────</span><span class="">
+devin auth login
+a) A support engineer needs to clear the customer&#x27;s stored Devin credentials.
+b) A support engineer needs to confirm whether the customer is signed in.
+c) A customer needs to sign in by pasting a token instead of opening a browser.
+d) A support engineer needs to sign in to Devin on the customer&#x27;s machine.
+</span><span class="acc">☞</span><span class=""> </span><span class="d">answer  ? hint · skip · quit</span><span class=""> </span><span class="b">● correct</span><span class=""> </span><span class="d">+6 xp</span><span class="">
+
+train · config-rules · tier 1 · recognize      </span><span class="d">l1 intern · 11 xp · x1.50</span><span class="">
+</span><span class="d">────────────────────────────────────────────────────────────────────────</span><span class="">
+devin rules list
+a) A support engineer needs to review the agent rules available to the customer.
+b) A customer needs agent rules filtered to one provider.
+c) A support engineer needs Devin to read a specific configuration file.
+d) A support engineer needs to inspect a named agent rule.
+</span><span class="acc">☞</span><span class=""> </span><span class="d">answer  ? hint · skip · quit</span><span class=""> </span><span class="b">● correct</span><span class=""> </span><span class="d">+8 xp</span><span class="">
+
+round 5/5 · ticket · mcp                       </span><span class="d">l1 intern · 19 xp · x1.75</span><span class="">
+</span><span class="d">────────────────────────────────────────────────────────────────────────</span><span class="">
+</span><span class="b">mystery ticket</span><span class=""> · The filesystem server that never starts
+</span><span class="b">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span><span class="">
+My filesystem MCP server&#x27;s tools never show up in Devin.
+</span><span class="acc">☞</span><span class=""> customer@laptop ~/app$ </span><span class="d">root cause</span><span class="">  Why do the filesystem tools not appear?
+1) The stdio server package name is misspelled, so the server never starts.
+2) The organization disallows MCP.
+3) The server requires devin mcp login.
+4) Filesystem servers require HTTP transport.
+</span><span class="acc">☞</span><span class=""> </span><span class="d">choose 1-4 or type the answer</span><span class=""> </span><span class="d">fix</span><span class="">  What is the correct repair?
+1) Remove fs, then add it again with @modelcontextprotocol/server-filesystem; verify the command manually first.
+2) Run devin mcp enable fs.
+3) Restart the terminal.
+4) Add mcp__fs__* to the allow list.
+</span><span class="acc">☞</span><span class=""> </span><span class="d">choose 1-4 or type the answer</span><span class=""> </span><span class="b">● root cause</span><span class="">
+</span><span class="b">● fix correct</span><span class=""> </span><span class="d">+25 xp</span><span class="">
+</span><span class="d">correct root cause</span><span class="">  The stdio server package name is misspelled, so the server never starts.
+</span><span class="d">correct fix</span><span class="">  Remove fs, then add it again with @modelcontextprotocol/server-filesystem; verify the command manually first.
+</span><span class="d">optimal chain</span><span class="">  devin mcp list -&gt; devin mcp get fs -&gt; cat .devin/mcp_config.local.json
+The recorded CLI output shows the misspelled package in the local project MCP configuration.
+</span><span class="d">evidence ○○○</span><span class="">
+
+</span><span class="b">session summary</span><span class="">
+</span><span class="b">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span><span class="">
+</span><span class="d">xp gained     </span><span class="">          220
+</span><span class="d">accuracy      </span><span class="">   4/5  80.0%
+</span><span class="d">category performance</span><span class="">
+</span><span class="d">category        correct    seen     acc  progress</span><span class="">
+</span><span class="b">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span><span class="">
+launch                0       1    0.0%  </span><span class="d">──────────</span><span class="">
+sessions              1       1  100.0%  ━━━━━━━━━━</span><span class="d"></span><span class="">
+auth                  1       1  100.0%  ━━━━━━━━━━</span><span class="d"></span><span class="">
+config-rules          1       1  100.0%  ━━━━━━━━━━</span><span class="d"></span><span class="">
+</span><span class="d">weakest topics</span><span class="">  launch
+</span><span class="d">missed items</span><span class="">
+○ A customer requests the opus model for their next Devin session.
+  answer  devin --model opus
+</span><span class="d">items due tomorrow</span><span class="">            4
+</span><span class="d">best combo    </span><span class="">           x1
+</span><span class="d">next up: 6 new tier-1 cards in launch</span><span class="">
+
+Script done on 2026-09-30 04:21:09+00:00 [COMMAND_EXIT_CODE=&quot;0&quot;]
+</pre><style>.b{font-weight:bold}.d{opacity:.55}.r{background:#ddd;color:#111}.acc{color:#ff8700}</style></body></html>

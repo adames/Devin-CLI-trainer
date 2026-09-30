@@ -1,0 +1,261 @@
+[
+  {
+    "id": "sup-acp-is-cli",
+    "topic": "acp",
+    "q": "In Devin Desktop, what actually executes a Devin Local conversation?",
+    "answers": [
+      "the devin cli over acp",
+      "devin cli via acp"
+    ],
+    "keywords": [
+      "acp"
+    ],
+    "hint": "three letters, agent client protocol",
+    "explain": "Devin Local = the Devin CLI running over ACP. Many Desktop tickets are really CLI tickets (invocation, auth, shell, language server).",
+    "source": "S-MASTER, P-71893",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-log-acp-channel",
+    "topic": "logs",
+    "q": "Which Desktop Output channel holds the Devin Local / ACP logs?",
+    "answers": [
+      "devin acp devin-cli"
+    ],
+    "keywords": [
+      "devin acp"
+    ],
+    "hint": "Output panel channel named after ACP and the cli",
+    "explain": "'Devin ACP devin-cli'. Also grab Agent panel -> ... -> Download Diagnostics.",
+    "source": "S-RE",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-log-diagnostics",
+    "topic": "logs",
+    "q": "Where in Desktop does the customer export a diagnostics bundle?",
+    "answers": [
+      "agent panel download diagnostics"
+    ],
+    "keywords": [
+      "download diagnostics"
+    ],
+    "hint": "Agent panel, the ... menu",
+    "explain": "Agent panel -> ... -> Download Diagnostics.",
+    "source": "S-RE",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-log-win-path",
+    "topic": "logs",
+    "q": "Windows: where are Devin Desktop's log folders?",
+    "answers": [
+      "%appdata%\\devin\\logs"
+    ],
+    "keywords": [
+      "appdata",
+      "devin",
+      "logs"
+    ],
+    "hint": "%APPDATA%\\...",
+    "explain": "%APPDATA%\\Devin\\logs\\<timestamp>\\window1\\ (renderer.log, exthost, Devin ACP logs). User data dir is %APPDATA%\\Devin.",
+    "source": "S-WSL, P-67687",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-auth-cli-code-source",
+    "topic": "auth",
+    "q": "CLI login on a remote box: where must the pasted code come from?",
+    "answers": [
+      "the link the cli prints",
+      "the pkce link printed by the cli"
+    ],
+    "keywords": [
+      "link"
+    ],
+    "hint": "not show-auth-code",
+    "explain": "CLI login is PKCE: use the link `devin auth login --force-manual-token-flow` prints. A show-auth-code code fails with 'Failed to exchange code'.",
+    "source": "S-MASTER",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-auth-exchange-error",
+    "topic": "auth",
+    "q": "Exact error when a show-auth-code code is pasted into CLI login?",
+    "answers": [
+      "failed to exchange code"
+    ],
+    "keywords": [
+      "exchange"
+    ],
+    "hint": "Failed to ... code",
+    "explain": "'Failed to exchange code': wrong flow. show-auth-code codes are for Desktop backup login only.",
+    "source": "S-MASTER",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-auth-desktop-backup",
+    "topic": "auth",
+    "q": "Desktop backup login: which command palette entry, and what happens if the code is reused?",
+    "answers": [
+      "provide devin auth token (backup login); invalid auth token"
+    ],
+    "keywords": [
+      "backup",
+      "invalid auth token"
+    ],
+    "hint": "Devin: Provide ... ; error says the token is invalid",
+    "explain": "Ctrl/Cmd+Shift+P -> 'Devin: Provide Devin auth token (backup login)', code from show-auth-code. Single-use and short-lived; reuse gives 'Invalid auth token'.",
+    "source": "P-71893, P-67687",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-auth-enterprise-perm",
+    "topic": "auth",
+    "q": "Enterprise user is logged in but gets 'Not authorized'. Which role permission must they have?",
+    "answers": [
+      "use devin cli"
+    ],
+    "keywords": [
+      "use devin cli"
+    ],
+    "hint": "Use ... CLI",
+    "explain": "Role needs 'Use Devin CLI'. Then `devin auth status`, then `devin auth logout && devin auth login`.",
+    "source": "DOCS",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-mcp-per-client",
+    "topic": "mcp",
+    "q": "Customer authed an MCP server in Claude Code. Is the Devin CLI authed too?",
+    "choices": [
+      "no, each client authenticates independently",
+      "yes, OAuth tokens are shared per machine",
+      "yes, if the server URL matches",
+      "only for stdio servers"
+    ],
+    "answers": [
+      "no, each client authenticates independently"
+    ],
+    "keywords": [],
+    "hint": "think per-client token stores",
+    "explain": "Each client authenticates independently: run `devin mcp login <server>`.",
+    "source": "DOCS",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-conn-banner-quota",
+    "topic": "debug",
+    "q": "Every Desktop tab shows 'Connection error, send a message to continue retrying (error id ...)' at once; web Devin works. What do you grep the ACP channel for first?",
+    "answers": [
+      "resource_exhausted"
+    ],
+    "keywords": [
+      "resource_exhausted"
+    ],
+    "hint": "gRPC status for quota",
+    "explain": "HYPOTHESIS (not confirmed end to end): per-user quota (user-total-messages, 1000) deny rendered as a generic connection error. Look for resource_exhausted / 'Reached overall message rate limit' in 'Devin ACP devin-cli', and collect Download Diagnostics.",
+    "source": "S-RE",
+    "confidence": "hypothesis"
+  },
+  {
+    "id": "sup-conn-reload",
+    "topic": "debug",
+    "q": "After many windows launch at once, some say 'Devin failed to start' and sending a message doesn't help. What recovered them in the repro?",
+    "answers": [
+      "reload window"
+    ],
+    "keywords": [
+      "reload"
+    ],
+    "hint": "command palette, Developer: ...",
+    "explain": "Mass simultaneous launch hit language-server start timeouts and an ECONNREFUSED loop to a dead LS port. Reload Window recovered; 'send a message' did not.",
+    "source": "S-MW",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-conn-per-window-ls",
+    "topic": "debug",
+    "q": "Seven Desktop windows are open. How many language_server processes should you expect?",
+    "choices": [
+      "seven, one per window",
+      "one shared",
+      "one per CPU core",
+      "zero until a chat starts"
+    ],
+    "answers": [
+      "seven, one per window"
+    ],
+    "keywords": [],
+    "hint": "check with pgrep -af language_server",
+    "explain": "One language server per window; there is no single shared server.",
+    "source": "S-MW",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-conn-red-herrings",
+    "topic": "debug",
+    "q": "Logs show unleash/remote-config timeouts, ECONNREFUSED and WS 1012. Is that enough to call it the root cause?",
+    "choices": [
+      "no, they also appear in healthy runs; correlate first",
+      "yes, unleash timeouts cause the banner",
+      "yes, WS 1012 always means a server restart bug",
+      "yes, ECONNREFUSED proves a firewall"
+    ],
+    "answers": [
+      "no, they also appear in healthy runs; correlate first"
+    ],
+    "keywords": [],
+    "hint": "control runs",
+    "explain": "All three reproduced WITHOUT the banner in healthy runs. Correlate with the failing request before assigning cause.",
+    "source": "S-MW",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-acp-shell-win",
+    "topic": "acp",
+    "q": "On Windows, how does Devin Local choose the shell for a command?",
+    "answers": [
+      "bash.exe -c from path",
+      "first bash.exe on path"
+    ],
+    "keywords": [
+      "bash",
+      "path"
+    ],
+    "hint": "no shell discovery",
+    "explain": "Every exec is spawned as `bash.exe -c \"<cmd>\"` resolved via PATH. Check with `where bash` (MKS Toolkit vs Git Bash).",
+    "source": "P-71893",
+    "confidence": "confirmed"
+  },
+  {
+    "id": "sup-ws-transition",
+    "topic": "debug",
+    "q": "#67687: what renderer.log line shows a Devin Local chat moved the window to a new workspace?",
+    "answers": [
+      "chatsessionstore: workspace transition"
+    ],
+    "keywords": [
+      "workspace transition"
+    ],
+    "hint": "ChatSessionStore: ...",
+    "explain": "Trigger = sending the first Devin Local message (not Ctrl+G). Window switches to an untitled workspace; next launch restores it as a 2nd window with its own ACP processes. Mechanism = hypothesis pending source.",
+    "source": "P-67687",
+    "confidence": "trigger confirmed 2/2; mechanism hypothesis"
+  },
+  {
+    "id": "sup-lag-usersettings",
+    "topic": "debug",
+    "q": "Typing/paste lag in Desktop: which function dominates the ext-host CPU profile in #70919/#70882/#70933?",
+    "answers": [
+      "get usersettings"
+    ],
+    "keywords": [
+      "usersettings"
+    ],
+    "hint": "an uncached settings getter",
+    "explain": "Uncached `get userSettings` -> resolveUnspecifiedSettings (~1.5 MB proto, several reads per keystroke). Ask for an exthost CPU profile; plaintext file = control. Desktop issue, often filed next to Devin Local tickets.",
+    "source": "P-70919, P-70882, P-70933",
+    "confidence": "mechanism reproduced; see tickets"
+  }
+]

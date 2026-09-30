@@ -1,0 +1,13 @@
+Authenticate with an MCP server via OAuth
+
+Usage: devin mcp login [OPTIONS] <NAME>
+
+Arguments:
+  <NAME>  Server name to authenticate with
+
+Options:
+      --scopes <SCOPE,SCOPE>          OAuth scopes to request (comma-separated)
+      --oauth-client-id <ID>          Pre-registered OAuth client ID for servers that don't support dynamic client registration (e.g. GitHub)
+      --oauth-client-secret <SECRET>  OAuth client secret (for confidential clients)
+      --oauth-resource <RESOURCE>     Override the RFC 8707 `resource` parameter sent in OAuth requests (default: the MCP server URL). Pass an empty string to omit the parameter for providers that reject it (e.g. Microsoft Entra)
+  -h, --help                          Print help

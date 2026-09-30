@@ -1,0 +1,14 @@
+Interactive setup wizard
+
+Guides you through authentication and MCP configuration.
+
+Usage: devin setup [OPTIONS]
+
+Options:
+      --force-manual-token-flow
+          Skip browser-based auth and paste a token manually
+          
+          Useful for remote or SSH sessions where the localhost redirect won't work.
+
+  -h, --help
+          Print help (see a summary with '-h')

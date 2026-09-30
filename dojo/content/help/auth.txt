@@ -1,0 +1,12 @@
+Authentication related commands
+
+Usage: devin auth <COMMAND>
+
+Commands:
+  login   Log in to Devin
+  logout  Log out and remove stored credentials
+  status  Check authentication status
+  help    Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help

@@ -1,0 +1,58 @@
+Script started on 2026-09-30 13:57:15+00:00 [<not executed on terminal>]
+where bash
+$env:PATH
+Get-ChildItem foo
+Bogus-Command
+solve
+1
+1
+devin dojo
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1 ticket
+
+round 1/1 · ticket · acp                        l1 intern · 0 xp · x1.00
+────────────────────────────────────────────────────────────────────────
+mystery ticket · Windows command never finishes
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Devin Local on Windows 11 runs `mvn test-compile -q` and it stays 'in progress' forever. Same command finishes in my terminal.
+☞ PS C:\app> C:\Program Files (x86)\MKS Toolkit\mksnt\bash.exe
+C:\Program Files\Git\bin\bash.exe [sim]
+evidence ●○ · combo x1 · turns 1/6
+☞ PS C:\app> C:\Program Files (x86)\MKS Toolkit\mksnt;C:\Program Files\Git\bin;C:\Windows\system32;... [sim]
+evidence ●● · combo x2 · turns 2/6
+☞ PS C:\app> (no useful output)
+evidence ●● · combo x0 · turns 3/6
+☞ PS C:\app> Bogus-Command : The term 'Bogus-Command' is not recognized as the name of a cmdlet, function, script file, or operable program.
+evidence ●● · combo x0 · turns 4/6
+☞ PS C:\app> root cause  Leading hypothesis?
+1) ACP spawns bash.exe -c from PATH and MKS Toolkit bash comes first
+2) Maven is too slow for Devin
+3) Windows Defender blocks Devin
+4) The language server crashed
+☞ choose 1-4 or type the answer fix  Next step?
+1) Put Git Bash ahead of MKS on PATH (or remove MKS from PATH) and retest; collect ACP logs if it persists
+2) Reinstall Devin Desktop
+3) Switch to cloud Devin
+4) Run with --permission-mode dangerous
+☞ choose 1-4 or type the answer ● root cause
+● fix correct +25 xp
+correct root cause  ACP spawns bash.exe -c from PATH and MKS Toolkit bash comes first
+correct fix  Put Git Bash ahead of MKS on PATH (or remove MKS from PATH) and retest; collect ACP logs if it persists
+optimal chain  where bash -> $env:PATH
+Pylon #71893. Did NOT reproduce with Git Bash; MKS is the leading suspect, unconfirmed. Label it that way to the customer.
+confidence  hypothesis
+evidence ●●
+
+session summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+xp gained               210
+accuracy        1/1  100.0%
+per-topic accuracy
+topic          right  seen     acc  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+acp                1     1  100.0%  ━━━━━━━━━━
+weakest topics  none
+items due tomorrow            1
+best combo               x2
+
+Script done on 2026-09-30 13:57:15+00:00 [COMMAND_EXIT_CODE="0"]

@@ -1,0 +1,9 @@
+Show details for a specific skill
+
+Usage: devin skills show <NAME>
+
+Arguments:
+  <NAME>  Skill name
+
+Options:
+  -h, --help  Print help
