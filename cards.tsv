@@ -14,7 +14,7 @@ Override the user config file for one run	devin --config <path>
 Project config vs personal project config	.devin/config.json (shared) vs .devin/config.local.json (gitignored)
 Config precedence, highest to lowest	Org/team > session approvals > .devin/config.local.json > .devin/config.json > ~/.config/devin/config.json
 Can dangerous/bypass mode override org deny rules?	No. Org deny/ask rules always apply
-Permission modes accepted by --permission-mode in v3000.11.3	auto (default), accept-edits, smart, dangerous  (env DEVIN_PERMISSION_MODE)
+Permission modes accepted by --permission-mode in v3000.11.92	auto (default), accept-edits, smart, dangerous  (env DEVIN_PERMISSION_MODE)
 What does Smart mode do?	Auto-approves workspace edits; a fast model judges other actions; prompts if unsafe or unsure
 Which mode requires --sandbox?	autonomous (/autonomous)
 Read-only planning mode / one-shot read-only question	/plan  /  /ask <question>

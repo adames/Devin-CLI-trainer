@@ -160,8 +160,9 @@ exact matching.
 
 ## Training flow
 
-A bare `professor-devin` starts 10 command rounds and one mystery-ticket boss.
-I can also run `professor-devin train [CATEGORY ...] --rounds N --tier 1|2|3
+In a terminal, a bare `professor-devin` opens the home menu, whose quick start
+is 10 command rounds and one mystery-ticket boss (piped runs skip the menu and
+start that session directly). I can also run `professor-devin train [CATEGORY ...] --rounds N --tier 1|2|3
 --seed N`. A tier limit includes every lower tier. A fixed seed makes a run
 repeatable. An unknown category prints the valid category names.
 

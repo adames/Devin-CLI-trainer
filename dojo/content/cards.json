@@ -216,7 +216,7 @@
   {
     "id": "card-17",
     "topic": "modes",
-    "q": "Permission modes accepted by --permission-mode in v3000.11.3",
+    "q": "Permission modes accepted by --permission-mode in v3000.11.92",
     "answers": [
       "auto (default), accept-edits, smart, dangerous  (env DEVIN_PERMISSION_MODE)"
     ],
