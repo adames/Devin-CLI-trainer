@@ -36,7 +36,7 @@ These mismatches show up in support tickets. I check `devin --version` before di
 |---|---|---|
 | 1 | Install, auth, file layout, sessions, `-p` scripting, general CLI basics (rg, jq, less, find, xargs) | You can redraw section 2 from memory; labs L1–L3 done; drill ≥80% |
 | 2 | Config layers, permissions, rules/AGENTS.md, skills, hooks | Labs L4–L7 done; you can predict precedence outcomes correctly |
-| 3 | MCP, subagents, plugins, sandbox, logging/tracing, proxy/TLS; process-level CLI (ps, lsof, ss, strace) | Labs L8–L11 done; 2 break-it drills solved cold |
+| 3 | MCP, subagents, plugins, sandbox, logging/tracing, proxy/TLS; process-level CLI (ps, lsof, fs_usage) | Labs L8–L11 done; 2 break-it drills solved cold |
 | 4 | Cloud: `--cloud`, `/handoff`, `devin ssh/forward`, `devin cloud drs`, ACP (IDE integration) | Labs L12–L14 done; write your personal support runbook |
 
 After week four, I work one mystery ticket (section 6) each week and read new changelog entries as they ship (`docs.devin.ai/cli/changelog/stable`).
@@ -72,9 +72,9 @@ IDEs (Zed, JetBrains, Xcode) ---- ACP ---> devin acp
 | `~/.local/share/devin/cli/logs/devin_<ts>_<pid>.log` | one log per run; `.log.gz` after 48h untouched |
 | `~/.local/share/devin/mcp/` | MCP state |
 | `~/.local/share/devin/summaries/<session>.md` | summarizer agent output |
-| `~/.cache/devin/` | caches: `team_settings.bin`, `model_configs.bin`, `cli/unleash_definitions.*.bin` (likely feature flags), `cached_version.json`. Found with strace; a suspect when things look stale |
+| `~/.cache/devin/` | caches: `team_settings.bin`, `model_configs.bin`, `cli/unleash_definitions.*.bin` (likely feature flags), `cached_version.json`. Found by tracing file lookups (section 4, item 10); a suspect when things look stale |
 | `/etc/devin/system.json` | MDM-managed system policy (login/proxy pinning; docs: cli/enterprise/system-config) |
-| `~/.codeium/windsurf/memories/global_rules.md`, `~/.config/devin/.windsurfrules` | legacy/imported rule paths probed at startup (found with strace) |
+| `~/.codeium/windsurf/memories/global_rules.md`, `~/.config/devin/.windsurfrules` | legacy/imported rule paths probed at startup (found by tracing file lookups) |
 | `~/.config/devin/config.json` | user config (lowest-priority layer) |
 | `~/.config/devin/mcp_config.json` | user MCP servers (v3000.3+; older versions used `mcpServers` in config.json) |
 | `~/.config/devin/AGENTS.md` | global rules |
@@ -145,10 +145,10 @@ I practice these until they feel automatic. Each item is a command I can use in 
 5. Doctor failures only: `devin doctor --json | jq -r '.checks[] | select(.status!="pass") | "\(.check): \(.detail)"'`
 6. Explore the session DB read-only: `sqlite3 -readonly ~/.local/share/devin/cli/sessions.db '.tables'`, then `.schema <table>`
 7. Show the effective user config: `jq . ~/.config/devin/config.json`; diff two configs: `diff <(jq -S . a.json) <(jq -S . b.json)`
-8. What is Devin running right now? `pgrep -af devin`; its process tree: `ps -o pid,ppid,cmd --forest -g $(pgrep -o devin)`
-9. Which sockets and files does it hold? `lsof -p <pid>`, `ss -tpn | rg devin`
-10. Which files does it probe (how you find undocumented config paths): `strace -f -e trace=file -o /tmp/st.txt devin rules list >/dev/null; rg -o '"/[^"]+"' /tmp/st.txt | sort -u | rg -i 'devin|claude|agents|windsurf|cursor|cognition'`. Use `trace=file`, not `openat`: most config lookups are stat calls, so `openat` misses them.
-11. Which env vars does it see? `cat /proc/<pid>/environ | tr '\0' '\n' | rg -i 'devin|proxy|path'`
+8. What is Devin running right now? `pgrep -fl devin`; who launched it: `ps -o pid,ppid,command -p $(pgrep -d, -f devin)` (then `ps -p <ppid>` for the parent)
+9. Which sockets and files does it hold? `lsof -p <pid>`, `lsof -iTCP -P -n -a -p <pid>`
+10. Which files does it probe (how you find undocumented config paths): in one pane run `sudo fs_usage -w -f pathname devin | rg -i 'devin|claude|agents|windsurf|cursor|cognition'`, then run `devin rules list` in another. Use `-f pathname`, which includes stat and access calls: most config lookups never open the file. (Needs sudo.)
+11. Which env vars does it see? `ps eww <pid> | tr ' ' '\n' | rg -i 'devin|proxy|path'`
 12. Is it the network? `curl -sv https://cli.devin.ai -o /dev/null 2>&1 | rg -i 'connected|ssl|HTTP/'`
 13. Is it PATH? `bash -lic 'command -v node'` vs `command -v node` (Devin snapshots the *login* shell env once at startup)
 14. Script print mode: `for f in src/*.py; do devin -p "one-line summary of $f" > "out/$(basename $f).txt"; done`
@@ -192,7 +192,7 @@ For each one, set up the fault, reopen the shell, and diagnose it from the sympt
 6. Print mode in an untrusted directory fails. Find the flag that fixes it.
 7. A `.claude/settings.json` hook you forgot about keeps firing. Find its source with `/hooks`, then turn off `read_config_from.claude`.
 8. Two skills with the same name in user and project dirs. Which one wins? Prove it.
-9. A stale version after `devin update`: inspect `_versions/`, `command -v -a devin`, and PATH order.
+9. A stale version after `devin update`: inspect `_versions/`, `type -a devin`, and PATH order.
 10. An org deny rule vs. `--permission-mode dangerous`. Explain to a "customer" why dangerous mode didn't bypass it.
 
 ### My support triage checklist
@@ -204,7 +204,7 @@ ls -la ~/.config/devin .devin 2>/dev/null; jq . ~/.config/devin/config.json
 devin rules list; devin skills list; devin mcp list; (in REPL) /hooks /mcp /login-status
 newest log → rg -z -i 'error|warn|panic'
 repro: minimal dir + --config empty + print mode, then add layers back one at a time (bisect the config)
-network suspect → RUST_LOG trace / mitmproxy;  env suspect → bash -lic; /proc/<pid>/environ
+network suspect → RUST_LOG trace / mitmproxy;  env suspect → bash -lic; ps eww <pid>
 report: /bug inside the CLI, or support@cognition.ai
 ```
 
@@ -222,4 +222,4 @@ report: /bug inside the CLI, or support@cognition.ai
 - `where bash` — show Windows bash executables resolved from PATH in search order.
 - `nohup devin -p <prompt> </dev/null >devin.log 2>&1 &` — detach a prompted CLI job and capture output in devin.log.
 - `grep -iE "resource_exhausted|rate limit" repro-*.log` — search repro logs for quota and rate-limit messages.
-- `pgrep -af language_server` — list matching language-server processes with full command lines.
+- `pgrep -fl language_server` — list matching language-server processes with full command lines.

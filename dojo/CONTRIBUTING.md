@@ -125,13 +125,11 @@ The `shell` category is for general support work from `../GUIDE.md`. Current
 cards cover log lookup, live log search, JSON and config checks, process and
 socket inspection, file tracing, environment inspection, PATH checks, HTTP
 connectivity, print-mode scripting, and the support one-liners. That includes
-`type -a`, `command -v`, `rg -z`, `strace -f -e trace=file`, `lsof -p`,
-`sqlite3 -readonly`, `jq`, `tail -F`, and `/proc/<pid>/environ` checks. The
+`type -a`, `command -v`, `rg -z`, `sudo fs_usage -w -f pathname`, `lsof -p`,
+`sqlite3 -readonly`, `jq`, `tail -F`, and `ps eww` checks. The
 support one-liners include `where bash`, `nohup`, quota-log search, and
-`pgrep -af language_server`. I keep each answer tied to its cited GUIDE line;
-I don't add a command that the guide doesn't show. I leave out
-`lsof -iTCP -sTCP:LISTEN -P -n` and `env | sort` because neither appears in the
-current guide.
+`pgrep -fl language_server`. I keep each answer tied to its cited GUIDE line;
+I don't add a command that the guide doesn't show.
 
 ### How command answers are checked
 

@@ -222,7 +222,7 @@ ticket's unknown output. Command lookup ignores case. The known set includes
 `command`, `bash`, `curl`, `ps`, `lsof`, `ss`, `strace`, `tail`, `head`,
 `find`, `sqlite3`, `git`, `python3`, `printenv`, `diff`, `where`, `where.exe`,
 `tasklist`, `findstr`, `select-string`, `get-childitem`, `get-command`, `dir`,
-`pgrep`, `nohup`, and `mvn`.
+`pgrep`, `nohup`, `mvn`, `sudo`, `fs_usage`, and `tr`.
 
 Consecutive new evidence commands build the in-ticket combo from x1 to x3.
 A non-evidence command resets it to x1. The best combo reached is used for

@@ -53,14 +53,14 @@ Manage environment blueprints/builds from the CLI	devin cloud drs (blueprint-lis
 Env var for models to fall back to on provider refusal	DEVIN_REFUSAL_FALLBACK (comma-separated)
 Disable importing Claude Code config	read_config_from.claude = false in user config
 CLI: follow the newest log live	tail -F "$(ls -t ~/.local/share/devin/cli/logs/*.log | head -1)"
-CLI: list every path a process opens or stats	strace -f -e trace=file -o out.txt <cmd>
-CLI: show a running process's env vars	tr '\0' '\n' < /proc/<pid>/environ
+CLI: list every path a process opens or stats	sudo fs_usage -w -f pathname <cmd-name>
+CLI: show a running process's env vars	ps eww <pid> | tr ' ' '\n'
 CLI: show doctor checks that did not pass	devin doctor --json | jq -r '.checks[]|select(.status!="pass")|.check'
 CLI: diff two JSON configs ignoring key order	diff <(jq -S . a.json) <(jq -S . b.json)
 CLI: open SQLite DB safely read-only and list tables	sqlite3 -readonly file.db '.tables'
 CLI: compare interactive-login PATH vs current	bash -lic 'echo $PATH'  vs  echo $PATH
 CLI: find every devin on PATH, in order	type -a devin   (or which -a devin)
-CLI: process tree for a PID	ps -o pid,ppid,cmd --forest -g <pgid>   (or pstree -p <pid>)
-CLI: files/sockets held by a process	lsof -p <pid>  ;  ss -tpn
+CLI: process tree for a PID	ps -o pid,ppid,command -p <pid>   (or pstree -p <pid> from Homebrew)
+CLI: files/sockets held by a process	lsof -p <pid>  ;  lsof -iTCP -P -n -a -p <pid>
 Where does the CLI cache team settings / model configs / flags?	~/.cache/devin/ (team_settings.bin, model_configs.bin, cli/unleash_definitions.*.bin)
 MDM-managed system policy file (Linux)	/etc/devin/system.json

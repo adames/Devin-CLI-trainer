@@ -187,7 +187,7 @@
       "seven, one per window"
     ],
     "keywords": [],
-    "hint": "check with pgrep -af language_server",
+    "hint": "check with pgrep -fl language_server",
     "explain": "One language server per window; there is no single shared server.",
     "source": "S-MW",
     "confidence": "confirmed"

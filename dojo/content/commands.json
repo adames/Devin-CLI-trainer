@@ -2854,22 +2854,22 @@
     ],
     "blank": "lsof",
     "hint": "Review GUIDE.md near line 149 and identify the command starting with 'l'.",
-    "explain": "9. Which sockets and files does it hold? `lsof -p <pid>`, `ss -tpn | rg devin`\nUse it when the support investigation needs this evidence.",
+    "explain": "9. Which sockets and files does it hold? `lsof -p <pid>`, `lsof -iTCP -P -n -a -p <pid>`\nUse it when the support investigation needs this evidence.",
     "source": "../GUIDE.md:149",
     "kind": "write",
     "topic": "shell"
   },
   {
-    "id": "shell-proc-environ",
+    "id": "shell-ps-environ",
     "category": "shell",
     "tier": 2,
     "task": "A Devin process behaves differently from its shell; inspect its exported proxy and path variables.",
     "answers": [
-      "cat /proc/<pid>/environ | tr '\\0' '\\n' | rg -i 'devin|proxy|path'"
+      "ps eww <pid> | tr ' ' '\\n' | rg -i 'devin|proxy|path'"
     ],
-    "blank": "cat",
-    "hint": "Review GUIDE.md near line 151 and identify the command starting with 'c'.",
-    "explain": "11. Which env vars does it see? `cat /proc/<pid>/environ | tr '\\0' '\\n' | rg -i 'devin|proxy|path'`\nUse it when the support investigation needs this evidence.",
+    "blank": "ps",
+    "hint": "Review GUIDE.md near line 151 and identify the command starting with 'p'.",
+    "explain": "11. Which env vars does it see? `ps eww <pid> | tr ' ' '\\n' | rg -i 'devin|proxy|path'`\nUse it when the support investigation needs this evidence.",
     "source": "../GUIDE.md:151",
     "kind": "write",
     "topic": "shell"
@@ -2878,13 +2878,13 @@
     "id": "shell-process-tree",
     "category": "shell",
     "tier": 2,
-    "task": "A support engineer needs to see which parent process launched the active Devin process group.",
+    "task": "A support engineer needs to see which parent process launched the running Devin processes.",
     "answers": [
-      "ps -o pid,ppid,cmd --forest -g $(pgrep -o devin)"
+      "ps -o pid,ppid,command -p $(pgrep -d, -f devin)"
     ],
     "blank": "ps",
     "hint": "Review GUIDE.md near line 148 and identify the command starting with 'p'.",
-    "explain": "8. What is Devin running right now? `pgrep -af devin`; its process tree: `ps -o pid,ppid,cmd --forest -g $(pgrep -o devin)`\nUse it when the support investigation needs this evidence.",
+    "explain": "8. What is Devin running right now? `pgrep -fl devin`; who launched it: `ps -o pid,ppid,command -p $(pgrep -d, -f devin)` (then `ps -p <ppid>` for the parent)\nUse it when the support investigation needs this evidence.",
     "source": "../GUIDE.md:148",
     "kind": "write",
     "topic": "shell"
@@ -2925,11 +2925,11 @@
     "tier": 2,
     "task": "A customer reports a stuck session; find running Devin processes and their arguments.",
     "answers": [
-      "pgrep -af devin"
+      "pgrep -fl devin"
     ],
     "blank": "pgrep",
     "hint": "Review GUIDE.md near line 148 and identify the command starting with 'p'.",
-    "explain": "8. What is Devin running right now? `pgrep -af devin`; its process tree: `ps -o pid,ppid,cmd --forest -g $(pgrep -o devin)`\nUse it when the support investigation needs this evidence.",
+    "explain": "8. What is Devin running right now? `pgrep -fl devin`; who launched it: `ps -o pid,ppid,command -p $(pgrep -d, -f devin)` (then `ps -p <ppid>` for the parent)\nUse it when the support investigation needs this evidence.",
     "source": "../GUIDE.md:148",
     "kind": "write",
     "topic": "shell"
@@ -2940,11 +2940,11 @@
     "tier": 2,
     "task": "A support engineer suspects a network issue; find TCP sockets owned by Devin processes.",
     "answers": [
-      "ss -tpn | rg devin"
+      "lsof -iTCP -P -n -a -p <pid>"
     ],
-    "blank": "ss",
-    "hint": "Review GUIDE.md near line 149 and identify the command starting with 's'.",
-    "explain": "9. Which sockets and files does it hold? `lsof -p <pid>`, `ss -tpn | rg devin`\nUse it when the support investigation needs this evidence.",
+    "blank": "lsof",
+    "hint": "Review GUIDE.md near line 149 and identify the command starting with 'l'.",
+    "explain": "9. Which sockets and files does it hold? `lsof -p <pid>`, `lsof -iTCP -P -n -a -p <pid>`\nUse it when the support investigation needs this evidence.",
     "source": "../GUIDE.md:149",
     "kind": "write",
     "topic": "shell"
@@ -2965,16 +2965,16 @@
     "topic": "shell"
   },
   {
-    "id": "shell-strace-files",
+    "id": "shell-fs-usage-files",
     "category": "shell",
     "tier": 2,
     "task": "A customer may have conflicting configuration files; trace file lookups and extract candidate paths.",
     "answers": [
-      "strace -f -e trace=file -o /tmp/st.txt devin rules list >/dev/null; rg -o '\"/[^\"]+\"' /tmp/st.txt | sort -u | rg -i 'devin|claude|agents|windsurf|cursor|cognition'"
+      "sudo fs_usage -w -f pathname devin | rg -i 'devin|claude|agents|windsurf|cursor|cognition'"
     ],
-    "blank": "strace",
-    "hint": "Review GUIDE.md near line 150 and identify the command starting with 's'.",
-    "explain": "10. Which files does it probe (how you find undocumented config paths): `strace -f -e trace=file -o /tmp/st.txt devin rules list >/dev/null; rg -o '\"/[^\"]+\"' /tmp/st.txt | sort -u | rg -i 'devin|claude|agents|windsurf|cursor|cognition'`. Use `trace=file`, not `openat`: most config lookups are stat calls, so `openat` misses them.\nUse it when the support investigation needs this evidence.",
+    "blank": "fs_usage",
+    "hint": "Review GUIDE.md near line 150 and identify the command starting with 'f'.",
+    "explain": "10. Which files does it probe (how you find undocumented config paths): in one pane run `sudo fs_usage -w -f pathname devin | rg -i 'devin|claude|agents|windsurf|cursor|cognition'`, then run `devin rules list` in another. Use `-f pathname`, which includes stat and access calls: most config lookups never open the file. (Needs sudo.)\nUse it when the support investigation needs this evidence.",
     "source": "../GUIDE.md:150",
     "kind": "write",
     "topic": "shell"
@@ -3135,12 +3135,12 @@
     "category": "shell",
     "tier": 2,
     "kind": "write",
-    "task": "List every running language-server process with its full command line on Linux or macOS.",
+    "task": "List every running language-server process with its full command line on macOS.",
     "answers": [
-      "pgrep -af language_server"
+      "pgrep -fl language_server"
     ],
     "hint": "Choose the process lookup that prints full commands.",
-    "explain": "- `pgrep -af language_server` — list matching language-server processes with full command lines.\nUse it when support needs to compare per-window language-server processes.",
+    "explain": "- `pgrep -fl language_server` — list matching language-server processes with full command lines.\nUse it when support needs to compare per-window language-server processes.",
     "topic": "shell",
     "tags": [
       "support"

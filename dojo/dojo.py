@@ -40,7 +40,7 @@ KNOWN_COMMANDS = {
     "command", "bash", "curl", "ps", "lsof", "ss", "strace", "tail", "head",
     "find", "sqlite3", "git", "python3", "printenv", "diff", "where", "where.exe",
     "tasklist", "findstr", "select-string", "get-childitem", "get-command", "dir",
-    "pgrep", "nohup", "mvn",
+    "pgrep", "nohup", "mvn", "sudo", "fs_usage", "tr",
 }
 CATEGORIES = (
     "launch", "sessions", "auth", "config-rules", "skills", "mcp", "plugins",

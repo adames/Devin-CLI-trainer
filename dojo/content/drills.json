@@ -252,24 +252,6 @@
     "explain": "The server PID and its randomly allocated port are stored in .pid and .truth."
   },
   {
-    "id": "d-strace-policy",
-    "topic": "general-cli",
-    "prompt": "Using strace on `devin rules list`, what system-wide policy file does the CLI probe?",
-    "platforms": [
-      "linux"
-    ],
-    "requires": [
-      "strace",
-      "devin"
-    ],
-    "costs_credits": false,
-    "setup": [],
-    "kind": "answer",
-    "truth": "echo /etc/devin/system.json",
-    "cleanup": [],
-    "explain": "On this Linux box, strace shows the CLI probing /etc/devin/system.json."
-  },
-  {
     "id": "d-print-pong",
     "topic": "launch",
     "prompt": "This arena is a fresh, untrusted directory. Use print mode so Devin replies with exactly PONG here, without changing your global config; type what it printed.",

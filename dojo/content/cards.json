@@ -749,27 +749,27 @@
     "topic": "general-cli",
     "q": "CLI: list every path a process opens or stats",
     "answers": [
-      "strace -f -e trace=file -o out.txt <cmd>"
+      "sudo fs_usage -w -f pathname <cmd-name>"
     ],
     "keywords": [
-      "strace -f",
-      "trace=file"
+      "fs_usage",
+      "-f pathname"
     ],
-    "hint": "strace -f -e trace=file -o out.txt <cmd>",
-    "explain": "strace -f -e trace=file -o out.txt <cmd>"
+    "hint": "sudo fs_usage -w -f pathname <cmd-name>",
+    "explain": "sudo fs_usage -w -f pathname <cmd-name>"
   },
   {
     "id": "card-57",
     "topic": "general-cli",
     "q": "CLI: show a running process's env vars",
     "answers": [
-      "tr '\\0' '\\n' < /proc/<pid>/environ"
+      "ps eww <pid> | tr ' ' '\\n'"
     ],
     "keywords": [
-      "/proc/<pid>/environ"
+      "ps eww"
     ],
-    "hint": "tr '\\0' '\\n' < /proc/<pid>/environ",
-    "explain": "tr '\\0' '\\n' < /proc/<pid>/environ"
+    "hint": "ps eww <pid> | tr ' ' '\\n'",
+    "explain": "ps eww <pid> | tr ' ' '\\n'"
   },
   {
     "id": "card-58",
@@ -845,28 +845,26 @@
     "topic": "general-cli",
     "q": "CLI: process tree for a PID",
     "answers": [
-      "ps -o pid,ppid,cmd --forest -g <pgid>   (or pstree -p <pid>)"
+      "ps -o pid,ppid,command -p <pid>   (or pstree -p <pid> from Homebrew)"
     ],
     "keywords": [
-      "ps -o",
-      "--forest"
+      "ps -o pid,ppid,command"
     ],
-    "hint": "ps -o pid,ppid,cmd --forest -g <pgid>",
-    "explain": "ps -o pid,ppid,cmd --forest -g <pgid>   (or pstree -p <pid>)"
+    "hint": "ps -o pid,ppid,command -p <pid>",
+    "explain": "ps -o pid,ppid,command -p <pid>   (or pstree -p <pid> from Homebrew)"
   },
   {
     "id": "card-64",
     "topic": "general-cli",
     "q": "CLI: files/sockets held by a process",
     "answers": [
-      "lsof -p <pid>  ;  ss -tpn"
+      "lsof -p <pid>  ;  lsof -iTCP -P -n -a -p <pid>"
     ],
     "keywords": [
-      "lsof -p",
-      "ss -tpn"
+      "lsof -iTCP"
     ],
     "hint": "lsof -p <pid>",
-    "explain": "lsof -p <pid>  ;  ss -tpn"
+    "explain": "lsof -p <pid>  ;  lsof -iTCP -P -n -a -p <pid>"
   },
   {
     "id": "card-65",

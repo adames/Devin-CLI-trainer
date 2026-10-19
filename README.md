@@ -12,6 +12,13 @@ terminal game ("Professor Devin") that quizzes real commands against captured
 - **Drill:** `./drill.sh [N] [regex]` — flashcards from `cards.tsv`.
 - **Play:** `cd dojo && bash install.sh && professor-devin` — the game.
 
+## macOS only
+
+The shell commands in GUIDE.md section 4, the dojo drills, and `drill.sh` are
+written and tested for macOS (bash 3.2, BSD userland: no `shuf`, `strace`,
+`ss`, or `/proc`). On Linux swap `ps eww` → `cat /proc/<pid>/environ`,
+`fs_usage` → `strace -f -e trace=file`, `lsof -iTCP` → `ss -tpn`.
+
 ## Folder map
 
 ```
