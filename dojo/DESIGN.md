@@ -68,6 +68,13 @@ Menu logo banner (home menu):
 followed by a muted progress line (`l1 intern · 0 xp · 0 cards due today`), the `✱ What do you want to
 practice?` question, the numbered options, the `1-7 to choose · ↵ quick start · q quit` footer, and `❭ `.
 
+The setup wizard (first run or `professor-devin setup`) reuses the same banner with the fourth line reading
+`first run · cards written for devin cli <content> · you have <ver>` (or `setup · ...`), then a `✱ How well do
+you know the Devin CLI?` question with the same numbered-option styling.
+
+Coach tips: on the beginner profile, one muted chrome line `tip  <text>` is printed between the question and
+the footer the first two times a form is seen.
+
 Outcomes:
 - correct: strong `● correct` + muted `+N xp`
 - self-graded: strong `● counted` + muted `+N xp`

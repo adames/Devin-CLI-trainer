@@ -686,7 +686,11 @@ class MenuAndCliTests(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
-    def run_main(self, inputs):
+    def run_main(self, inputs, profile="veteran"):
+        if profile is not None:
+            dojo.save_state(
+                self.home, dict(dojo.default_state(), profile=profile)
+            )
         output = io.StringIO()
         with patch.dict(os.environ, {"PROFESSOR_HOME": str(self.home)}):
             with patch.object(dojo, "interactive_terminal", return_value=True):
@@ -767,6 +771,125 @@ class MenuAndCliTests(unittest.TestCase):
         self.assertIn("✱ ", result.stdout)
         self.assertIn("? hint · skip · quit", result.stdout)
         self.assertIn("❭", result.stdout)
+
+    def test_first_run_wizard_offers_profiles_and_saves(self):
+        with patch.object(dojo.Dojo, "train") as train:
+            result, text = self.run_main(["2", "q"], profile=None)
+        self.assertEqual(result, 0)
+        self.assertIn("How well do you know the Devin CLI?", text)
+        self.assertIn("What do you want to practice?", text)
+        train.assert_not_called()
+        state = json.loads((self.home / "state.json").read_text())
+        self.assertEqual(state["profile"], "veteran")
+
+    def test_first_run_beginner_gets_how_it_works(self):
+        result, text = self.run_main(["", "", "q"], profile=None)
+        self.assertEqual(result, 0)
+        self.assertIn("How well do you know the Devin CLI?", text)
+        self.assertIn("how it works", text)
+        self.assertIn("What do you want to practice?", text)
+        state = json.loads((self.home / "state.json").read_text())
+        self.assertEqual(state["profile"], "beginner")
+
+    def test_second_run_with_profile_skips_wizard(self):
+        (self.home).mkdir(parents=True, exist_ok=True)
+        dojo.save_state(self.home, dict(dojo.default_state(), profile="veteran"))
+        result, text = self.run_main(["q"])
+        self.assertEqual(result, 0)
+        self.assertNotIn("How well do you know the Devin CLI?", text)
+        self.assertIn("What do you want to practice?", text)
+
+    def test_train_subcommand_never_shows_wizard(self):
+        output = io.StringIO()
+        with patch.dict(os.environ, {"PROFESSOR_HOME": str(self.home)}):
+            with patch.object(dojo, "interactive_terminal", return_value=True):
+                with patch.object(dojo.Dojo, "train"):
+                    with redirect_stdout(output):
+                        self.assertEqual(dojo.main(["train", "--rounds", "2"]), 0)
+        self.assertNotIn("How well do you know", output.getvalue())
+
+    def test_setup_subcommand_and_help(self):
+        output = io.StringIO()
+        with patch.dict(os.environ, {"PROFESSOR_HOME": str(self.home)}):
+            with patch("builtins.input", side_effect=["1", ""]):
+                with redirect_stdout(output):
+                    self.assertEqual(dojo.main(["setup"]), 0)
+        state = json.loads((self.home / "state.json").read_text())
+        self.assertEqual(state["profile"], "beginner")
+
+        result = self.run_cli(["--help"])
+        self.assertIn("setup", result.stdout)
+        result = self.run_cli(["help", "setup"])
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn("professor-devin setup", result.stdout)
+
+    def test_get_sh_clones_and_installs(self):
+        repo = ROOT.parent
+        with tempfile.TemporaryDirectory() as directory:
+            # /var is a symlink on macOS; resolve so HOME matches the
+            # installer's readlink -f spelling either way.
+            root = Path(directory).resolve()
+            env = {
+                **os.environ,
+                "HOME": str(root),
+                "PROFESSOR_DEVIN_REPO": str(repo),
+                "PROFESSOR_DEVIN_DIR": str(root / "app"),
+            }
+            for _ in range(2):
+                result = subprocess.run(
+                    ["bash", str(repo / "get.sh")],
+                    input="",
+                    env=env,
+                    text=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    timeout=60,
+                )
+                self.assertEqual(result.returncode, 0, result.stdout)
+            link = root / ".local" / "bin" / "professor-devin"
+            self.assertTrue(link.is_symlink())
+            self.assertEqual(
+                link.resolve(), (root / "app" / "dojo" / "dojo.py").resolve()
+            )
+
+    def test_veteran_profile_forces_recall_but_fix_stays_fix(self):
+        content = dojo.load_content(self.home)
+        game = dojo.Dojo(self.home, content)
+        write_card = next(
+            card for card in content["commands"] if card["kind"] == "write"
+        )
+        fix_card = next(
+            card for card in content["commands"] if card["kind"] == "fix"
+        )
+        game.state["profile"] = "veteran"
+        self.assertEqual(game.command_form(write_card), "recall")
+        self.assertEqual(game.command_form(fix_card), "fix")
+        game.state["profile"] = "beginner"
+        self.assertEqual(game.command_form(write_card), "recognize")
+
+    def test_coach_tip_shows_twice_for_beginner_never_for_veteran(self):
+        content = dojo.load_content(self.home)
+        card = next(
+            card for card in content["commands"] if card["kind"] == "write"
+        )
+        game = dojo.Dojo(self.home, content)
+        game.state["profile"] = "beginner"
+        for round_number in range(3):
+            output = io.StringIO()
+            with patch("builtins.input", return_value="skip"):
+                with redirect_stdout(output):
+                    game.ask_command_card(card, [card], "recognize")
+            if round_number < 2:
+                self.assertIn("tip  ", output.getvalue())
+            else:
+                self.assertNotIn("tip  ", output.getvalue())
+        veteran = dojo.Dojo(self.home, content)
+        veteran.state["profile"] = "veteran"
+        output = io.StringIO()
+        with patch("builtins.input", return_value="skip"):
+            with redirect_stdout(output):
+                veteran.ask_command_card(card, [card], "recognize")
+        self.assertNotIn("tip  ", output.getvalue())
 
     def test_force_color_enables_and_zero_disables(self):
         class NonTty(io.StringIO):

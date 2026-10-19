@@ -478,6 +478,8 @@ def combo_score(evidence_found, unused_turns, best_combo, root_correct, fix_corr
 
 def default_state():
     return {
+        "profile": None,
+        "tips_seen": {},
         "xp": 0,
         "streak": 0,
         "daily_streak": 0,
@@ -1581,6 +1583,8 @@ class Dojo:
     def command_form(self, card):
         if card["kind"] == "fix":
             return "fix"
+        if self.state.get("profile") == "veteran":
+            return "recall"
         box = self.state.get("items", {}).get(card["id"], {}).get("box", 1)
         return "recognize" if box <= 1 else "fill in" if box == 2 else "recall"
 
@@ -1689,6 +1693,24 @@ class Dojo:
             question(card["task"])
         return None
 
+    COACH_TIPS = {
+        "recognize": "Type the number of your answer and press ↵",
+        "fill in": "Type only the missing part, or the whole command if that is easier",
+        "recall": "Type the command exactly as you would in your terminal; ? shows a hint",
+        "fix": "Copy the broken command and change only what is wrong",
+        "flash": "Short answers are fine; the game checks for the key words",
+        "flash-choice": "Type the number of your answer and press ↵",
+    }
+
+    def coach_tip(self, key):
+        if self.state.get("profile") != "beginner":
+            return
+        tips = self.state.setdefault("tips_seen", {})
+        if tips.get(key, 0) >= 2:
+            return
+        print("%s  %s" % (muted(chrome("Tip")), self.COACH_TIPS[key]))
+        tips[key] = tips.get(key, 0) + 1
+
     COMMAND_FOOTERS = {
         "recognize": ("1-4 to choose", "? hint", "skip", "quit"),
         "fill in": ("type the missing part or the whole command", "? hint", "skip", "quit"),
@@ -1753,6 +1775,7 @@ class Dojo:
     def ask_command_card(self, card, cards, form):
         choices = self.show_command_prompt(card, cards, form)
         print()
+        self.coach_tip(form)
         footer(*self.COMMAND_FOOTERS[form])
         box_open()
         hint_used = False
@@ -2053,6 +2076,7 @@ class Dojo:
         if displayed_choices:
             hints = ("1-4 to choose",) + hints
         print()
+        self.coach_tip("flash-choice" if displayed_choices else "flash")
         footer(*hints)
         box_open()
         hint_used = False
@@ -2571,6 +2595,7 @@ def show_stats(state):
     print(kv("XP", xp))
     print(kv("Streak", state.get("streak", 0)))
     print(kv("Daily streak", state.get("daily_streak", 0)))
+    print(kv("Profile", state.get("profile") or "not set"))
     items = state.get("items", {})
     correct, seen, percent = stats_accuracy(items)
     print(kv("Accuracy", "%d/%d  %.1f%%" % (correct, seen, percent)))
@@ -2734,7 +2759,8 @@ triage tech, tracer, config whisperer, root-causer, staff rca.
 The same things from the command line:
   professor-devin train [topic]        professor-devin play --mode flash
   professor-devin play --mode combo    professor-devin stats
-Progress is saved in ~/.professor-devin"""
+Progress is saved in ~/.professor-devin
+Switch profile any time: professor-devin setup"""
 
 
 def print_how_to_play():
@@ -2752,7 +2778,7 @@ def menu_progress_line(state):
         due_date = parse_time(progress.get("due"))
         if due_date and due_date <= now:
             due += 1
-    return "L%d %s %s %d xp %s %d cards due today" % (
+    line = "L%d %s %s %d xp %s %d cards due today" % (
         level,
         title_for_level(level),
         glyph("separator"),
@@ -2760,23 +2786,13 @@ def menu_progress_line(state):
         glyph("separator"),
         due,
     )
+    if state.get("profile"):
+        line += " %s %s" % (glyph("separator"), state["profile"])
+    return line
 
 
 def print_home_menu(state):
-    installed = installed_cli_version()
-    version_note = (
-        "you have %s" % installed if installed else "devin not installed"
-    )
-    print(MENU_LOGO[0])
-    print("%s  %s" % (MENU_LOGO[1], strong(chrome("Professor Devin"))))
-    print("%s  %s" % (MENU_LOGO[2], muted(chrome("Learn the Devin CLI by typing it"))))
-    print("%s  %s" % (MENU_LOGO[3], muted(chrome(
-        "Cards written for Devin CLI %s %s %s" % (
-            content_cli_version(),
-            glyph("separator"),
-            version_note,
-        )
-    ))))
+    print_banner(None)
     print()
     print(muted(chrome(menu_progress_line(state))))
     print()
@@ -2838,7 +2854,104 @@ def choose_topic_menu(content, state):
     return None
 
 
+SETUP_OPTIONS = (
+    ("New to it", "multiple choice first, with short tips in your first rounds"),
+    ("Already using it", "every card asks for the full command from the start; no tips"),
+)
+
+HOW_IT_WORKS = """Each round shows a job to do with the Devin CLI. Type the command you would
+run and press ↵. Nothing you type in command rounds or tickets runs for real.
+Cards you miss come back sooner; cards you know wait longer.
+
+  ?      hint          skip   show the answer and move on
+  quit   stop and save (ctrl-c works too)
+
+Pick 1 on the next screen for a 10-round quick start."""
+
+
+def print_banner(lead):
+    installed = installed_cli_version()
+    version_note = (
+        "you have %s" % installed if installed else "devin not installed"
+    )
+    lead_line = "%s %s " % (lead, glyph("separator")) if lead else ""
+    print(MENU_LOGO[0])
+    print("%s  %s" % (MENU_LOGO[1], strong(chrome("Professor Devin"))))
+    print("%s  %s" % (MENU_LOGO[2], muted(chrome("Learn the Devin CLI by typing it"))))
+    print("%s  %s" % (MENU_LOGO[3], muted(chrome(
+        "%scards written for Devin CLI %s %s %s" % (
+            lead_line,
+            content_cli_version(),
+            glyph("separator"),
+            version_note,
+        )
+    ))))
+
+
+def setup_wizard(home, state, first_run):
+    print_banner("First run" if first_run else "Setup")
+    print()
+    question("How well do you know the Devin CLI?")
+    print()
+    title_width = max(len(title) for title, _ in SETUP_OPTIONS)
+    for index, (title, description) in enumerate(SETUP_OPTIONS, 1):
+        padded = chrome(title).ljust(title_width)
+        if index == 1:
+            marker = accent(glyph("prompt"))
+            title_text = strong(padded)
+        else:
+            marker = " "
+            title_text = padded
+        print("%s %s %s  %s" % (
+            marker,
+            muted(str(index)),
+            title_text,
+            muted(chrome(description)),
+        ))
+    print()
+    footer(
+        "1-2 to choose",
+        "↵ new to it",
+        "change later with professor-devin setup",
+    )
+    while True:
+        try:
+            choice = read_answer().strip().lower()
+        except EOFError:
+            print()
+            return
+        if choice in ("q", "quit"):
+            return
+        if choice in ("", "1", "2"):
+            break
+        print(muted(chrome("Choose 1 or 2")))
+    if choice == "2":
+        state["profile"] = "veteran"
+        save_state(home, state)
+        print("%s %s" % (
+            strong("%s %s" % (glyph("found"), chrome("Veteran profile saved"))),
+            muted(chrome("every card asks for the full command; no tips")),
+        ))
+        return
+    state["profile"] = "beginner"
+    save_state(home, state)
+    print()
+    print(strong(chrome("How it works")))
+    print(rule(is_strong=True))
+    print(HOW_IT_WORKS)
+    print()
+    footer("↵ continue")
+    try:
+        read_answer()
+    except EOFError:
+        print()
+
+
 def home_menu(home, content):
+    state = load_state(home)
+    if state.get("profile") is None:
+        setup_wizard(home, state, first_run=True)
+        print()
     while True:
         state = load_state(home)
         print_home_menu(state)
@@ -2901,6 +3014,7 @@ Commands:
   categories  Show every category with cards seen, mastered, and due
   list        List every card and its review box
   reset       Erase saved progress
+  setup       Choose beginner or veteran profile (first-run wizard)
   help        Print this message or the help of the given subcommand(s)
 
 Options:
@@ -2970,6 +3084,13 @@ Options:
       --yes     Do not ask for confirmation
   -h, --help    Print help"""
 
+SETUP_HELP = """Choose beginner or veteran profile (first-run wizard)
+
+Usage: professor-devin setup [OPTIONS]
+
+Options:
+  -h, --help  Print help"""
+
 HELP_HELP = """Print this message or the help of the given subcommand(s)
 
 Usage: professor-devin help [COMMAND]
@@ -2988,6 +3109,7 @@ SUBCOMMAND_HELP = {
     "categories": CATEGORIES_HELP,
     "list": LIST_HELP,
     "reset": RESET_HELP,
+    "setup": SETUP_HELP,
     "help": HELP_HELP,
 }
 
@@ -3035,6 +3157,8 @@ def build_parser():
     reset_parser.add_argument("--yes", action="store_true")
     reset_parser.format_help = _static_help(RESET_HELP)
 
+    subparsers.add_parser("setup").format_help = _static_help(SETUP_HELP)
+
     help_parser = subparsers.add_parser("help")
     help_parser.add_argument("topic", nargs="?", choices=sorted(SUBCOMMAND_HELP))
     help_parser.format_help = _static_help(HELP_HELP)
@@ -3079,6 +3203,9 @@ def validate_training_arguments(args, parser):
 def run_cli_command(args, parser, home, content, state):
     if args.command == "menu":
         home_menu(home, content)
+        return
+    if args.command == "setup":
+        setup_wizard(home, state, first_run=False)
         return
     if args.command == "help":
         print(SUBCOMMAND_HELP[args.topic] if args.topic else ROOT_HELP)

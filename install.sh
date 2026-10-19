@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
-script_dir=$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+script_dir=$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
 target="$script_dir/dojo/dojo.py"
 launcher="$script_dir/professor-devin"
 bin_dir="$HOME/.local/bin"

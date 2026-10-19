@@ -3,6 +3,22 @@
 Every screen, key, and score in the game. Run `professor-devin` (or
 `./professor-devin` from the repo) to start.
 
+## First run and profiles
+
+The first time the menu opens you are asked how well you know the Devin CLI:
+
+- **new to it** (default) — the beginner profile: command cards start as
+  multiple choice, and your first rounds show one-line `tip` hints.
+- **already using it** — the veteran profile: every write card asks for the
+  full command from the start, and no tips are shown.
+
+Profiles change only the question form and the tips — XP, levels, and spaced
+repetition work the same either way. Change it later with
+`professor-devin setup`. Subcommands never show the wizard: `train`, `play`,
+`stats` and friends run straight through. Tips belong to the profile, not the
+entry point — a beginner who runs `professor-devin train` directly still sees
+them in the first rounds.
+
 ## The home menu
 
 In a terminal, `professor-devin` opens the home menu; `professor-devin menu`
@@ -104,6 +120,7 @@ Whisperer, Root-Causer, Staff RCA.
     professor-devin categories
     professor-devin list [--type flash|drill|combo|command]
     professor-devin reset [--yes]
+    professor-devin setup                          beginner or veteran profile
     professor-devin help [COMMAND]
     professor-devin -h | --help    -V | --version
 
@@ -119,8 +136,9 @@ State lives in `$PROFESSOR_HOME/state.json` — `PROFESSOR_HOME` first, then
 
 ## Troubleshooting
 
-- `professor-devin: command not found` — add
-  `export PATH="$HOME/.local/bin:$PATH"` to your shell rc, or run
+- `professor-devin: command not found` — easiest: re-run the installer,
+  `curl -fsSL https://raw.githubusercontent.com/adames/Devin-CLI-trainer/main/get.sh | bash`,
+  or add `export PATH="$HOME/.local/bin:$PATH"` to your shell rc, or run
   `./professor-devin` from the repo.
 - No colors — colors need a terminal with `NO_COLOR` unset; force them in a
   pipe with `FORCE_COLOR=1`.

@@ -283,6 +283,9 @@ def fresh_home():
 
 def shot_home():
     home, _ = fresh_home()
+    dojo.save_state(
+        home, dict(dojo.default_state(), profile="beginner")
+    )
     env = dict(os.environ)
     env["FORCE_COLOR"] = "1"
     env["PROFESSOR_HOME"] = str(home)
@@ -307,6 +310,18 @@ def seed_train_state(home, content):
     progress["due"] = (now - dt.timedelta(days=3)).isoformat()
     dojo.save_state(home, state)
     return recall_card, fill_card
+
+
+def shot_first_run():
+    home, _ = fresh_home()
+    env = dict(os.environ)
+    env["FORCE_COLOR"] = "1"
+    env["PROFESSOR_HOME"] = str(home)
+    with patch.dict(os.environ, env, clear=True):
+        text, marks = capture_session(
+            lambda: dojo.setup_wizard(home, dojo.load_state(home), True), []
+        )
+    return slice_at(text, marks["eof"]) + CURSOR, "professor-devin"
 
 
 def shot_train():
@@ -351,6 +366,7 @@ def shot_stats():
     state["xp"] = 230
     state["streak"] = 4
     state["daily_streak"] = 3
+    state["profile"] = "beginner"
     pool = []
     for category, count in (
         ("launch", 8), ("sessions", 5), ("auth", 3), ("mcp", 12), ("slash", 12)
@@ -389,6 +405,7 @@ def shot_stats():
 
 
 SHOTS = {
+    "first-run": shot_first_run,
     "home": shot_home,
     "train": shot_train,
     "ticket": shot_ticket,

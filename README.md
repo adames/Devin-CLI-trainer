@@ -8,7 +8,12 @@ asks you to write real `devin` commands, checks them against the CLI's own
 
 ## Install (about a minute)
 
-You need Python 3 (macOS and Linux have it; on macOS, `xcode-select --install` adds it if missing).
+You need git and Python 3 (macOS and Linux have them; on macOS, `xcode-select --install` adds what is missing).
+
+    curl -fsSL https://raw.githubusercontent.com/adames/Devin-CLI-trainer/main/get.sh | bash
+    professor-devin
+
+Or from a clone:
 
     git clone https://github.com/adames/Devin-CLI-trainer.git
     cd Devin-CLI-trainer
@@ -19,8 +24,9 @@ You need Python 3 (macOS and Linux have it; on macOS, `xcode-select --install` a
 that folder to your PATH. Prefer not to install? `./professor-devin` runs it
 from the repo.
 
-New to the terminal? Every screen tells you what to type. Pick an option with
-a number, press Enter, and type commands exactly as you would in a real shell.
+**New to the terminal?** The first run asks how well you know the Devin CLI. Pick *new to it* and you get multiple choice first plus short tips in your first rounds. **Already fluent?** Pick *already using it*: every card asks for the full command from the start, no tips, and `professor-devin train`, `play`, `stats` work directly without the menu. Change your mind any time with `professor-devin setup`.
+
+![First run](assets/first-run.png)
 
 ## What you practice
 
@@ -56,6 +62,7 @@ Command rounds and tickets are simulated; nothing you type in them runs for real
     professor-devin train mcp           10 rounds on one topic, then a ticket
     professor-devin play --mode flash   flashcards only
     professor-devin stats               level, accuracy by topic, cards due
+    professor-devin setup               beginner or veteran profile
     professor-devin help train          flags for any command
 
 Progress lives in `~/.professor-devin/` (`PROFESSOR_HOME` overrides it). `professor-devin reset` clears it.

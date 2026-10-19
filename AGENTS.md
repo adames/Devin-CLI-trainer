@@ -10,6 +10,9 @@ live drills under one XP/spaced-repetition system.
 - Content: `dojo/content/*.json` + `dojo/content/help/` (captured `--help`).
 - Tests: `cd dojo && python3 -m unittest discover -s tests -v`
 - Lint: `cd dojo && flake8 --max-line-length 120 dojo.py tests/`
+- Install: `install.sh` (symlink into ~/.local/bin) or `get.sh` (one-line
+  curl installer). CLI surface includes `menu`, `train`, `play`, `stats`,
+  `categories`, `list`, `reset`, `setup` (profile wizard), `help`.
 - Screenshots: `python3 tools/screenshots.py` → `assets/*.png` (regenerate
   after any UI change; needs `rsvg-convert` or `magick`).
 

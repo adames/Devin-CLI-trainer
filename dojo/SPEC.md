@@ -48,9 +48,15 @@ professor-devin play [--mode flash|drill|combo] [--topic REGEX] [--rounds N]
 professor-devin stats
 professor-devin list [--type flash|drill|combo|command]
 professor-devin reset [--yes]
+professor-devin setup
 professor-devin help [COMMAND]
 professor-devin -V | --version
 ```
+
+A one-line installer, `get.sh` at the repo root, clones the repo to
+`~/.local/share/professor-devin` (or pulls if already cloned) and runs
+`install.sh`, taking its answers from `/dev/tty` so it works under
+`curl | bash`.
 
 A bare run opens the home menu when stdin and stdout are both terminals; when
 piped it still starts 10 command-writing rounds and one ticket boss, so
@@ -62,6 +68,21 @@ limit the categories, number of rounds, highest tier, and random seed. `play`
 keeps the mixed flashcard, drill, and ticket game. Unknown categories produce
 an error listing the valid category names. `--help` and `help [COMMAND]` print
 clap-style help; `-V`/`--version` prints the game and content versions.
+
+## Profiles and the first-run wizard
+
+`state.json` carries `profile` (`beginner`, `veteran`, or absent) and
+`tips_seen` (per-tip counters). When the home menu opens with no profile set,
+a first-run wizard asks "How well do you know the Devin CLI?": *new to it*
+saves `beginner`, *already using it* saves `veteran`; `professor-devin setup`
+re-runs the wizard any time. Subcommands and piped runs never trigger it.
+
+On the veteran profile every write card asks for the full command (`recall`)
+regardless of its Leitner box; fix cards still ask for the fix. On the
+beginner profile a one-line `tip` appears before the answer footer the first
+two times each form is seen (`recognize`, `fill in`, `recall`, `fix`,
+`flash`, `flash-choice`). XP, streaks, and spaced repetition are identical on
+both profiles.
 
 All answers use regular `input()`. This lets tests send answers through stdin;
 the game doesn't read raw keys or open `/dev/tty`. End-of-file ends the run
