@@ -501,7 +501,7 @@ class EndToEndTests(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stdout)
             self.assertIn("round 1/3", result.stdout)
-            self.assertNotIn("[L1 Intern", result.stdout)
+            self.assertNotIn("[L1 Otter Pup", result.stdout)
             state_path = Path(env["DOJO_HOME"]) / "state.json"
             self.assertTrue(state_path.exists())
             state = json.loads(state_path.read_text())

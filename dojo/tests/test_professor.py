@@ -677,6 +677,66 @@ class ProfessorEngineTests(unittest.TestCase):
             self.assertTrue(link.is_symlink())
             self.assertEqual(link.resolve(), ROOT / "dojo.py")
 
+    def test_titles_follow_the_otter_ladder(self):
+        self.assertEqual(dojo.title_for_level(1), "Otter Pup")
+        self.assertEqual(dojo.title_for_level(3), "Shell Cracker")
+        self.assertEqual(dojo.title_for_level(9), "Laptop Otter")
+        self.assertEqual(dojo.title_for_level(10), "Devin Deity")
+        self.assertEqual(dojo.title_for_level(42), "Devin Deity")
+        self.assertEqual(dojo.level_for_xp(4050), 10)
+        self.assertEqual(dojo.level_for_xp(4049), 9)
+
+    def test_level_up_notice_prints_once_after_crossing_round(self):
+        self.game.state["xp"] = 45
+        self.game.begin_session(seed=1)
+        self.game.award(10)
+        out = io.StringIO()
+        with redirect_stdout(out):
+            self.game.print_level_up()
+        self.assertIn("level up", out.getvalue())
+        self.assertIn("l2 rock picker", out.getvalue())
+        out = io.StringIO()
+        with redirect_stdout(out):
+            self.game.print_level_up()
+        self.assertEqual(out.getvalue(), "")
+        self.game.award(5)
+        out = io.StringIO()
+        with redirect_stdout(out):
+            self.game.print_level_up()
+        self.assertEqual(out.getvalue(), "")
+
+        self.game.state["xp"] = 45
+        self.game.begin_session(seed=1)
+        item = {
+            "id": "card-test-levelup",
+            "topic": "launch",
+            "q": "q",
+            "answers": ["correct"],
+            "keywords": ["correct"],
+            "hint": "hint",
+            "explain": "explain",
+        }
+        options = {"flash": [item], "drill": [], "combo": []}
+        out = io.StringIO()
+        with patch("builtins.input", return_value="correct"), redirect_stdout(out):
+            self.assertTrue(self.game.play_requested_round(1, 1, "flash", options))
+        text = out.getvalue()
+        self.assertIn("correct +10 xp", text)
+        self.assertIn("l2 rock picker", text)
+        self.assertLess(text.index("correct +10 xp"), text.index("level up"))
+
+    def test_stats_names_next_rank(self):
+        out = io.StringIO()
+        with redirect_stdout(out):
+            dojo.show_stats({"xp": 420, "items": {}})
+        self.assertIn("l3 shell cracker", out.getvalue())
+        self.assertIn("next: l4 brisk otter in 30 xp", out.getvalue())
+        out = io.StringIO()
+        with redirect_stdout(out):
+            dojo.show_stats({"xp": 4100, "items": {}})
+        self.assertIn("l10 devin deity", out.getvalue())
+        self.assertIn("next: l11 devin deity in 900 xp", out.getvalue())
+
 
 class MenuAndCliTests(unittest.TestCase):
     def setUp(self):

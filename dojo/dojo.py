@@ -28,13 +28,17 @@ DRILL_TIME_BONUS_SECONDS = 20
 DRILL_BASE_XP = 25
 VALID_TIERS = (1, 2, 3)
 TITLES = {
-    1: "Intern",
-    2: "Log Reader",
-    3: "Triage Tech",
-    4: "Tracer",
-    5: "Config Whisperer",
-    6: "Root-Causer",
+    1: "Otter Pup",
+    2: "Rock Picker",
+    3: "Shell Cracker",
+    4: "Brisk Otter",
+    5: "Sidekick",
+    6: "Raft Captain",
+    7: "Dangerous Otter",
+    8: "Keystone Otter",
+    9: "Laptop Otter",
 }
+TOP_TITLE = "Devin Deity"
 KNOWN_COMMANDS = {
     "devin", "cat", "ls", "jq", "rg", "grep", "env", "echo", "type", "which",
     "command", "bash", "curl", "ps", "lsof", "ss", "strace", "tail", "head",
@@ -456,7 +460,7 @@ def level_for_xp(xp):
 
 
 def title_for_level(level):
-    return TITLES.get(level, "Staff RCA")
+    return TITLES.get(level, TOP_TITLE)
 
 
 def streak_multiplier(streak):
@@ -1393,6 +1397,7 @@ class Dojo:
         self.last_new_category = None
         self.last_new_tier = None
         self.session_hint = None
+        self.round_level = level_for_xp(self.state.get("xp", 0))
 
     def award(self, points):
         old_xp = self.state.get("xp", 0)
@@ -1400,6 +1405,15 @@ class Dojo:
         actual = self.state["xp"] - old_xp
         self.session_xp += actual
         return actual
+
+    def print_level_up(self):
+        level = level_for_xp(self.state.get("xp", 0))
+        if level > self.round_level:
+            print(strong("%s %s" % (
+                glyph("found"),
+                chrome("Level up %s L%d %s" % (glyph("separator"), level, title_for_level(level))),
+            )))
+        self.round_level = level
 
     def begin_session(self, seed=None):
         if seed is not None:
@@ -1426,6 +1440,7 @@ class Dojo:
             self.state["daily_streak"] = 1
         self.state["last_session_date"] = today.isoformat()
         self.state["sessions"] = self.state.get("sessions", 0) + 1
+        self.round_level = level_for_xp(self.state.get("xp", 0))
 
     def record_round(self, item, correct):
         self.round_attempts += 1
@@ -1455,6 +1470,7 @@ class Dojo:
 
     def header(self, item, category, round_number, total_rounds):
         level = level_for_xp(self.state.get("xp", 0))
+        self.round_level = level
         multiplier = self.global_multiplier()
         digits = len(str(total_rounds))
         round_label = "%0*d/%0*d" % (
@@ -1501,6 +1517,7 @@ class Dojo:
 
     def training_header(self, item, form, round_number, total_rounds):
         level = level_for_xp(self.state.get("xp", 0))
+        self.round_level = level
         digits = len(str(total_rounds))
         round_label = "%0*d/%0*d" % (digits, round_number, digits, total_rounds)
         left = chrome("Round %s %s %s %s %s" % (
@@ -1858,6 +1875,7 @@ class Dojo:
                 form = self.command_form(card)
                 self.training_header(card, form, round_number + 1, rounds + 1)
                 result = self.ask_command_card(card, filtered, form)
+                self.print_level_up()
                 if result is None or self.stop_requested:
                     break
             if not self.stop_requested:
@@ -1867,6 +1885,7 @@ class Dojo:
                 if ticket:
                     self.header(ticket, "combo", rounds + 1, rounds + 1)
                     self.play_combo(ticket)
+                    self.print_level_up()
         except EOFError:
             print("\n%s %s" % (glyph("quit"), muted(chrome("Input ended; saving progress"))))
         except KeyboardInterrupt:
@@ -2382,6 +2401,7 @@ class Dojo:
                 self.stop_requested = True
         else:
             self.play_combo(item)
+        self.print_level_up()
         return True
 
     def run_play_rounds(self, plan, options):
@@ -2592,6 +2612,7 @@ def show_stats(state):
         score_bar(progress),
         muted("%d/%d xp" % (xp, level_ceiling)),
     ))
+    print(muted(chrome("Next: L%d %s in %d xp" % (level + 1, title_for_level(level + 1), level_ceiling - xp))))
     print(kv("XP", xp))
     print(kv("Streak", state.get("streak", 0)))
     print(kv("Daily streak", state.get("daily_streak", 0)))

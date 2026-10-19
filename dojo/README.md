@@ -107,8 +107,10 @@ box 1 recognize, box 2 fill in, box 3+ recall.
   combo; a wrong root cause costs 20, a correct fix adds 25.
 
 The streak multiplier is `1 + 0.25 × streak`, capped at x3. Your level is
-`floor(sqrt(xp / 50)) + 1`: Intern, Log Reader, Triage Tech, Tracer, Config
-Whisperer, Root-Causer, Staff RCA.
+`floor(sqrt(xp / 50)) + 1`: Otter Pup, Rock Picker, Shell Cracker, Brisk
+Otter, Sidekick, Raft Captain, Dangerous Otter, Keystone Otter, Laptop Otter,
+then Devin Deity at level 10+. Crossing a level prints `● level up · l4 brisk
+otter` after the round, and `stats` shows `next: l4 brisk otter in 30 xp`.
 
 ## Command reference
 

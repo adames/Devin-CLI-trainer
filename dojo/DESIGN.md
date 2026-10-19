@@ -42,7 +42,7 @@ CLI equivalent of the menu choice.
 Round header:
 ```
 (blank line)
-round 04/13 · flash · hooks            l3 triage tech · 420 xp · x1.75
+round 04/13 · flash · hooks            l3 shell cracker · 420 xp · x1.75
 ```
 Left part ink, right part muted, right-aligned to W (if it doesn't fit, put the right part on its own line).
 Numbers zero-padded to the width of total rounds. Train headers are the same (`round 03/10 · launch · recall`),
@@ -65,7 +65,7 @@ Menu logo banner (home menu):
 ⠀⣤⣶⣦⣴⠿⢿⠿⠃  learn the devin cli by typing it      (muted)
 ⠀⠻⢿⠿⠃⠀⠀⠀⠀  cards written for devin cli <content> · you have <ver>   (muted)
 ```
-followed by a muted progress line (`l1 intern · 0 xp · 0 cards due today`), the `✱ What do you want to
+followed by a muted progress line (`l1 otter pup · 0 xp · 0 cards due today`), the `✱ What do you want to
 practice?` question, the numbered options, the `1-7 to choose · ↵ quick start · q quit` footer, and `❭ `.
 
 The setup wizard (first run or `professor-devin setup`) reuses the same banner with the fourth line reading
@@ -84,6 +84,7 @@ Outcomes:
   (SignalDots: ● per key evidence found, ○ per remaining). `[sim]`/`[rec]` provenance tag muted, appended to output from
   simulated/recorded commands (add `[rec]`; today only `[sim]` shows).
 - root cause wrong: danger ` wrong root cause ` + muted `-20 xp`; right: strong `● root cause`.
+- level up: strong `● level up · l4 brisk otter`, printed after the round's outcome line (after the reveal for tickets)
 
 Mystery ticket intro: `✱ ` + strong chrome label `mystery ticket` + ` · <title>` (title is content), strong
 rule, then ticket text, then one muted footer (`shell commands as the customer · hint (-10 xp) · ticket ·
@@ -98,7 +99,7 @@ Summary and stats (app data surfaces):
   right-aligned numbers and a 10-cell ScoreBar for acc. Sorted by topic.
 - weakest topics, missed items (`○ <question>` then indented `<answer>`), due tomorrow, best combo, leitner boxes
   (stats: `box 1  box 2 ...` as a DataTable header with counts).
-- level progress in stats: `l3 triage tech` + ScoreBar of progress to next level + muted `420/450 xp`.
+- level progress in stats: `l3 shell cracker` + ScoreBar of progress to next level + muted `420/450 xp`, followed by a muted `next: l4 brisk otter in 30 xp` line.
 
 ## NO_COLOR / non-TTY
 No SGR at all. `FORCE_COLOR` (any value except `""`/`0`) forces color on even when piped. Lowercase chrome,

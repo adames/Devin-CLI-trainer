@@ -145,9 +145,13 @@ The global streak counts consecutive correct rounds. The multiplier is
   fix. A hint or self-grade halves that command round's XP.
 
 The global streak multiplier applies to round XP. Level is
-`floor(sqrt(xp / 50)) + 1`. Titles are Intern, Log Reader, Triage Tech, Tracer,
-Config Whisperer, Root-Causer, then Staff RCA for level 7 and above. A daily
-streak counts consecutive days with at least one session.
+`floor(sqrt(xp / 50)) + 1`. Titles are Otter Pup, Rock Picker, Shell Cracker,
+Brisk Otter, Sidekick, Raft Captain, Dangerous Otter, Keystone Otter, Laptop
+Otter, then Devin Deity for level 10 and above. When a round raises the level,
+the game prints `● level up · l4 brisk otter` after that round's outcome (after
+the reveal for tickets). `stats` shows the next rank and the xp still needed
+(`next: l4 brisk otter in 30 xp`). A daily streak counts consecutive days with
+at least one session.
 
 The summary shows XP gained, accuracy, topic accuracy, the weakest topics,
 missed items, items due tomorrow, and the best combo. Training summaries also

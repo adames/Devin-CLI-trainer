@@ -48,7 +48,7 @@ Command rounds and tickets are simulated; nothing you type in them runs for real
 - **Real answers.** Every `devin` command card is validated against the captured `devin <cmd> --help` text in `dojo/content/help/` (CLI 3000.11.92), so a wrong flag gets a precise correction, not just "wrong".
 - **Spaced repetition.** Each card sits in one of five boxes. Get it right and it moves up and comes back later (1, 3, 7, 21 days); miss it and it returns to box 1.
 - **Harder as you learn.** Box 1 cards are multiple choice, box 2 fill-in, box 3+ full recall. Fix cards show a broken command and its error.
-- **XP and levels.** Streaks multiply XP up to 3x. Levels run Intern, Log Reader, Triage Tech, Tracer, Config Whisperer, Root-Causer, Staff RCA.
+- **XP and levels.** Streaks multiply XP up to 3x. Levels run Otter Pup, Rock Picker, Shell Cracker, Brisk Otter, Sidekick, Raft Captain, Dangerous Otter, Keystone Otter, Laptop Otter, then Devin Deity.
 
 ![Progress](assets/stats.png)
 
