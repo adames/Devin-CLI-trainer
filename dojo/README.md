@@ -1,88 +1,139 @@
-# Professor Devin
+# Professor Devin: player's manual
 
-I'm a support engineer at Cognition. I built Professor Devin so I could stop
-looking up Devin CLI flags and start knowing them. It asks me to write real
-commands, points out what I got wrong, and brings missed cards back later.
+Every screen, key, and score in the game. Run `professor-devin` (or
+`./professor-devin` from the repo) to start.
 
-This folder is part of the [devin-cli-mastery kit](../README.md); it expects
-`../cards.tsv` and `../GUIDE.md` to be in place next to it.
+## The home menu
 
-## Install
+In a terminal, `professor-devin` opens the home menu; `professor-devin menu`
+opens it anywhere. Each choice prints the CLI command it stands for under
+`next time:` in the session header.
 
-1. Open a terminal in this project folder.
-2. Run `bash install.sh`. It puts `professor-devin` in `~/.local/bin`.
-3. Run `professor-devin`.
+| Key | Activity | Same thing from the CLI |
+| - | - | - |
+| 1 (or just ↵) | Quick start: 10 command rounds, then a mystery ticket | `professor-devin train` |
+| 2 | Pick a topic: the same session on one category | `professor-devin train <topic>` |
+| 3 | Flashcards | `professor-devin play --mode flash` |
+| 4 | Mystery ticket | `professor-devin play --mode combo` |
+| 5 | Live drills | `professor-devin play --mode drill` |
+| 6 | Progress: level, accuracy by topic, cards due | `professor-devin stats` + `categories` |
+| 7 | How to play: the rules on one screen | — |
+| q | Quit | — |
 
-## Your first 5 minutes
+## A round, line by line
 
-The first run gives you 10 command rounds and a mystery-ticket boss. Each round
-shows a support task. Type the command you would use, then press Enter. Type
-`?` for a hint. Type `skip` to see the answer and explanation without taking a
-guess.
+![A training round](../assets/train.png)
 
-The game keeps your progress between runs. It uses spaced repetition: missed
-cards come back sooner, and cards you know stay away longer.
+- `round 3/11 · launch · recall` counts the rounds, names the topic and the
+  form; the right side shows your level, XP, and streak multiplier.
+- `✱` marks the task to do.
+- The muted footer (`? hint · skip · quit` or `1-4 to choose · ...`) lists
+  the keys that work right now.
+- You type on the `❭ ` line between the hairlines.
+- `● correct +15 xp` is the outcome. A miss shows ` missed `, then
+  `answer`/`command`, the `devin --help` lines the answer came from, the
+  explanation, and `❭ count it as correct? y/n` — answer `y` if you were
+  right in spirit.
+- `?` shows the hint once (it halves that round's XP), `skip` reveals the
+  answer and moves on, `quit` stops and saves. Ctrl-C saves too.
 
-### Four question types
+## The four forms
 
-- **Recognize:** See `devin -c` and choose what it does.
-- **Fill in:** See the task and `devin ___`; type the missing part.
-- **Recall:** See “Reopen the latest session in this directory”; write the
-  whole command.
-- **Fix:** See a broken command and its error; write the corrected command.
+- **recognize** — you see a command and pick what it does (1-4, or a-d, or
+  type the task text).
+- **fill in** — a command with one piece blanked out; type the missing part,
+  or the whole command.
+- **recall** — write the whole command from the task.
+- **fix** — a broken command and its real error; type the corrected command.
 
-The form gets harder as you learn a card. Fix cards always show the broken
-command and error.
+## Mystery tickets
 
-## Categories and tiers
+![A mystery ticket](../assets/ticket.png)
 
-Categories group commands by job: `launch`, `sessions`, `auth`, `config-rules`,
-`skills`, `mcp`, `plugins`, `models`, `cloud`, `maintenance`, `integration`,
-`slash`, and `shell`.
+A customer's broken setup, one shell command at a time — simulated: nothing
+runs for real. Type shell commands at the `❭ customer@… $` prompt. New
+evidence commands fill the evidence dots (`●○○○`) and build the combo
+multiplier (up to x3). `ticket` reprints the message, `hint` shows the next
+optimal command and costs 10 XP, `solve` moves to the diagnosis questions,
+`quit` ends the session. When the turns run out you have to solve. Name the
+root cause and the fix from the numbered choices.
 
-Tier 1 covers commands I use often. Tier 2 adds useful commands. Tier 3 fills
-out the less common parts of the CLI. `--tier 2` includes tiers 1 and 2.
+## Live drills
 
-For a focused session, run
-`professor-devin train launch --rounds 5 --tier 1 --seed 1`. Replace `launch`
-with any category. `--seed` makes the order repeatable.
+Drills run real `devin` commands on your machine inside
+`$PROFESSOR_HOME/arena/<drill-id>/`. A drill is skipped when your platform or
+a required program is missing, when `devin auth status` reports
+`Not logged in`, when it may use credits without `--allow-credits`, or under
+`--no-live`. Inside a drill, `!<command>` runs a shell command in the arena
+as often as you like; `give up` shows the explanation.
 
-## Other commands
+## Spaced repetition
 
-- `professor-devin play --mode flash` runs flashcards.
-- `professor-devin play --mode drill --no-live` practices without running live
-  drills.
-- `professor-devin play --mode combo` runs a mystery ticket.
-- `professor-devin stats` shows your progress.
-- `professor-devin list --type command` lists command cards.
-- `professor-devin categories` shows the category deck.
-- `professor-devin reset --yes` clears saved progress.
+Every item lives in one of five boxes:
 
-You can add `--topic REGEX`, `--rounds N`, and `--seed N` to `play`. Live
-credit-using drills are off unless you add `--allow-credits`.
+| Box after a correct answer | Wait before it is due |
+|---:|---:|
+| 2 | 1 day |
+| 3 | 3 days |
+| 4 | 7 days |
+| 5 | 21 days |
+
+A miss resets the card to box 1, due now. Command-card boxes choose the form:
+box 1 recognize, box 2 fill in, box 3+ recall.
+
+## XP
+
+- Command rounds: recognize 5, fill in 10, recall or fix 15. A hint or a
+  self-grade halves the round.
+- Flashcards: 10, or 5 with a hint or self-grade.
+- Live drills: 25 plus a speed bonus of up to 15.
+- Tickets: 50 + 10 per evidence command + 5 per unused turn, times the best
+  combo; a wrong root cause costs 20, a correct fix adds 25.
+
+The streak multiplier is `1 + 0.25 × streak`, capped at x3. Your level is
+`floor(sqrt(xp / 50)) + 1`: Intern, Log Reader, Triage Tech, Tracer, Config
+Whisperer, Root-Causer, Staff RCA.
+
+## Command reference
+
+    professor-devin [menu]                          home menu
+    professor-devin train [CATEGORY ...] [--rounds N] [--tier 1|2|3] [--seed N]
+    professor-devin play [--mode flash|drill|combo] [--topic REGEX]
+                         [--rounds N] [--seed N] [--no-live] [--allow-credits]
+    professor-devin stats
+    professor-devin categories
+    professor-devin list [--type flash|drill|combo|command]
+    professor-devin reset [--yes]
+    professor-devin help [COMMAND]
+    professor-devin -h | --help    -V | --version
+
+`--rounds` defaults to 10, `--tier` to 3, `--seed` repeats a shuffle.
+`--no-live` skips drills; `--allow-credits` permits credit-using ones.
+`reset` asks for confirmation unless `--yes`.
 
 ## Saved progress
 
-Progress goes to `$PROFESSOR_HOME` if set, otherwise `$DOJO_HOME`, otherwise
-`~/.professor-devin/`.
+State lives in `$PROFESSOR_HOME/state.json` — `PROFESSOR_HOME` first, then
+`DOJO_HOME`, then `~/.professor-devin/`. Live-drill arenas sit under
+`arena/` in the same folder. `professor-devin reset` erases it.
 
 ## Troubleshooting
 
-If `professor-devin` is not found, add `~/.local/bin` to your `PATH`, then
-open a new terminal. Run `professor-devin --help` to see the available
-commands.
+- `professor-devin: command not found` — add
+  `export PATH="$HOME/.local/bin:$PATH"` to your shell rc, or run
+  `./professor-devin` from the repo.
+- No colors — colors need a terminal with `NO_COLOR` unset; force them in a
+  pipe with `FORCE_COLOR=1`.
+- Glyphs look wrong — the game needs a UTF-8 terminal; it falls back to
+  ASCII automatically when the encoding isn't UTF-8.
+- `devin not installed` in the banner — the game still works; only live
+  drills need the CLI.
 
 ## Development
 
-```
-python3 -m unittest discover -s tests -v
-flake8 --max-line-length 120 dojo.py tests/
-```
-
-## More docs
-
-- [CONTRIBUTING.md](CONTRIBUTING.md) — where card facts come from and how to
-  add cards.
-- [SPEC.md](SPEC.md) — exact game behaviour.
-- [DESIGN.md](DESIGN.md) — terminal styling rules.
-- [transcripts/README.md](transcripts/README.md) — index of review captures.
+- Tests: `cd dojo && python3 -m unittest discover -s tests -v`
+  (`flake8 --max-line-length 120 dojo.py tests/` if you have flake8).
+- Screenshots in `assets/`: `python3 tools/screenshots.py` (regenerate after
+  UI changes).
+- `../GUIDE.md` is append-only: `commands.json` `source` fields and tests
+  cite it by line number.

@@ -555,7 +555,7 @@ class PresentationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout)
         self.assertNotIn("\x1b", result.stdout)
         self.assertIn("[missed]", result.stdout)
-        self.assertIn("devin dojo", result.stdout)
+        self.assertIn("professor devin %s play" % dojo.glyph("separator"), result.stdout)
         self.assertRegex(result.stdout, r"round \d+/\d+")
 
     def test_color_wrong_flash_uses_inverse_danger_and_accent_marker_only(self):
@@ -591,7 +591,7 @@ class PresentationTests(unittest.TestCase):
             match.end() for match in re.finditer(re.escape(accent_sequence), text)
         ]
         self.assertTrue(accent_positions)
-        self.assertTrue(all(text[position:].startswith("☞") for position in accent_positions))
+        self.assertTrue(all(text[position:].startswith("❭") for position in accent_positions))
         self.assertEqual(dojo.chrome("Session summary"), "session summary")
 
     def test_accent_code_parsing_and_default(self):
@@ -604,7 +604,10 @@ class PresentationTests(unittest.TestCase):
 
     def test_ascii_fallback_omits_all_unicode_glyphs(self):
         output = TerminalCapture(encoding="ascii")
-        names = ("prompt", "found", "empty", "separator", "quit", "strong_rule", "hairline")
+        names = (
+            "prompt", "question", "found", "empty", "separator", "quit",
+            "strong_rule", "hairline",
+        )
         with patch.object(dojo, "use_color", return_value=False):
             with redirect_stdout(output):
                 print("".join(dojo.glyph(name) for name in names))
@@ -612,7 +615,7 @@ class PresentationTests(unittest.TestCase):
                 print(dojo.score_bar(0.5))
                 print(dojo.rule(), dojo.rule(is_strong=True))
         text = output.getvalue()
-        for character in "☞●○·✕━─":
+        for character in "❭✱●○·✕━─":
             self.assertNotIn(character, text)
 
     def test_source_has_no_non_accent_foreground_sgr_literals(self):

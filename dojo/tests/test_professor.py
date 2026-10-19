@@ -429,11 +429,12 @@ class ProfessorEngineTests(unittest.TestCase):
         output = io.StringIO()
         with patch("builtins.input", return_value="skip"), redirect_stdout(output):
             self.game.ask_command_card(card, self.content["commands"], "fill in")
+            marker = dojo.glyph("question")
         self.assertEqual(
             output.getvalue().splitlines()[:2],
             [
-                card["task"],
-                card["answers"][0].replace(dojo.command_blank(card), "___", 1),
+                "%s %s" % (marker, card["task"]),
+                "  " + card["answers"][0].replace(dojo.command_blank(card), "___", 1),
             ],
         )
 
@@ -584,8 +585,9 @@ class ProfessorEngineTests(unittest.TestCase):
             with patch.dict(os.environ, {
                 "PROFESSOR_HOME": str(Path(directory) / "state"),
             }):
-                with patch.object(dojo.Dojo, "train") as train:
-                    self.assertEqual(dojo.main([]), 0)
+                with patch.object(dojo, "interactive_terminal", return_value=False):
+                    with patch.object(dojo.Dojo, "train") as train:
+                        self.assertEqual(dojo.main([]), 0)
         train.assert_called_once_with([], 10, 3, None)
         self.assertEqual(dojo.build_parser().prog, "professor-devin")
 
@@ -628,6 +630,125 @@ class ProfessorEngineTests(unittest.TestCase):
             link = home / ".local" / "bin" / "professor-devin"
             self.assertTrue(link.is_symlink())
             self.assertEqual(link.resolve(), ROOT / "dojo.py")
+
+
+class MenuAndCliTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.home = Path(self.temp.name)
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def run_main(self, inputs):
+        output = io.StringIO()
+        with patch.dict(os.environ, {"PROFESSOR_HOME": str(self.home)}):
+            with patch.object(dojo, "interactive_terminal", return_value=True):
+                with patch("builtins.input", side_effect=inputs):
+                    with redirect_stdout(output):
+                        result = dojo.main([])
+        return result, output.getvalue()
+
+    def test_bare_run_in_terminal_opens_home_menu(self):
+        with patch.object(dojo.Dojo, "train") as train:
+            result, text = self.run_main(["q"])
+        self.assertEqual(result, 0)
+        self.assertIn("What do you want to practice?", text)
+        self.assertIn("quick start", text)
+        train.assert_not_called()
+
+    def test_menu_quick_start_runs_default_train(self):
+        with patch.object(dojo.Dojo, "train") as train:
+            result, _ = self.run_main(["1", "", "q"])
+        self.assertEqual(result, 0)
+        train.assert_called_once_with([], 10, 3, None)
+
+    def test_menu_enter_starts_quick_start(self):
+        with patch.object(dojo.Dojo, "train") as train:
+            result, _ = self.run_main(["", "", "q"])
+        self.assertEqual(result, 0)
+        train.assert_called_once_with([], 10, 3, None)
+
+    def test_menu_pick_a_topic_trains_that_category(self):
+        with patch.object(dojo.Dojo, "train") as train:
+            result, _ = self.run_main(["2", "mcp", "", "q"])
+        self.assertEqual(result, 0)
+        train.assert_called_once_with(["mcp"], 10, 3, None)
+
+    def run_cli(self, argv, stdin=""):
+        env = {
+            **os.environ,
+            "PROFESSOR_HOME": str(self.home / "state"),
+            "NO_COLOR": "1",
+            "PYTHONIOENCODING": "utf-8",
+        }
+        return subprocess.run(
+            [sys.executable, str(ROOT / "dojo.py")] + argv,
+            input=stdin,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            env=env,
+            timeout=30,
+        )
+
+    def test_help_and_version_look_like_clap(self):
+        result = self.run_cli(["--help"])
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn("Usage: professor-devin", result.stdout)
+        self.assertIn("Commands:", result.stdout)
+        for name in ("menu", "train", "play", "stats", "categories", "list", "reset", "help"):
+            self.assertIn(name, result.stdout)
+
+        result = self.run_cli(["help", "play"])
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn("--rounds", result.stdout)
+        self.assertIn("--mode", result.stdout)
+
+        result = self.run_cli(["help", "train"])
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn("--rounds", result.stdout)
+
+        for flag in ("-V", "--version"):
+            result = self.run_cli([flag])
+            self.assertEqual(result.returncode, 0, result.stdout)
+            self.assertIn("professor-devin 1.0.0", result.stdout)
+
+    def test_train_round_layout_no_color(self):
+        result = self.run_cli(["train"], stdin="quit\n")
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn("round 01/", result.stdout)
+        self.assertIn("✱ ", result.stdout)
+        self.assertIn("? hint · skip · quit", result.stdout)
+        self.assertIn("❭", result.stdout)
+
+    def test_force_color_enables_and_zero_disables(self):
+        class NonTty(io.StringIO):
+            def isatty(self):
+                return False
+
+        with patch.dict(os.environ, {"FORCE_COLOR": "1"}):
+            os.environ.pop("NO_COLOR", None)
+            with redirect_stdout(NonTty()):
+                self.assertTrue(dojo.use_color())
+        with patch.dict(os.environ, {"FORCE_COLOR": "0"}):
+            os.environ.pop("NO_COLOR", None)
+            with redirect_stdout(NonTty()):
+                self.assertFalse(dojo.use_color())
+
+    def test_fill_in_accepts_the_whole_command(self):
+        content = dojo.load_content(self.home)
+        card = next(
+            card for card in content["commands"]
+            if card["kind"] == "write" and card["category"] == "launch"
+        )
+        game = dojo.Dojo(self.home, content)
+        self.assertTrue(game.command_response_is_correct(
+            card, "fill in", card["answers"][0], None
+        ))
+        self.assertTrue(game.command_response_is_correct(
+            card, "fill in", dojo.command_blank(card), None
+        ))
 
 
 if __name__ == "__main__":

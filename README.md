@@ -1,78 +1,79 @@
-# Devin CLI mastery
+# Professor Devin
 
-A self-study kit for learning Devin CLI (pinned to CLI v3000.11.3) for support
-work. It has three parts: a written guide, a bash flashcard drill, and a
-terminal game ("Professor Devin") that quizzes real commands against captured
-`--help` output.
+Learn the Devin CLI by typing it. Professor Devin is a terminal game that
+asks you to write real `devin` commands, checks them against the CLI's own
+`--help` output, and brings back the ones you miss until they stick.
 
-## Start here
+![Professor Devin home menu](assets/home.png)
 
-- **Read:** [GUIDE.md](GUIDE.md) — learning plan, architecture, labs, and
-  break-it drills.
-- **Drill:** `./drill.sh [N] [regex]` — flashcards from `cards.tsv`.
-- **Play:** `cd dojo && bash install.sh && professor-devin` — the game.
+## Install (about a minute)
 
-## macOS only
+You need Python 3 (macOS and Linux have it; on macOS, `xcode-select --install` adds it if missing).
 
-The shell commands in GUIDE.md section 4, the dojo drills, and `drill.sh` are
-written and tested for macOS (bash 3.2, BSD userland: no `shuf`, `strace`,
-`ss`, or `/proc`). On Linux swap `ps eww` → `cat /proc/<pid>/environ`,
-`fs_usage` → `strace -f -e trace=file`, `lsof -iTCP` → `ss -tpn`.
+    git clone https://github.com/adames/Devin-CLI-trainer.git
+    cd Devin-CLI-trainer
+    bash install.sh
+    professor-devin
 
-## Folder map
+`install.sh` links `professor-devin` into `~/.local/bin` and offers to add
+that folder to your PATH. Prefer not to install? `./professor-devin` runs it
+from the repo.
 
-```
-GUIDE.md     learning plan, mental model, commands, labs, break-it drills,
-             triage checklist
-cards.tsv    66 Q/A flashcards (question<TAB>answer); used by drill.sh and
-             also loaded by the dojo
-drill.sh     bash flashcard drill; misses weighted 3x next run; writes
-             .misses.tsv / .history.log (gitignored)
-docs/        offline snapshots of docs.devin.ai CLI pages (see
-             docs/README.md)
-dojo/        Professor Devin game:
-  dojo.py        single-file game, stdlib only, Python 3.8+
-  install.sh     installs the professor-devin symlink into ~/.local/bin
-  content/       commands.json, cards*.json, scenarios*.json, drills.json,
-                 help/ (captured --help output + VERSION),
-                 support/ (SOURCES.md + RECORDINGS.md)
-  tests/         unittest suite
-  transcripts/   review captures (see transcripts/README.md)
-  README.md / CONTRIBUTING.md / SPEC.md / DESIGN.md
-```
+New to the terminal? Every screen tells you what to type. Pick an option with
+a number, press Enter, and type commands exactly as you would in a real shell.
 
-## How the pieces connect
+## What you practice
 
-- The dojo reads `../cards.tsv` for flashcards and `../GUIDE.md` **by line
-  number** for `shell`-category cards. GUIDE.md is effectively append-only:
-  if you edit existing lines, you must update the `source` fields in
-  `dojo/content/commands.json` and the tests that verify quoted line text.
-- Devin command answers are validated against `dojo/content/help/*.txt`.
-- Slash commands come from the `docs/` snapshots.
-- Every support fact cites a key in `dojo/content/support/SOURCES.md`.
+| Mode | What happens | Start it |
+| - | - | - |
+| Command rounds | A task appears; you type the `devin` command that does it. Multiple choice first, then fill-in-the-blank, then full recall. | menu 1 or 2 · `professor-devin train [topic]` |
+| Mystery tickets | A broken setup described like a support ticket. You run shell commands in a simulated customer machine, find the evidence, name the root cause and the fix. | menu 4 · `professor-devin play --mode combo` |
+| Flashcards | Short questions on config, hooks, skills, rules, and the shell. | menu 3 · `professor-devin play --mode flash` |
+| Live drills | Real `devin` commands on your machine (version, doctor, rules, MCP). Credit-using drills stay off unless you opt in. | menu 5 · `professor-devin play --mode drill` |
 
-## Which doc do I read?
+![A training round](assets/train.png)
 
-| Doc | Audience |
-| - | - |
-| [GUIDE.md](GUIDE.md) | Learner: the main study guide |
-| [dojo/README.md](dojo/README.md) | Playing the game |
-| [dojo/CONTRIBUTING.md](dojo/CONTRIBUTING.md) | Adding cards / where facts come from |
-| [dojo/SPEC.md](dojo/SPEC.md) | Exact game behaviour |
-| [dojo/DESIGN.md](dojo/DESIGN.md) | Terminal styling rules |
-| [docs/README.md](docs/README.md) | Index of doc snapshots |
+Command rounds and tickets are simulated; nothing you type in them runs for real.
 
-## Updating for a new CLI version
+![A mystery ticket](assets/ticket.png)
 
-1. `devin --version` — confirm the installed release.
-2. Re-capture `devin <cmd> --help` into `dojo/content/help/` and update
-   `dojo/content/help/VERSION`.
-3. Re-fetch changed doc pages into `docs/`.
-4. Run the dojo tests — they check that every command and flag has a card.
+## How it teaches
 
-## Tests
+- **Real answers.** Every `devin` command card is validated against the captured `devin <cmd> --help` text in `dojo/content/help/` (CLI 3000.11.3), so a wrong flag gets a precise correction, not just "wrong".
+- **Spaced repetition.** Each card sits in one of five boxes. Get it right and it moves up and comes back later (1, 3, 7, 21 days); miss it and it returns to box 1.
+- **Harder as you learn.** Box 1 cards are multiple choice, box 2 fill-in, box 3+ full recall. Fix cards show a broken command and its error.
+- **XP and levels.** Streaks multiply XP up to 3x. Levels run Intern, Log Reader, Triage Tech, Tracer, Config Whisperer, Root-Causer, Staff RCA.
 
-```
-cd dojo && python3 -m unittest discover -s tests -v
-flake8 --max-line-length 120 dojo.py tests/
-```
+![Progress](assets/stats.png)
+
+## Topics
+
+200 command cards in 13 topics: launch, sessions, auth, config-rules, skills, mcp, plugins, models, cloud, maintenance, integration, slash (slash commands inside the REPL), shell (support one-liners). Plus 91 flashcards, 12 mystery tickets, and 14 live drills.
+
+## From the command line
+
+    professor-devin                     home menu
+    professor-devin train mcp           10 rounds on one topic, then a ticket
+    professor-devin play --mode flash   flashcards only
+    professor-devin stats               level, accuracy by topic, cards due
+    professor-devin help train          flags for any command
+
+Progress lives in `~/.professor-devin/` (`PROFESSOR_HOME` overrides it). `professor-devin reset` clears it.
+
+## Study material
+
+- [GUIDE.md](GUIDE.md): the written course the game is built from — a four-week plan, the CLI's file layout, labs, break-it drills, and a support triage checklist. The shell commands in section 4 are the answers to the `shell` cards and the mystery tickets.
+- [cards.tsv](cards.tsv) + `./drill.sh [N] [regex]`: the same flashcards as a plain bash drill.
+- [docs/README.md](docs/README.md): offline snapshots of the docs.devin.ai CLI pages the content cites.
+
+## Requirements and limits
+
+- macOS or Linux, Python 3.8+, no dependencies. Shell answers are written for macOS (BSD userland); on Linux the equivalents are `cat /proc/<pid>/environ` for `ps eww`, `strace -f -e trace=file` for `fs_usage`, and `ss -tpn` for `lsof -iTCP`.
+- Content is pinned to Devin CLI 3000.11.3; the menu shows your installed version next to it. Newer CLIs add commands the cards don't cover yet.
+
+## Contributing
+
+- [dojo/README.md](dojo/README.md): the player's manual (every screen, key, and score).
+- [dojo/CONTRIBUTING.md](dojo/CONTRIBUTING.md): where facts come from and how to add cards.
+- [dojo/SPEC.md](dojo/SPEC.md) and [dojo/DESIGN.md](dojo/DESIGN.md): exact behaviour and terminal styling.
+- Tests: `cd dojo && python3 -m unittest discover -s tests -v`. Screenshots: `python3 tools/screenshots.py`.

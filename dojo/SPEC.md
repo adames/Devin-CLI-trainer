@@ -40,6 +40,7 @@ under `arena/<drill-id>/`.
 
 ```text
 professor-devin
+professor-devin menu
 professor-devin train [CATEGORY ...] [--rounds N] [--tier 1|2|3] [--seed N]
 professor-devin categories
 professor-devin play [--mode flash|drill|combo] [--topic REGEX] [--rounds N]
@@ -47,18 +48,29 @@ professor-devin play [--mode flash|drill|combo] [--topic REGEX] [--rounds N]
 professor-devin stats
 professor-devin list [--type flash|drill|combo|command]
 professor-devin reset [--yes]
+professor-devin help [COMMAND]
+professor-devin -V | --version
 ```
 
-A bare run starts 10 command-writing rounds and one ticket boss. `train` can
+A bare run opens the home menu when stdin and stdout are both terminals; when
+piped it still starts 10 command-writing rounds and one ticket boss, so
+scripts keep working. The menu offers quick start, a topic picker over the
+command-card categories, flashcards, a mystery ticket, live drills, progress,
+and a how-to-play screen; every activity also prints the exact CLI command
+that would have launched it (`next time: professor-devin train`). `train` can
 limit the categories, number of rounds, highest tier, and random seed. `play`
 keeps the mixed flashcard, drill, and ticket game. Unknown categories produce
-an error listing the valid category names.
+an error listing the valid category names. `--help` and `help [COMMAND]` print
+clap-style help; `-V`/`--version` prints the game and content versions.
 
 All answers use regular `input()`. This lets tests send answers through stdin;
 the game doesn't read raw keys or open `/dev/tty`. End-of-file ends the run
 gracefully and saves progress. Ctrl-C also saves and exits cleanly.
 
-Colors use ANSI only when stdout is a terminal and `NO_COLOR` is unset.
+Colors use ANSI only when stdout is a terminal and `NO_COLOR` is unset, or
+always when `FORCE_COLOR` is set to a value other than `0`. Each round opens
+with a counter header (`round 03/10 · launch · recall`), asks its question
+with a `✱` marker, and takes the answer on a `❭ ` line between hairlines.
 Styling: see `DESIGN.md`.
 
 ## Session plan and item selection
@@ -131,7 +143,8 @@ and slash answers, which use the command word and argument tokens.
 The card's Leitner box chooses its question form:
 
 - Box 1: recognize the command from four task choices.
-- Box 2: fill in the hidden part of a command template.
+- Box 2: fill in the hidden part of a command template. Typing the whole
+  command also counts as correct.
 - Box 3 or higher: recall the whole command from its task.
 - A fix card always shows a broken command and its error.
 
