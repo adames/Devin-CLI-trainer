@@ -10,13 +10,13 @@ asks you to write real `devin` commands, checks them against the CLI's own
 
 You need git and Python 3 (macOS and Linux have them; on macOS, `xcode-select --install` adds what is missing).
 
-    curl -fsSL https://raw.githubusercontent.com/adames/Devin-CLI-trainer/main/get.sh | bash
+    curl -fsSL https://raw.githubusercontent.com/adames/professor-devin/main/get.sh | bash
     professor-devin
 
 Or from a clone:
 
-    git clone https://github.com/adames/Devin-CLI-trainer.git
-    cd Devin-CLI-trainer
+    git clone https://github.com/adames/professor-devin.git
+    cd professor-devin
     bash install.sh
     professor-devin
 

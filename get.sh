@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Install Professor Devin with one command:
-#   curl -fsSL https://raw.githubusercontent.com/adames/Devin-CLI-trainer/main/get.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/adames/professor-devin/main/get.sh | bash
 set -eu
 
 for tool in git python3; do
@@ -10,7 +10,7 @@ for tool in git python3; do
     fi
 done
 
-repo="${PROFESSOR_DEVIN_REPO:-https://github.com/adames/Devin-CLI-trainer.git}"
+repo="${PROFESSOR_DEVIN_REPO:-https://github.com/adames/professor-devin.git}"
 dir="${PROFESSOR_DEVIN_DIR:-$HOME/.local/share/professor-devin}"
 
 if [ -d "$dir/.git" ]; then

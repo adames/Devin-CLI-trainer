@@ -137,7 +137,7 @@ State lives in `$PROFESSOR_HOME/state.json` — `PROFESSOR_HOME` first, then
 ## Troubleshooting
 
 - `professor-devin: command not found` — easiest: re-run the installer,
-  `curl -fsSL https://raw.githubusercontent.com/adames/Devin-CLI-trainer/main/get.sh | bash`,
+  `curl -fsSL https://raw.githubusercontent.com/adames/professor-devin/main/get.sh | bash`,
   or add `export PATH="$HOME/.local/bin:$PATH"` to your shell rc, or run
   `./professor-devin` from the repo.
 - No colors — colors need a terminal with `NO_COLOR` unset; force them in a

@@ -179,7 +179,7 @@ Also learn the flags you will reach for most: `rg` (-l -c -z -g -A/-B), `jq` (se
 
 ## 5. Practice labs (in order, with a check for each)
 
-Keep lab work in `~/devin-cli-mastery/lab/<N>/` and notes in `journal.md`.
+Keep lab work in `~/professor-devin/lab/<N>/` and notes in `journal.md`.
 
 | # | Lab | Done when |
 |---|---|---|
