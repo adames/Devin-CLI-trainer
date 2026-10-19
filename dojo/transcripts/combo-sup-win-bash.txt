@@ -39,7 +39,7 @@ evidence ●● · combo x0 · turns 4/6
 correct root cause  ACP spawns bash.exe -c from PATH and MKS Toolkit bash comes first
 correct fix  Put Git Bash ahead of MKS on PATH (or remove MKS from PATH) and retest; collect ACP logs if it persists
 optimal chain  where bash -> $env:PATH
-Pylon #71893. Did NOT reproduce with Git Bash; MKS is the leading suspect, unconfirmed. Label it that way to the customer.
+Generalized from a real case. Did NOT reproduce with Git Bash; MKS is the leading suspect, unconfirmed. Label it that way to the customer.
 confidence  hypothesis
 evidence ●●
 

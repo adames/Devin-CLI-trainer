@@ -12,7 +12,7 @@
     ],
     "hint": "three letters, agent client protocol",
     "explain": "Devin Local = the Devin CLI running over ACP. Many Desktop tickets are really CLI tickets (invocation, auth, shell, language server).",
-    "source": "S-MASTER, P-71893",
+    "source": "S-MASTER, R-WIN-BASH",
     "confidence": "confirmed"
   },
   {
@@ -59,7 +59,7 @@
     ],
     "hint": "%APPDATA%\\...",
     "explain": "%APPDATA%\\Devin\\logs\\<timestamp>\\window1\\ (renderer.log, exthost, Devin ACP logs). User data dir is %APPDATA%\\Devin.",
-    "source": "S-WSL, P-67687",
+    "source": "S-WSL, R-WS-TRANSITION",
     "confidence": "confirmed"
   },
   {
@@ -106,7 +106,7 @@
     ],
     "hint": "Devin: Provide ... ; error says the token is invalid",
     "explain": "Ctrl/Cmd+Shift+P -> 'Devin: Provide Devin auth token (backup login)', code from show-auth-code. Single-use and short-lived; reuse gives 'Invalid auth token'.",
-    "source": "P-71893, P-67687",
+    "source": "R-WIN-BASH, R-WS-TRANSITION",
     "confidence": "confirmed"
   },
   {
@@ -154,7 +154,7 @@
       "resource_exhausted"
     ],
     "hint": "gRPC status for quota",
-    "explain": "HYPOTHESIS (not confirmed end to end): per-user quota (user-total-messages, 1000) deny rendered as a generic connection error. Look for resource_exhausted / 'Reached overall message rate limit' in 'Devin ACP devin-cli', and collect Download Diagnostics.",
+    "explain": "HYPOTHESIS (not confirmed end to end): a per-user message quota deny rendered as a generic connection error. Look for resource_exhausted / 'Reached overall message rate limit' in 'Devin ACP devin-cli', and collect Download Diagnostics.",
     "source": "S-RE",
     "confidence": "hypothesis"
   },
@@ -225,13 +225,13 @@
     ],
     "hint": "no shell discovery",
     "explain": "Every exec is spawned as `bash.exe -c \"<cmd>\"` resolved via PATH. Check with `where bash` (MKS Toolkit vs Git Bash).",
-    "source": "P-71893",
+    "source": "R-WIN-BASH",
     "confidence": "confirmed"
   },
   {
     "id": "sup-ws-transition",
     "topic": "debug",
-    "q": "#67687: what renderer.log line shows a Devin Local chat moved the window to a new workspace?",
+    "q": "Workspace transition case: what renderer.log line shows a Devin Local chat moved the window to a new workspace?",
     "answers": [
       "chatsessionstore: workspace transition"
     ],
@@ -240,13 +240,13 @@
     ],
     "hint": "ChatSessionStore: ...",
     "explain": "Trigger = sending the first Devin Local message (not Ctrl+G). Window switches to an untitled workspace; next launch restores it as a 2nd window with its own ACP processes. Mechanism = hypothesis pending source.",
-    "source": "P-67687",
+    "source": "R-WS-TRANSITION",
     "confidence": "trigger confirmed 2/2; mechanism hypothesis"
   },
   {
     "id": "sup-lag-usersettings",
     "topic": "debug",
-    "q": "Typing/paste lag in Desktop: which function dominates the ext-host CPU profile in #70919/#70882/#70933?",
+    "q": "Typing/paste lag in Desktop: which function dominates the ext-host CPU profile?",
     "answers": [
       "get usersettings"
     ],
@@ -255,7 +255,7 @@
     ],
     "hint": "an uncached settings getter",
     "explain": "Uncached `get userSettings` -> resolveUnspecifiedSettings (~1.5 MB proto, several reads per keystroke). Ask for an exthost CPU profile; plaintext file = control. Desktop issue, often filed next to Devin Local tickets.",
-    "source": "P-70919, P-70882, P-70933",
+    "source": "R-TYPING-LAG",
     "confidence": "mechanism reproduced; see tickets"
   }
 ]

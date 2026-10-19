@@ -252,8 +252,8 @@
       "where bash",
       "$env:PATH"
     ],
-    "explain": "Pylon #71893. Did NOT reproduce with Git Bash; MKS is the leading suspect, unconfirmed. Label it that way to the customer.",
-    "source": "P-71893",
+    "explain": "Generalized from a real case. Did NOT reproduce with Git Bash; MKS is the leading suspect, unconfirmed. Label it that way to the customer.",
+    "source": "R-WIN-BASH",
     "confidence": "hypothesis"
   },
   {
@@ -322,8 +322,8 @@
       "rg -i \"workspace transition\" logs",
       "tasklist"
     ],
-    "explain": "Pylon #67687, reproduced 2/2. Trigger confirmed; internal mechanism not confirmed from source. The 'recorded' log line is from the real repro (ids truncated there).",
-    "source": "P-67687",
+    "explain": "Generalized from a real case, reproduced 2/2. Trigger confirmed; internal mechanism not confirmed from source. The 'recorded' log line is from the real repro (ids truncated there).",
+    "source": "R-WS-TRANSITION",
     "confidence": "trigger confirmed; mechanism hypothesis"
   }
 ]

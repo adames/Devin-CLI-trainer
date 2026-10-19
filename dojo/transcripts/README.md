@@ -9,7 +9,7 @@ Terminal captures kept for review and regression reference.
 - `combo-s<N>-*.txt` — mystery-ticket runs. Each maps to one of the break-it
   drills in `../../GUIDE.md` section 6 (the `s<N>` is the scenario id, not the
   GUIDE number). `combo-sup-win-bash.txt` is the support-pack ticket for the
-  Windows `bash.exe` case (P-71893 in `../content/support/SOURCES.md`).
+  Windows `bash.exe` case (R-WIN-BASH in `../content/support/SOURCES.md`).
 - `prof-*.txt` / `prof-*.ansi` — Professor mode review captures:
   `prof-train.txt` (seeded training run), `prof-forms.txt` (recognize /
   fill-in / recall / fix forms), `prof-categories.txt` (category table),
