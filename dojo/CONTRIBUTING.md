@@ -7,12 +7,14 @@ the facts come from and how I add more practice.
 ## Where the facts come from
 
 I use the captured help files in `content/help/` for Devin commands and flags.
-They come from Devin CLI 3000.11.3. If I update the CLI version, I capture its
+They come from Devin CLI 3000.11.92. If I update the CLI version, I capture its
 help again and save the version output in `content/help/VERSION`.
 
-Slash-command facts come from the documentation snapshots under `../docs/`.
-`content/help/slash.txt` lists the allowed slash commands and their source
-lines. I don't add a slash command that isn't in that file.
+Slash-command facts come from the documentation snapshots under `../docs/`,
+or from `content/help/slash-help.txt` (the REPL's own `/help` listing) when
+the docs don't list the command yet. `content/help/slash.txt` lists the
+allowed slash commands and their source lines. I don't add a slash command
+that isn't in that file.
 
 For the `shell` category, I use `../GUIDE.md`. I keep the line number in each
 card's source so the test can check the quoted line.
@@ -227,7 +229,7 @@ Here is a ticket example. Replace the sample ID before saving it:
     {
       "id": "show-version",
       "match": ["devin --version"],
-      "output": "devin 3000.11.3 (9c803229faa4)",
+      "output": "devin 3000.11.92 (7f4e64980e22)",
       "evidence": true,
       "source": "recorded"
     }

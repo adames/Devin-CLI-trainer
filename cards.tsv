@@ -64,3 +64,13 @@ CLI: process tree for a PID	ps -o pid,ppid,command -p <pid>   (or pstree -p <pid
 CLI: files/sockets held by a process	lsof -p <pid>  ;  lsof -iTCP -P -n -a -p <pid>
 Where does the CLI cache team settings / model configs / flags?	~/.cache/devin/ (team_settings.bin, model_configs.bin, cli/unleash_definitions.*.bin)
 MDM-managed system policy file (Linux)	/etc/devin/system.json
+Keep Devin working on an objective across turns until it reports done or blocked	/goal <objective>   (then /goal resume · /goal clear; pauses after 50 turns)
+Message a running turn without cancelling it	just type and press Enter (steering); Cmd+Enter / Ctrl+Enter queues it for after the turn
+Ctrl+C with text in the input vs with an empty input	clears the draft vs cancels the running task
+Move the session history database off a network home directory	DEVIN_SESSIONS_DIR=<dir>
+Config key for the model that subagent_explore and custom subagents use	agent.subagent_model
+Hooks that run around context compaction	PreCompact / PostCompact (matchers: manual, auto)
+Find which config file or plugin an MCP server came from	devin mcp list / devin mcp get <name> show a Source: line
+Install a GitHub repo that only ships skills/<name>/SKILL.md	devin plugins install owner/repo  (installs as a skills-only plugin named after the repo)
+Proxy cannot handle compressed API requests	"proxy": {"gzip": false} in config.json
+Start a cloud session with a subcommand instead of a flag	devin cloud  (same as --cloud; never asks for directory trust)

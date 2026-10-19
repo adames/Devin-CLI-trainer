@@ -194,3 +194,6 @@ Devin CLI finds your project root by looking for a `.git` or `.jj` directory, wa
 <Note>
   **Windows:** Paths shown as `~/.config/devin/` use the XDG convention for Linux/macOS. On Windows, these resolve to `%APPDATA%\devin\` (typically `C:\Users\<YourUser>\AppData\Roaming\devin\`).
 </Note>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

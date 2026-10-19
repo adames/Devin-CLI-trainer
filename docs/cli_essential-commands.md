@@ -6,6 +6,8 @@
 
 > The must-know Devin CLI commands: starting and resuming sessions, cloud sessions, slash commands, and keyboard shortcuts.
 
+New to Devin CLI? Watch [Introducing Devin CLI](/cli/introducing-devin-cli) for a two-minute tour, then come back here for the commands you'll use every day.
+
 ## Starting Devin CLI
 
 By default, sessions happen in a REPL, a graphical terminal interface where you can chat back and forth and observe Devin's actions.
@@ -264,10 +266,13 @@ Here are the most important keyboard shortcuts. See [Keyboard Shortcuts](/cli/re
 | Shortcut | Description |
 | - | - |
 | `Shift+Tab` | Cycle between modes (Normal, Accept Edits, Smart, Bypass, Autonomous) |
-| `Ctrl+C` | Clear input text, or cancel the running agent |
+| `Ctrl+C` | Clear the draft (text and attachments); cancel the running agent when the draft is empty |
 | `Esc` | Cancel the running agent |
 | `Shift+Enter` | Insert a newline (multi-line input) |
 | `Ctrl+V` or `Shift+Insert` | Paste from clipboard |
 | `Ctrl+G` | Open external editor |
 | `Ctrl+O` | Open full-screen thinking trace viewer |
 | `@` | Mention files to add as context |
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

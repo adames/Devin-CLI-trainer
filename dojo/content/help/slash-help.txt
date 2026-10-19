@@ -1,0 +1,63 @@
+Devin CLI 3000.11.92: the list printed by /help inside the REPL (captured 2026-10-19).
+Each line is: command [arguments] (aliases)  description. A few commands print no description.
+
+!<command>                        Run a shell command (output added to next message)
+/model [model] (/models)          Interactively choose a model, or specify one directly
+/usage                            Show session usage of credits / ACUs
+/context                          Show context window usage
+/mode [mode]                      Show or switch mode
+/bug [description]                Report a bug to the Devin CLI developers
+/handoff [task description]       Hand off between local and Devin cloud
+/accept-edits                     Switch to accept edits mode
+/add-dir <path>                   Add additional workspace directory
+/ask [question]                   Switch to Ask mode (read-only)
+/autonomous                       Switch to autonomous mode (sandbox-enforced)
+/billing [on|off]                 Choose whether a provider plan (e.g. ChatGPT) pays for its models
+/btw [prompt]                     Ask a quick side question without disrupting the main conversation
+/bypass                           Switch to bypass mode
+/clear (/new)                     Clear conversation history
+/cloud                            Switch this session to run in Devin cloud
+/code [prompt]                    Switch to Code mode, or run a prompt in it
+/compact                          Force conversation compaction
+/config                           Open the interactive config editor
+/continue [session-id]            Resume the most recent session (or a given id)
+/copy                             Copy the last response to clipboard
+/dangerous
+/exit                             Exit the application
+/fast [prompt]                    Switch to the fastest model available to you, or run a prompt with it
+/feedback <up|down>               Rate the last response (up or down)
+/fork [step]                      Fork current session (optionally from a specific step)
+/fusion                           Choose a Fusion model (same as /model fusion)
+/goal [<objective>|resume|clear]  Set a goal the agent keeps working on until it is done
+/help                             Show available commands
+/hooks                            List loaded hooks
+/list-sessions [--all] (/ls)      List recent sessions
+/login [api-key] (/log-in)        Re-authenticate with Devin in this session
+/login-status                     Show login and authentication status
+/logout                           Clear stored credentials and exit
+/loop <prompt>                    Run a prompt then auto-review the diff in a loop
+/mcp                              List configured MCP servers and their status
+/normal                           Switch to normal mode
+/org                              Select your Devin organization
+/plan [prompt]                    Switch to Plan mode, or plan with a prompt
+/quit
+/recap                            Recap the session so far with a short summary
+/remove-dir <path>                Remove a workspace directory
+/rename <new title>               Rename this session
+/rename-session <new title>       Rename the current session
+/resume [session-id]              Resume a previous session (opens a picker when no id is given)
+/revert <step>                    Revert back to a previous step in this conversation
+/rm-session <session-id>          Delete a session
+/session-stats (/stats)           Show session statistics
+/share                            Share this conversation with your team on Devin
+/shortcuts                        Show keyboard shortcuts
+/smart                            Switch to smart mode
+/status                           Check authentication status
+/steps                            List conversation steps (for use with /fork and /revert)
+/theme [theme]                    Switch between themes
+/title <new title>
+/undo-add-dir <path>
+/update [--force]                 Check for and install updates
+/upgrade                          Upgrade your subscription plan
+/workspace                        List workspace directories
+/yolo

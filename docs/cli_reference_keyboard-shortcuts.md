@@ -4,7 +4,7 @@
 
 # Keyboard Shortcuts
 
-> Common keyboard shortcuts in Devin CLI
+> Learn Devin CLI keyboard shortcuts for composing drafts, cancelling tasks, changing modes, editing text, and rebinding keys.
 
 Every shortcut on this page is a **default** — shortcuts are rebindable. Run `/shortcuts` to browse and rebind them interactively, or edit the [`keymap`](/cli/reference/configuration/config-file#keymap) section of your config file directly.
 
@@ -17,7 +17,7 @@ These shortcuts work while typing at the prompt.
 | `Enter` | Submit your message |
 | `Shift+Enter`\* or `Alt+Enter` | Insert a newline (for multi-line input) |
 | `Shift+Tab` | Cycle between modes (Normal, Accept Edits, Smart, Bypass, Autonomous) |
-| `Ctrl+C` | Cancel current input (clears text), or cancel running agent |
+| `Ctrl+C` | Clear the current draft (text and attachments); cancel the running agent only when the draft is empty |
 | `Ctrl+D` | Exit (when input is empty) |
 | `Esc` | Cancel running agent |
 | `Ctrl+G` | Open external editor for composing your message |
@@ -33,6 +33,8 @@ These shortcuts work while typing at the prompt.
 </Note>
 
 \* Requires a [compatible terminal](/cli/reference/terminal-compatibility). Terminals that do not support the Kitty keyboard protocol cannot distinguish `Shift+Enter` from `Enter`. Use `Alt+Enter` or `Ctrl+J` instead.
+
+While Devin is working, `Ctrl+C` clears a non-empty draft without interrupting the task. Press it again with an empty input to cancel the task. In `/btw`, it clears a typed question first; with an empty input, it cancels a streaming answer or closes the idle panel.
 
 ***
 
@@ -69,7 +71,7 @@ To set bindings directly, add a [`keymap`](/cli/reference/configuration/config-f
 ```
 
 <Note>
-  `Ctrl+C` cannot be unbound — it always cancels the running agent.
+  `Ctrl+C` cannot be unbound from cancellation. With the default shortcuts, clearing a non-empty draft takes precedence over cancelling the running agent.
 </Note>
 
 ***
@@ -149,3 +151,6 @@ Warning: keymap: override creates a conflict (editor: `ctrl+a` bound to both
 ```
 
 This covers unknown context/action names, malformed key specs, wrong-typed values, and overrides that collide with another binding in the same context (the conflicting override reverts to its default). `Ctrl+C` (cancel) cannot be unbound.
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

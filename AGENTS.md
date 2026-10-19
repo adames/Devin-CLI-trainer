@@ -19,8 +19,9 @@ live drills under one XP/spaced-repetition system.
   answers, card text, command output) is never re-cased.
 - No foreground colors besides the accent (ember `38;5;208`, only on the `❭`
   marker); a test rejects `\x1b[3x` literals. See `dojo/DESIGN.md`.
-- `GUIDE.md` is append-only: `commands.json` `source` fields and tests cite
-  it by line number.
-- Content is pinned to Devin CLI 3000.11.3 (`dojo/content/help/VERSION`).
+- Shell cards in `dojo/content/commands.json` quote `GUIDE.md` lines verbatim
+  and cite them by line number: keep those lines intact when editing the guide
+  and run `python3 tools/relink_guide_sources.py` afterwards (a test checks it).
+- Content is pinned to Devin CLI 3000.11.92 (`dojo/content/help/VERSION`).
 - Behaviour details: `dojo/SPEC.md` (mechanics) and `dojo/DESIGN.md` (styling)
   are the sources of truth — keep them in sync with `dojo.py`.

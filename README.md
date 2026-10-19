@@ -39,7 +39,7 @@ Command rounds and tickets are simulated; nothing you type in them runs for real
 
 ## How it teaches
 
-- **Real answers.** Every `devin` command card is validated against the captured `devin <cmd> --help` text in `dojo/content/help/` (CLI 3000.11.3), so a wrong flag gets a precise correction, not just "wrong".
+- **Real answers.** Every `devin` command card is validated against the captured `devin <cmd> --help` text in `dojo/content/help/` (CLI 3000.11.92), so a wrong flag gets a precise correction, not just "wrong".
 - **Spaced repetition.** Each card sits in one of five boxes. Get it right and it moves up and comes back later (1, 3, 7, 21 days); miss it and it returns to box 1.
 - **Harder as you learn.** Box 1 cards are multiple choice, box 2 fill-in, box 3+ full recall. Fix cards show a broken command and its error.
 - **XP and levels.** Streaks multiply XP up to 3x. Levels run Intern, Log Reader, Triage Tech, Tracer, Config Whisperer, Root-Causer, Staff RCA.
@@ -48,7 +48,7 @@ Command rounds and tickets are simulated; nothing you type in them runs for real
 
 ## Topics
 
-200 command cards in 13 topics: launch, sessions, auth, config-rules, skills, mcp, plugins, models, cloud, maintenance, integration, slash (slash commands inside the REPL), shell (support one-liners). Plus 91 flashcards, 12 mystery tickets, and 14 live drills.
+209 command cards in 13 topics: launch, sessions, auth, config-rules, skills, mcp, plugins, models, cloud, maintenance, integration, slash (slash commands inside the REPL), shell (support one-liners). Plus 101 flashcards, 12 mystery tickets, and 14 live drills.
 
 ## From the command line
 
@@ -69,7 +69,7 @@ Progress lives in `~/.professor-devin/` (`PROFESSOR_HOME` overrides it). `profes
 ## Requirements and limits
 
 - macOS or Linux, Python 3.8+, no dependencies. Shell answers are written for macOS (BSD userland); on Linux the equivalents are `cat /proc/<pid>/environ` for `ps eww`, `strace -f -e trace=file` for `fs_usage`, and `ss -tpn` for `lsof -iTCP`.
-- Content is pinned to Devin CLI 3000.11.3; the menu shows your installed version next to it. Newer CLIs add commands the cards don't cover yet.
+- Content is pinned to Devin CLI 3000.11.92; the menu shows your installed version next to it. Newer CLIs add commands the cards don't cover yet.
 
 ## Contributing
 

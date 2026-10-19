@@ -357,7 +357,7 @@ class ContentTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             content = dojo.load_content(Path(directory))
         self.assertTrue(dojo.validate_content(content))
-        self.assertEqual(len(content["flash"]), 91)
+        self.assertEqual(len(content["flash"]), 101)
         self.assertEqual(sum("choices" in item for item in content["flash"]), 11)
         source_rows = [
             line.split("\t", 1)
@@ -373,8 +373,8 @@ class ContentTests(unittest.TestCase):
             (item["q"], item["explain"])
             for item in plain_cards
         }
-        self.assertEqual(len(source_rows), 66)
-        self.assertEqual(len(plain_cards), 65)
+        self.assertEqual(len(source_rows), 76)
+        self.assertEqual(len(plain_cards), 75)
         policy = next(item for item in content["flash"] if item["id"] == "card-66")
         self.assertTrue(all(
             tuple(row) in source_cards

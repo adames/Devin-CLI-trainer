@@ -42,6 +42,7 @@ Devin CLI uses JSON files (with comment support) for configuration. This page do
       // Agent behavior
       "agent": {
         "model": "swe-1-6-fast",           // Default model
+        "subagent_model": "swe-1-6-fast",  // Model for subagents
         "show_history_on_continue": true  // Show messages when resuming
       },
 
@@ -153,6 +154,7 @@ Devin CLI uses JSON files (with comment support) for configuration. This page do
 | Option | Type | Default | Description |
 | - | - | - | - |
 | `model` | string | `"swe-1-6-fast"` | Default AI model |
+| `subagent_model` | string | unset | Model for subagents, used instead of your team's [default subagent model](/cli/subagents#which-model-does-a-subagent-use). Must be a model your team allows |
 | `show_history_on_continue` | boolean | `true` | Show previous messages when resuming a session |
 
 ### theme\_mode <span style={{fontSize: '0.7em', color: 'gray'}}>(user only)</span>
@@ -499,3 +501,6 @@ Config files support JavaScript-style comments:
   "permissions": {}
 }
 ```
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

@@ -1689,7 +1689,8 @@
     "tier": 1,
     "task": "A customer wants to inspect or change the model for this session.",
     "answers": [
-      "/model"
+      "/model",
+      "/models"
     ],
     "blank": "/model",
     "hint": "Review cli_reference_commands.md line 459 and identify the slash action starting with 'm'.",
@@ -2105,7 +2106,8 @@
     "tier": 2,
     "task": "A customer needs to authenticate the CLI with their account.",
     "answers": [
-      "/login"
+      "/login",
+      "/log-in"
     ],
     "blank": "/login",
     "hint": "Review cli_reference_commands.md line 517 and identify the slash action starting with 'l'.",
@@ -2750,7 +2752,7 @@
     "blank": "command",
     "hint": "Review GUIDE.md near line 153 and identify the command starting with 'c'.",
     "explain": "13. Is it PATH? `bash -lic 'command -v node'` vs `command -v node` (Devin snapshots the *login* shell env once at startup)\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:153",
+    "source": "../GUIDE.md:170",
     "kind": "write",
     "topic": "shell"
   },
@@ -2765,7 +2767,7 @@
     "blank": "curl",
     "hint": "Review GUIDE.md near line 152 and identify the command starting with 'c'.",
     "explain": "12. Is it the network? `curl -sv https://cli.devin.ai -o /dev/null 2>&1 | rg -i 'connected|ssl|HTTP/'`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:152",
+    "source": "../GUIDE.md:169",
     "kind": "write",
     "topic": "shell"
   },
@@ -2780,7 +2782,7 @@
     "blank": "diff",
     "hint": "Review GUIDE.md near line 147 and identify the command starting with 'd'.",
     "explain": "7. Show the effective user config: `jq . ~/.config/devin/config.json`; diff two configs: `diff <(jq -S . a.json) <(jq -S . b.json)`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:147",
+    "source": "../GUIDE.md:164",
     "kind": "write",
     "topic": "shell"
   },
@@ -2795,7 +2797,7 @@
     "blank": "devin",
     "hint": "Review GUIDE.md near line 145 and identify the command starting with 'd'.",
     "explain": "5. Doctor failures only: `devin doctor --json | jq -r '.checks[] | select(.status!=\"pass\") | \"\\(.check): \\(.detail)\"'`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:145",
+    "source": "../GUIDE.md:162",
     "kind": "write",
     "topic": "shell"
   },
@@ -2810,7 +2812,7 @@
     "blank": "jq",
     "hint": "Review GUIDE.md near line 147 and identify the command starting with 'j'.",
     "explain": "7. Show the effective user config: `jq . ~/.config/devin/config.json`; diff two configs: `diff <(jq -S . a.json) <(jq -S . b.json)`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:147",
+    "source": "../GUIDE.md:164",
     "kind": "write",
     "topic": "shell"
   },
@@ -2825,7 +2827,7 @@
     "blank": "ls",
     "hint": "Review GUIDE.md near line 141 and identify the command starting with 'l'.",
     "explain": "1. Find the newest Devin log: `ls -t ~/.local/share/devin/cli/logs | head -1`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:141",
+    "source": "../GUIDE.md:158",
     "kind": "write",
     "topic": "shell"
   },
@@ -2840,7 +2842,7 @@
     "blank": "bash",
     "hint": "Review GUIDE.md near line 153 and identify the command starting with 'b'.",
     "explain": "13. Is it PATH? `bash -lic 'command -v node'` vs `command -v node` (Devin snapshots the *login* shell env once at startup)\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:153",
+    "source": "../GUIDE.md:170",
     "kind": "write",
     "topic": "shell"
   },
@@ -2855,7 +2857,7 @@
     "blank": "lsof",
     "hint": "Review GUIDE.md near line 149 and identify the command starting with 'l'.",
     "explain": "9. Which sockets and files does it hold? `lsof -p <pid>`, `lsof -iTCP -P -n -a -p <pid>`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:149",
+    "source": "../GUIDE.md:166",
     "kind": "write",
     "topic": "shell"
   },
@@ -2870,7 +2872,7 @@
     "blank": "ps",
     "hint": "Review GUIDE.md near line 151 and identify the command starting with 'p'.",
     "explain": "11. Which env vars does it see? `ps eww <pid> | tr ' ' '\\n' | rg -i 'devin|proxy|path'`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:151",
+    "source": "../GUIDE.md:168",
     "kind": "write",
     "topic": "shell"
   },
@@ -2885,7 +2887,7 @@
     "blank": "ps",
     "hint": "Review GUIDE.md near line 148 and identify the command starting with 'p'.",
     "explain": "8. What is Devin running right now? `pgrep -fl devin`; who launched it: `ps -o pid,ppid,command -p $(pgrep -d, -f devin)` (then `ps -p <ppid>` for the parent)\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:148",
+    "source": "../GUIDE.md:165",
     "kind": "write",
     "topic": "shell"
   },
@@ -2900,7 +2902,7 @@
     "blank": "rg",
     "hint": "Review GUIDE.md near line 144 and identify the command starting with 'r'.",
     "explain": "4. Count errors per log file: `rg -z -c -i error ~/.local/share/devin/cli/logs/ | sort -t: -k2 -n`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:144",
+    "source": "../GUIDE.md:161",
     "kind": "write",
     "topic": "shell"
   },
@@ -2915,7 +2917,7 @@
     "blank": "rg",
     "hint": "Review GUIDE.md near line 143 and identify the command starting with 'r'.",
     "explain": "3. Search every log, compressed or not: `rg -z -i 'error|panic|denied' ~/.local/share/devin/cli/logs/`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:143",
+    "source": "../GUIDE.md:160",
     "kind": "write",
     "topic": "shell"
   },
@@ -2930,7 +2932,7 @@
     "blank": "pgrep",
     "hint": "Review GUIDE.md near line 148 and identify the command starting with 'p'.",
     "explain": "8. What is Devin running right now? `pgrep -fl devin`; who launched it: `ps -o pid,ppid,command -p $(pgrep -d, -f devin)` (then `ps -p <ppid>` for the parent)\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:148",
+    "source": "../GUIDE.md:165",
     "kind": "write",
     "topic": "shell"
   },
@@ -2945,7 +2947,7 @@
     "blank": "lsof",
     "hint": "Review GUIDE.md near line 149 and identify the command starting with 'l'.",
     "explain": "9. Which sockets and files does it hold? `lsof -p <pid>`, `lsof -iTCP -P -n -a -p <pid>`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:149",
+    "source": "../GUIDE.md:166",
     "kind": "write",
     "topic": "shell"
   },
@@ -2960,7 +2962,7 @@
     "blank": "sqlite3",
     "hint": "Review GUIDE.md near line 146 and identify the command starting with 's'.",
     "explain": "6. Explore the session DB read-only: `sqlite3 -readonly ~/.local/share/devin/cli/sessions.db '.tables'`, then `.schema <table>`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:146",
+    "source": "../GUIDE.md:163",
     "kind": "write",
     "topic": "shell"
   },
@@ -2975,7 +2977,7 @@
     "blank": "fs_usage",
     "hint": "Review GUIDE.md near line 150 and identify the command starting with 'f'.",
     "explain": "10. Which files does it probe (how you find undocumented config paths): in one pane run `sudo fs_usage -w -f pathname devin | rg -i 'devin|claude|agents|windsurf|cursor|cognition'`, then run `devin rules list` in another. Use `-f pathname`, which includes stat and access calls: most config lookups never open the file. (Needs sudo.)\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:150",
+    "source": "../GUIDE.md:167",
     "kind": "write",
     "topic": "shell"
   },
@@ -2990,7 +2992,7 @@
     "blank": "tail",
     "hint": "Review GUIDE.md near line 142 and identify the command starting with 't'.",
     "explain": "2. Follow it live in a second pane: `tail -F \"$(ls -t ~/.local/share/devin/cli/logs/*.log | head -1)\"`\nUse it when the support investigation needs this evidence.",
-    "source": "../GUIDE.md:142",
+    "source": "../GUIDE.md:159",
     "kind": "write",
     "topic": "shell"
   },
@@ -3006,7 +3008,7 @@
     "blank": "-a",
     "hint": "bash builtin that reports what a name resolves to; all matches",
     "explain": "- In terminals Devin creates, `type -a devin` shows `devin is a function` before `devin is ~/.local/bin/devin`; call the binary by path or with `command devin`.\nUse it when a command behaves unlike the installed binary: a shell function or alias may be shadowing it.",
-    "source": "../GUIDE.md:219",
+    "source": "../GUIDE.md:241",
     "topic": "shell",
     "confidence": "confirmed",
     "tags": [
@@ -3089,7 +3091,7 @@
     "tags": [
       "support"
     ],
-    "source": "../GUIDE.md:223",
+    "source": "../GUIDE.md:243",
     "confidence": "confirmed"
   },
   {
@@ -3108,7 +3110,7 @@
     "tags": [
       "support"
     ],
-    "source": "../GUIDE.md:224",
+    "source": "../GUIDE.md:244",
     "confidence": "confirmed"
   },
   {
@@ -3127,7 +3129,7 @@
       "support",
       "windows"
     ],
-    "source": "../GUIDE.md:222",
+    "source": "../GUIDE.md:242",
     "confidence": "confirmed"
   },
   {
@@ -3145,7 +3147,150 @@
     "tags": [
       "support"
     ],
-    "source": "../GUIDE.md:225",
+    "source": "../GUIDE.md:245",
     "confidence": "confirmed"
+  },
+  {
+    "id": "cmd-cloud-session",
+    "category": "cloud",
+    "tier": 2,
+    "task": "A customer wants the REPL to drive Devin Cloud sessions and prefers the subcommand to the flag.",
+    "answers": [
+      "devin cloud"
+    ],
+    "blank": "cloud",
+    "hint": "Look at the root help's cloud command description.",
+    "explain": "With no subcommand, opens the REPL on Devin cloud sessions instead of the local agent. Subcommands manage Devin Cloud resources (environment setup, sandbox sessions, builds).\nUse it when the customer wants to start a cloud session from the REPL without the flag.",
+    "source_file": "cloud.txt",
+    "kind": "write",
+    "topic": "cloud"
+  },
+  {
+    "id": "slash-goal",
+    "category": "slash",
+    "tier": 2,
+    "task": "Keep Devin working on an objective across turns until it reports complete or blocked.",
+    "answers": [
+      "/goal <objective>"
+    ],
+    "blank": "/goal",
+    "hint": "Review slash-help.txt line 31 and identify the slash action starting with 'g'.",
+    "explain": "/goal [<objective>|resume|clear]  Set a goal the agent keeps working on until it is done\nUse it when the customer wants Devin to keep going on a goal until it finishes or gets blocked.",
+    "source_file": "slash.txt",
+    "kind": "write",
+    "topic": "slash",
+    "source": "slash-help.txt:31"
+  },
+  {
+    "id": "slash-goal-resume",
+    "category": "slash",
+    "tier": 3,
+    "task": "After an interrupt, resume the objective Devin was pursuing across turns.",
+    "answers": [
+      "/goal resume"
+    ],
+    "blank": "resume",
+    "hint": "Review slash-help.txt line 31 and identify the goal form that continues it.",
+    "explain": "/goal [<objective>|resume|clear]  Set a goal the agent keeps working on until it is done\nUse it when the customer interrupted Devin and wants the same goal continued.",
+    "source_file": "slash.txt",
+    "kind": "write",
+    "topic": "slash",
+    "source": "slash-help.txt:31"
+  },
+  {
+    "id": "slash-goal-clear",
+    "category": "slash",
+    "tier": 3,
+    "task": "Drop the objective Devin keeps working toward and clear it from the session.",
+    "answers": [
+      "/goal clear"
+    ],
+    "blank": "clear",
+    "hint": "Review slash-help.txt line 31 and identify the goal form that drops it.",
+    "explain": "/goal [<objective>|resume|clear]  Set a goal the agent keeps working on until it is done\nUse it when the customer wants to abandon the active goal entirely.",
+    "source_file": "slash.txt",
+    "kind": "write",
+    "topic": "slash",
+    "source": "slash-help.txt:31"
+  },
+  {
+    "id": "slash-recap",
+    "category": "slash",
+    "tier": 2,
+    "task": "Get a short summary of the session so far.",
+    "answers": [
+      "/recap"
+    ],
+    "blank": "/recap",
+    "hint": "Review slash-help.txt line 44 and identify the slash action starting with 'r'.",
+    "explain": "/recap                            Recap the session so far with a short summary\nUse it when the customer wants a quick recap of where the session stands.",
+    "source_file": "slash.txt",
+    "kind": "write",
+    "topic": "slash",
+    "source": "slash-help.txt:44"
+  },
+  {
+    "id": "slash-share",
+    "category": "slash",
+    "tier": 2,
+    "task": "Share this conversation with the customer's team on Devin.",
+    "answers": [
+      "/share"
+    ],
+    "blank": "/share",
+    "hint": "Review slash-help.txt line 52 and identify the slash action starting with 's'.",
+    "explain": "/share                            Share this conversation with your team on Devin\nUse it when the customer wants teammates to see the current conversation.",
+    "source_file": "slash.txt",
+    "kind": "write",
+    "topic": "slash",
+    "source": "slash-help.txt:52"
+  },
+  {
+    "id": "slash-fusion",
+    "category": "slash",
+    "tier": 2,
+    "task": "Open the Fusion model picker from the REPL.",
+    "answers": [
+      "/fusion"
+    ],
+    "blank": "/fusion",
+    "hint": "Review slash-help.txt line 30 and identify the slash action starting with 'f'.",
+    "explain": "/fusion                           Choose a Fusion model (same as /model fusion)\nUse it when the customer wants to pick a Fusion model without typing the model name.",
+    "source_file": "slash.txt",
+    "kind": "write",
+    "topic": "slash",
+    "source": "slash-help.txt:30"
+  },
+  {
+    "id": "slash-billing",
+    "category": "slash",
+    "tier": 3,
+    "task": "Show or switch whether a provider plan such as a ChatGPT plan pays for those models.",
+    "answers": [
+      "/billing"
+    ],
+    "blank": "/billing",
+    "hint": "Review slash-help.txt line 15 and identify the slash action starting with 'b'.",
+    "explain": "/billing [on|off]                 Choose whether a provider plan (e.g. ChatGPT) pays for its models\nUse it when the customer wants a provider plan, not credits, to pay for the models.",
+    "source_file": "slash.txt",
+    "kind": "write",
+    "topic": "slash",
+    "source": "slash-help.txt:15"
+  },
+  {
+    "id": "slash-code",
+    "category": "slash",
+    "tier": 2,
+    "task": "Switch back to Code mode after running Plan or Ask.",
+    "answers": [
+      "/code"
+    ],
+    "blank": "/code",
+    "hint": "Review slash-help.txt line 20 and identify the slash action starting with 'c'.",
+    "explain": "/code [prompt]                    Switch to Code mode, or run a prompt in it\nUse it when the customer left Code mode and wants it back.",
+    "source_file": "slash.txt",
+    "kind": "write",
+    "topic": "slash",
+    "source": "slash-help.txt:20"
   }
 ]

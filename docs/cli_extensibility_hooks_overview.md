@@ -244,3 +244,6 @@ Use the `/hooks` slash command to see all currently loaded hooks and their sourc
     Control which config locations Devin CLI reads hooks from.
   </Card>
 </CardGroup>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

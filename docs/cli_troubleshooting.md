@@ -292,3 +292,6 @@ If you're still experiencing issues:
 * **Email support:** [support@cognition.ai](mailto:support@cognition.ai)
 * **Submit a bug report:** Use the `/bug` command inside Devin CLI to report issues directly to the Devin CLI developers
 * **Check for updates:** Run `devin update` to ensure you're on the latest version
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

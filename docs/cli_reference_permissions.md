@@ -458,3 +458,6 @@ Restrict to specific safe operations, always prompt for writes:
 <Tip>
   In this example, writes to `.env*` are denied outright, all other writes always prompt the user, and the specific command allows override the broader `exec` ask at the same configuration level. The `.env*` denial still takes priority over the `Write(**)` ask rule.
 </Tip>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

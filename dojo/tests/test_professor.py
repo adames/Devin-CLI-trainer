@@ -1,4 +1,5 @@
 import io
+import json
 import os
 import re
 import shlex
@@ -60,6 +61,12 @@ class DevinCommandParserTests(unittest.TestCase):
             "devin -- summarize PATH handling",
             prompt_card,
         ))
+
+    def test_cloud_without_subcommand_parses(self):
+        parsed = dojo.parse_devin_command("devin cloud")
+        self.assertEqual(parsed["path"], ("cloud",))
+        card = self.card("cmd-cloud-session")
+        self.assertTrue(dojo.command_answer_matches("devin cloud", card))
 
     def test_unknown_flag_suggestion(self):
         card = self.card("cmd-launch-permission-mode")
@@ -368,6 +375,21 @@ class ProfessorContentTests(unittest.TestCase):
             for value in model_values
         ))
 
+        guide_lines = (ROOT.parent / "GUIDE.md").read_text(
+            encoding="utf-8"
+        ).splitlines()
+        for card in self.cards:
+            if card["category"] != "shell":
+                continue
+            match = re.fullmatch(r"\.\./GUIDE\.md:(\d+)", card["source"])
+            self.assertIsNotNone(match, card["id"])
+            line_number = int(match.group(1))
+            self.assertEqual(
+                guide_lines[line_number - 1].strip(),
+                card["explain"].splitlines()[0].strip(),
+                card["id"],
+            )
+
         self.assertEqual(
             cards_by_id["fix-print-option-order"]["error"],
             "error: the argument '--print [<PROMPT>]' cannot be used with '[PATH]...'\n"
@@ -377,6 +399,30 @@ class ProfessorContentTests(unittest.TestCase):
             "\n"
             "For more information, try '--help'.",
         )
+
+
+    def test_every_tsv_row_has_a_cards_json_card(self):
+        tsv_rows = [
+            line.split("\t", 1)
+            for line in (ROOT.parent / "cards.tsv").read_text(
+                encoding="utf-8"
+            ).splitlines()
+            if line.strip()
+        ]
+        json_cards = [
+            card
+            for path in (ROOT / "content").glob("cards*.json")
+            for card in json.loads(path.read_text(encoding="utf-8"))
+        ]
+        by_question = {card["q"]: card for card in json_cards}
+        for question, answer in tsv_rows:
+            card = by_question.get(question)
+            self.assertIsNotNone(card, question)
+            self.assertIn(
+                answer,
+                (card["explain"], card["answers"][0]),
+                question,
+            )
 
 
 class ProfessorEngineTests(unittest.TestCase):
@@ -712,7 +758,7 @@ class MenuAndCliTests(unittest.TestCase):
         for flag in ("-V", "--version"):
             result = self.run_cli([flag])
             self.assertEqual(result.returncode, 0, result.stdout)
-            self.assertIn("professor-devin 1.0.0", result.stdout)
+            self.assertIn("professor-devin 1.1.0", result.stdout)
 
     def test_train_round_layout_no_color(self):
         result = self.run_cli(["train"], stdin="quit\n")

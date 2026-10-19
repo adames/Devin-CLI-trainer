@@ -504,3 +504,6 @@ If you're on an enterprise team, your admin may restrict which MCP servers you c
     If both transports fail, the error message includes details from both attempts to help with troubleshooting.
   </Accordion>
 </AccordionGroup>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

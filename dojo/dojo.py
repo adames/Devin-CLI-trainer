@@ -64,7 +64,7 @@ SCENARIO_REQUIRED_FIELDS = {
 COMMAND_REQUIRED_FIELDS = {
     "id", "category", "tier", "task", "answers", "hint", "explain", "kind",
 }
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 GLYPHS = {
     "prompt": ("❭", ">"),
     "question": ("✱", "*"),

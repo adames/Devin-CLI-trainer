@@ -1,6 +1,6 @@
 Install a plugin from a source (auto-installs its required plugins).
 
-A source is a GitHub `owner/repo`, a git URL, or a local path. Append `#path/to/plugin` when the plugin is below a git repository's root.
+A source is a GitHub `owner/repo`, a git URL, or a local path. Append `#path/to/plugin` when the plugin is below a git repository's root. A repository with no plugin manifest but skills under `skills/<name>/SKILL.md` installs as a skills-only plugin named after the repository.
 
 Usage: devin plugins install [OPTIONS] <SOURCE>
 

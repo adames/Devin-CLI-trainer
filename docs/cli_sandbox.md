@@ -164,3 +164,6 @@ Because the more specific `Exec(gh *)` rule beats the wildcard `Exec(**)`, `gh` 
 * [Team Settings](/cli/enterprise/team-settings#sandbox-enforcement) — enterprise sandbox enforcement and domain filtering
 * [Config file reference](/cli/reference/configuration/config-file#sandbox) — the user-level `sandbox` config section
 * [Permissions](/cli/reference/permissions) — permission scopes that drive sandbox writable paths and deny rules
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

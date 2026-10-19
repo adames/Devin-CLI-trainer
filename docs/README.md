@@ -1,7 +1,7 @@
 # docs/ — Devin CLI documentation snapshots
 
-Offline copies of docs.devin.ai CLI pages, fetched 2026-09-30 against CLI
-version 3000.11.3. If a snapshot disagrees with the installed binary, the
+Offline copies of docs.devin.ai CLI pages, fetched 2026-10-19 against CLI
+version 3000.11.92. If a snapshot disagrees with the installed binary, the
 `--help` output of the binary wins. (GUIDE.md documents one known drift on
 `--permission-mode` values.)
 
@@ -26,3 +26,7 @@ version 3000.11.3. If a snapshot disagrees with the installed binary, the
 
 Filenames map to URLs by turning `cli_` into `https://docs.devin.ai/cli/` and
 remaining underscores into `/`; hyphens stay as-is.
+
+- `dojo/content/help/slash-help.txt` is the REPL's own `/help` listing; it is
+  the source for slash commands the docs don't list yet (`/billing`, `/code`,
+  `/fusion`, `/goal`, `/recap`, `/share`, plus aliases).

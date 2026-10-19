@@ -252,3 +252,6 @@ Rules from `AGENTS.md` are always "always-on".
 <Note>
   For most common types of rules, consider using skills instead. Skills give you more control over when and how they're applied.
 </Note>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

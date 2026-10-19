@@ -59,3 +59,6 @@ The cloud session starts in a fresh VM, so the CLI includes everything it needs 
     Source, install guides, and the full script reference
   </Card>
 </CardGroup>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

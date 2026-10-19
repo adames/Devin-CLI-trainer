@@ -3,11 +3,13 @@
 /archive	cli_reference_commands.md:547
 /ask	cli_reference_commands.md:456
 /autonomous	cli_reference_commands.md:458
+/billing	slash-help.txt:15
 /btw	cli_reference_commands.md:498
 /bug	cli_reference_commands.md:514
 /bypass	cli_reference_commands.md:457
 /clear	cli_reference_commands.md:471
 /cloud	cli_reference_commands.md:539
+/code	slash-help.txt:20
 /compact	cli_reference_commands.md:527
 /config	cli_reference_commands.md:513
 /context	cli_reference_commands.md:524
@@ -19,10 +21,13 @@
 /fast	cli_reference_commands.md:460
 /feedback	cli_reference_commands.md:522
 /fork	cli_reference_commands.md:473
+/fusion	slash-help.txt:30
+/goal	slash-help.txt:31
 /handoff	cli_reference_commands.md:540
 /help	cli_reference_commands.md:511
 /hooks	cli_reference_commands.md:504
 /list-sessions	cli_reference_commands.md:477
+/log-in	slash-help.txt:35
 /login	cli_reference_commands.md:517
 /login-status	cli_reference_commands.md:519
 /logout	cli_reference_commands.md:518
@@ -31,6 +36,7 @@
 /mcp	cli_reference_commands.md:505
 /mode	cli_reference_commands.md:451
 /model	cli_reference_commands.md:459
+/models	slash-help.txt:5
 /mouse	cli_reference_commands.md:523
 /new	cli_reference_commands.md:471
 /normal	cli_reference_commands.md:452
@@ -40,6 +46,7 @@
 /plan	cli_reference_commands.md:455
 /platform	cli_reference_commands.md:542
 /quit	cli_reference_commands.md:482
+/recap	slash-help.txt:44
 /remove-dir	cli_reference_commands.md:491
 /rename	cli_reference_commands.md:546
 /rename-session	cli_reference_commands.md:479
@@ -48,6 +55,7 @@
 /revert	cli_reference_commands.md:475
 /rm-session	cli_reference_commands.md:480
 /session-stats	cli_reference_commands.md:526
+/share	slash-help.txt:52
 /shortcuts	cli_reference_commands.md:512
 /smart	cli_reference_commands.md:454
 /ssh	cli_reference_commands.md:544

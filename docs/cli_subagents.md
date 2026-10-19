@@ -66,10 +66,22 @@ The **default subagent model** is not a fixed model name — it resolves through
 
 ### Influencing the Model
 
-There is no way to name a model for a subagent in a prompt — the `run_subagent` tool takes a *profile*, not a model. You have two levers:
+There is no way to name a model for a subagent in a prompt — the `run_subagent` tool takes a *profile*, not a model. You have three levers:
 
 1. **Ask for a profile in natural language.** Requesting an explore subagent ("research how auth works in an explore subagent") keeps the work on the default subagent model rather than your selected model. Asking for code changes gets you `subagent_general`, which runs on your selected model.
 2. **Pin a model in a [custom subagent](#custom-subagents) profile.** `model:` in the definition file is the only way to run a *write-capable* subagent on a model other than the parent's. A [skill](/cli/extensibility/skills) that runs in a subagent can also set `model:` in its frontmatter to override the profile's model.
+3. **Set your own default subagent model.** `agent.subagent_model` in your [config file](/cli/reference/configuration/config-file#agent) replaces the default subagent model for your sessions. It takes precedence over both the subagent router and a model an admin pinned as the team default; it does not re-enable subagents when the admin setting is **None**:
+
+   ```json theme={null}
+   // ~/.config/devin/config.json
+   {
+     "agent": {
+       "subagent_model": "swe-1-6-fast"
+     }
+   }
+   ```
+
+   It applies to `subagent_explore` and to custom subagents that don't pin a `model:`; `subagent_general` still follows the parent agent's model. The model must be one your organization allows, otherwise the setting is ignored and the team default is used. It applies to new sessions.
 
 ### Enterprise Controls
 
@@ -176,7 +188,7 @@ Interrupting the agent does not kill its subagents. Running subagents **park** w
 You can cancel a running subagent in two ways:
 
 1. **From the subagent panel:** Open the panel and press <kbd>x</kbd> on a running subagent.
-2. **Foreground subagent:** Press <kbd>Ctrl</kbd>+<kbd>C</kbd> or <kbd>Esc</kbd> to cancel the currently running foreground subagent.
+2. **Foreground subagent:** Press <kbd>Ctrl</kbd>+<kbd>C</kbd> with an empty input, or <kbd>Esc</kbd> twice, to cancel the currently running foreground subagent. With a non-empty draft, <kbd>Ctrl</kbd>+<kbd>C</kbd> clears the draft first.
 
 ***
 
@@ -353,3 +365,6 @@ You are a test runner subagent. Run the relevant test suites and report:
 - Failure messages and stack traces
 - Suggestions for fixing failures
 ```
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

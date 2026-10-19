@@ -10,7 +10,7 @@ Commands:
   rules      Manage agent rules (always-on context blobs)
   skills     Manage agent skills (slash commands and agent-triggered context blobs)
   plugins    Manage plugins (install, list, info, update, remove)
-  cloud      Manage Devin Cloud resources (environment setup, sandbox sessions, builds)
+  cloud      Start a Devin Cloud session (same as --cloud) or manage cloud resources
   desktop    Open Devin Desktop
   list       List sessions in the current directory [aliases: ls]
   rm         Delete a session by id or name
@@ -91,7 +91,7 @@ Options:
       --respect-workspace-trust [<RESPECT_WORKSPACE_TRUST>]
           Respect workspace trust settings
           
-          Defaults to true in every mode. Non-interactive (print) mode cannot show the trust prompt and fails in an untrusted directory; pass --respect-workspace-trust false to skip the check.
+          Defaults to true in every mode. Non-interactive (print) mode cannot show the trust prompt and fails in an untrusted directory; pass --respect-workspace-trust false to skip the check. Cloud sessions (`--cloud`) never check trust.
           
           [possible values: true, false]
 

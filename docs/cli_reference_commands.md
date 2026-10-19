@@ -113,7 +113,7 @@ devin mcp add my-server -- npx @company/mcp-server --port 3000
 
 # HTTP server (positional URL)
 devin mcp add notion https://mcp.notion.com/mcp
-devin mcp add --transport http datadog-mcp https://mcp.datadoghq.com/api/unstable/mcp-server/mcp
+devin mcp add --transport http datadog-mcp https://mcp.datadoghq.com/v1/mcp
 
 # HTTP server (--url flag, also works)
 devin mcp add notion --url https://mcp.notion.com/mcp
@@ -615,3 +615,6 @@ Profiles determine the agent's available tools and behavior. Profiles are automa
 | `normal` | Full coding assistant (used by Normal, Accept Edits, Smart, Bypass, and Autonomous modes) | All tools |
 | `plan` | Structured planning workflow (used by Plan mode) | Read-only tools (grep, glob, read, todo, ask\_user\_question, exit\_plan\_mode) |
 | `ask` | Question answering (used by the `/ask` command) | Read-only tools (grep, glob, read, todo, ask\_user\_question) |
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

@@ -135,5 +135,6 @@ State lives in `$PROFESSOR_HOME/state.json` — `PROFESSOR_HOME` first, then
   (`flake8 --max-line-length 120 dojo.py tests/` if you have flake8).
 - Screenshots in `assets/`: `python3 tools/screenshots.py` (regenerate after
   UI changes).
-- `../GUIDE.md` is append-only: `commands.json` `source` fields and tests
-  cite it by line number.
+- Shell cards quote `../GUIDE.md` lines verbatim and cite them by line
+  number. After editing the guide, run `python3 tools/relink_guide_sources.py`
+  to re-point the citations (a test checks they match).

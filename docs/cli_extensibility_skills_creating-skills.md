@@ -424,3 +424,6 @@ Explain how the pieces connect.
     Invoke your skill and iterate on the prompt until the output is what you want.
   </Card>
 </CardGroup>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

@@ -82,3 +82,6 @@ Available in cloud sessions alongside the usual [slash commands](/cli/essential-
     Full reference for `--cloud` and the cloud slash commands
   </Card>
 </CardGroup>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

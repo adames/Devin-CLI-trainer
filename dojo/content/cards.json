@@ -1064,5 +1064,140 @@
     ],
     "hint": "type -a",
     "explain": "type -a devin shows a shell function named devin shadowing ~/.local/bin/devin; call the binary by full path or `command devin`."
+  },
+  {
+    "id": "card-67",
+    "topic": "slash",
+    "q": "Keep Devin working on an objective across turns until it reports done or blocked",
+    "answers": [
+      "/goal <objective>   (then /goal resume · /goal clear; pauses after 50 turns)"
+    ],
+    "keywords": [
+      "/goal"
+    ],
+    "hint": "/goal <objective>   (then /goal resume · /goal clear; pauses after 50 turns)",
+    "explain": "/goal <objective>   (then /goal resume · /goal clear; pauses after 50 turns)"
+  },
+  {
+    "id": "card-68",
+    "topic": "modes",
+    "q": "Message a running turn without cancelling it",
+    "answers": [
+      "just type and press Enter (steering); Cmd+Enter / Ctrl+Enter queues it for after the turn"
+    ],
+    "keywords": [
+      "enter",
+      "steering"
+    ],
+    "hint": "just type and press Enter (steering); Cmd+Enter / Ctrl+Enter queues it for after the turn",
+    "explain": "just type and press Enter (steering); Cmd+Enter / Ctrl+Enter queues it for after the turn"
+  },
+  {
+    "id": "card-69",
+    "topic": "modes",
+    "q": "Ctrl+C with text in the input vs with an empty input",
+    "answers": [
+      "clears the draft vs cancels the running task"
+    ],
+    "keywords": [
+      "clears the draft",
+      "cancels"
+    ],
+    "hint": "clears the draft vs cancels the running task",
+    "explain": "clears the draft vs cancels the running task"
+  },
+  {
+    "id": "card-70",
+    "topic": "sessions",
+    "q": "Move the session history database off a network home directory",
+    "answers": [
+      "DEVIN_SESSIONS_DIR=<dir>"
+    ],
+    "keywords": [
+      "devin_sessions_dir"
+    ],
+    "hint": "DEVIN_SESSIONS_DIR=<dir>",
+    "explain": "DEVIN_SESSIONS_DIR=<dir>"
+  },
+  {
+    "id": "card-71",
+    "topic": "config",
+    "q": "Config key for the model that subagent_explore and custom subagents use",
+    "answers": [
+      "agent.subagent_model"
+    ],
+    "keywords": [
+      "agent.subagent_model"
+    ],
+    "hint": "agent.subagent_model",
+    "explain": "agent.subagent_model"
+  },
+  {
+    "id": "card-72",
+    "topic": "hooks",
+    "q": "Hooks that run around context compaction",
+    "answers": [
+      "PreCompact / PostCompact (matchers: manual, auto)"
+    ],
+    "keywords": [
+      "precompact",
+      "postcompact"
+    ],
+    "hint": "PreCompact / PostCompact (matchers: manual, auto)",
+    "explain": "PreCompact / PostCompact (matchers: manual, auto)"
+  },
+  {
+    "id": "card-73",
+    "topic": "mcp",
+    "q": "Find which config file or plugin an MCP server came from",
+    "answers": [
+      "devin mcp list / devin mcp get <name> show a Source: line"
+    ],
+    "keywords": [
+      "devin mcp",
+      "source:"
+    ],
+    "hint": "devin mcp list / devin mcp get <name> show a Source: line",
+    "explain": "devin mcp list / devin mcp get <name> show a Source: line"
+  },
+  {
+    "id": "card-74",
+    "topic": "skills",
+    "q": "Install a GitHub repo that only ships skills/<name>/SKILL.md",
+    "answers": [
+      "devin plugins install owner/repo  (installs as a skills-only plugin named after the repo)"
+    ],
+    "keywords": [
+      "devin plugins install"
+    ],
+    "hint": "devin plugins install owner/repo  (installs as a skills-only plugin named after the repo)",
+    "explain": "devin plugins install owner/repo  (installs as a skills-only plugin named after the repo)"
+  },
+  {
+    "id": "card-75",
+    "topic": "debug",
+    "q": "Proxy cannot handle compressed API requests",
+    "answers": [
+      "\"proxy\": {\"gzip\": false} in config.json"
+    ],
+    "keywords": [
+      "gzip",
+      "proxy"
+    ],
+    "hint": "\"proxy\": {\"gzip\": false} in config.json",
+    "explain": "\"proxy\": {\"gzip\": false} in config.json"
+  },
+  {
+    "id": "card-76",
+    "topic": "cloud",
+    "q": "Start a cloud session with a subcommand instead of a flag",
+    "answers": [
+      "devin cloud  (same as --cloud; never asks for directory trust)"
+    ],
+    "keywords": [
+      "devin cloud"
+    ],
+    "hint": "devin cloud  (same as --cloud; never asks for directory trust)",
+    "explain": "devin cloud  (same as --cloud; never asks for directory trust)"
   }
 ]
